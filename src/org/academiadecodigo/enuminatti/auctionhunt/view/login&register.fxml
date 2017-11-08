@@ -42,15 +42,15 @@
             <Font name="Helvetica Light" size="49.0" />
          </font>
       </Text>
-      <Hyperlink fx:id="dontHaveAccount" layoutX="377.0" layoutY="316.0" onAction="#changeToRegister" text="Don't have any account?" textFill="WHITE" visible="false" />
+      <Hyperlink fx:id="dontHaveAccount" layoutX="393.0" layoutY="316.0" onAction="#changeToRegister" text="Don't have account?" textFill="WHITE" visible="false" />
       <Text fx:id="succesfullLog" fill="#2aff22" layoutX="261.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You have successfully signed in!" visible="false" wrappingWidth="206.4814453125" />
       <Text fx:id="couldNotLogIn" fill="#ff8c57" layoutX="312.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Could not log in!" visible="false" wrappingWidth="105.52050769329071" />
-      <Text fx:id="emailText" fill="#fffefe" layoutX="142.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+      <Text fx:id="emailText" fill="#fffefe" layoutX="147.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <Hyperlink fx:id="alreadyHaveAccount" layoutX="373.0" layoutY="342.0" onAction="#changeToLogin" text="Already have an account?" textFill="WHITE" />
+      <Hyperlink fx:id="alreadyHaveAccount" layoutX="386.0" layoutY="342.0" onAction="#changeToLogin" text="Already have account?" textFill="WHITE" />
       <Button fx:id="logInButton" layoutX="421.0" layoutY="291.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="27.0" prefWidth="72.0" style="-fx-background-color: DODGERBLUE; -fx-border-color: white;" text="Sign In" textFill="WHITE" visible="false">
          <font>
             <Font size="12.0" />
@@ -58,6 +58,6 @@
       </Button>
       <Text fx:id="succesfullRegister" fill="#2aff22" layoutX="271.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You have register successfully!" visible="false" wrappingWidth="206.4814453125" />
       <Text fx:id="couldNotRegister" fill="#ff8c57" layoutX="288.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Could not register!" visible="false" wrappingWidth="120.52050769329071" />
-      <TextField fx:id="emailfield" layoutX="236.0" layoutY="270.0" prefHeight="27.0" prefWidth="257.0" />
+      <TextField fx:id="emailfield" layoutX="236.0" layoutY="267.0" prefHeight="27.0" prefWidth="257.0" />
    </children>
 </Pane>

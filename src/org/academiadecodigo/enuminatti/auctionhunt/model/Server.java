@@ -16,6 +16,7 @@ public class Server  {
     public static final int PORT = 9090;
     public static final String HOST = "localhost";
 
+
     public Server(){
 
         clientList = new LinkedList<>();

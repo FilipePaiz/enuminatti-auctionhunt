@@ -9,11 +9,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import org.academiadecodigo.enuminatti.auctionhunt.model.Client;
+import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LogicController implements Initializable{
+
+    private UserService userService;
 
     @FXML
     private Button logOutButton;
@@ -75,14 +80,59 @@ public class LogicController implements Initializable{
 
     @FXML
     void onLogin(ActionEvent event) {
+
         System.out.println("cenas");
+
+        if (usernameField.getText().isEmpty()) {
+            couldNotLogIn.setVisible(true);
+            return;
+        }
+
+        if (passwordfield.getText().isEmpty()) {
+            couldNotLogIn.setVisible(true);
+            return;
+        }
+
+        if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
+            succesfullLog.setVisible(true);
+        } else {
+            couldNotLogIn.setVisible(true);
+        }
+
+
     }
 
     @FXML
     void onRegister(ActionEvent event) {
+
         System.out.println(usernameField.getText());
         System.out.println(passwordfield.getText());
         System.out.println(emailfield.getText());
+
+        if (usernameField.getText().isEmpty()) {
+            couldNotRegister.setVisible(true);
+            return;
+        }
+
+        if (passwordfield.getText().isEmpty()) {
+            couldNotRegister.setVisible(true);
+            return;
+        }
+
+        if (emailfield.getText().isEmpty()) {
+            couldNotRegister.setVisible(true);
+            return;
+        }
+
+        if (userService.findByName(usernameField.getText()) != null) {
+            couldNotRegister.setVisible(true);
+            return;
+        }
+
+        userService.addUser(new Client(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
+
+        showLogin();
+        succesfullRegister.setVisible(true);
 
     }
 

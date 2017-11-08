@@ -15,6 +15,9 @@ public class Client implements Runnable{
     private boolean connectionStatus;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private String username;
+    private String password;
+    private String email;
 
 
     public Client(int money, Socket clientSocket) {
@@ -77,6 +80,19 @@ public class Client implements Runnable{
 
 
         //controller e todos os métodos da vida do Client!
+
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUsername() {
+        return username;
 
     }
 }

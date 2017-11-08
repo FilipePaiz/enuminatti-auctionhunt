@@ -1,28 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.enuminatti.auctionhunt.controller.ProfileController">
   <tabs>
     <Tab text="Profile">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: lightblue;">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="149.0" prefWidth="122.0" style="-fx-border-color: black;" text="Photo" />
+                  <Label fx:id="Photo" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="149.0" prefWidth="122.0" style="-fx-border-color: black;" text="Photo" />
+                  <GridPane layoutX="14.0" layoutY="184.0" prefHeight="60.0" prefWidth="123.0" style="-fx-background-color: white;">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="77.0" minWidth="10.0" prefWidth="77.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="58.0" minWidth="10.0" prefWidth="46.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button id="MyFunds" fx:id="MyFundsButton" mnemonicParsing="false" onAction="#onMyFundsButtonPressed" prefHeight="30.0" prefWidth="77.0" text="MyFunds:">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="77.0" text="MyItems" GridPane.rowIndex="1" />
+                        <Label fx:id="Money" prefHeight="41.0" prefWidth="60.0" text="Money" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="NumberOfItems" prefHeight="41.0" prefWidth="60.0" text="number" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+                  <Button id="LogOut" fx:id="LogOutButton" layoutX="514.0" layoutY="315.0" mnemonicParsing="false" onAction="#onLogoutButtonPressed" text="Log Out" />
+                  <Button fx:id="GoToAuctionButton" layoutX="484.0" layoutY="14.0" mnemonicParsing="false" onAction="#onGoToAuctionButtonPressed" text="Go to Auction" />
+                  <Pane fx:id="DepositWithdrawMoey" layoutX="200.0" layoutY="84.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
+                     <children>
+                        <Button fx:id="DepositButton" layoutX="23.0" layoutY="130.0" mnemonicParsing="false" onAction="#onDepositButtonPressed" text="Deposit" />
+                        <Button fx:id="WithdrawButton" layoutX="117.0" layoutY="130.0" mnemonicParsing="false" onAction="#onWithdrawButtonPressed" text="Withdraw" />
+                        <TextField fx:id="InsertWithdrawMoney" layoutX="17.0" layoutY="73.0" />
+                     </children>
+                  </Pane>
+                  <Button fx:id="UploadItemButton" layoutX="29.0" layoutY="284.0" mnemonicParsing="false" onAction="#onUploadButtonPressed" text="Upload Item" />
                </children></AnchorPane>
       </content>
     </Tab>
     <Tab text="History">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: lightblue; -fx-border-color: black;">
+               <children>
+                  <GridPane layoutX="100.0" layoutY="76.0" prefHeight="172.0" prefWidth="280.0" style="-fx-background-color: white; -fx-border-color: black; -fx-grid-lines-visible: black;">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label id="readhistory" fx:id="readHistory1" prefHeight="42.0" prefWidth="285.0" text="ReadHistory1" />
+                        <Label id="readHistory2" fx:id="readHistory2" prefHeight="53.0" prefWidth="294.0" text="ReadHistory2" GridPane.rowIndex="1" />
+                        <Label id="readHistory3" fx:id="readHistory3" prefHeight="43.0" prefWidth="290.0" text="ReadHistory3" GridPane.rowIndex="2" />
+                        <Label id="readHistory4" fx:id="readHistory4" prefHeight="55.0" prefWidth="297.0" text="ReadHistory4" GridPane.rowIndex="3" />
+                        <Label id="readHistory5" fx:id="readHistory5" prefHeight="60.0" prefWidth="287.0" text="ReadHistory5" GridPane.rowIndex="4" />
+                     </children>
+                  </GridPane>
+               </children></AnchorPane>
       </content>
     </Tab>
       <Tab text="Settings">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane id="UploadPhoto" fx:id="UploadPhotoButton" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button id="UploadPhoto" fx:id="UploadPhoto" layoutX="25.0" layoutY="25.0" mnemonicParsing="false" onAction="#onUploadPhotoButtonPressed" text="UploadPhoto" />
+               </children></AnchorPane>
         </content>
       </Tab>
   </tabs>

@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: DODGERBLUE;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.enuminatti.auctionhunt.controller.LogicController">
    <children>
       <Button fx:id="logOutButton" layoutX="421.0" layoutY="315.0" mnemonicParsing="false" onAction="#onRegister" prefHeight="27.0" prefWidth="72.0" style="-fx-background-color: DODGERBLUE; -fx-border-color: white;" text="Sign Up" textFill="WHITE">
@@ -43,7 +42,7 @@
             <Font name="Helvetica Light" size="49.0" />
          </font>
       </Text>
-      <Hyperlink fx:id="dontHaveAccount" layoutX="393.0" layoutY="316.0" onAction="#changeToRegister" text="Don't have account?" textFill="WHITE" visible="false" />
+      <Hyperlink fx:id="dontHaveAccount" layoutX="377.0" layoutY="316.0" onAction="#changeToRegister" text="Don't have any account?" textFill="WHITE" visible="false" />
       <Text fx:id="succesfullLog" fill="#2aff22" layoutX="261.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You have successfully signed in!" visible="false" wrappingWidth="206.4814453125" />
       <Text fx:id="couldNotLogIn" fill="#ff8c57" layoutX="312.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Could not log in!" visible="false" wrappingWidth="105.52050769329071" />
       <Text fx:id="emailText" fill="#fffefe" layoutX="142.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
@@ -51,7 +50,7 @@
             <Font size="22.0" />
          </font>
       </Text>
-      <Hyperlink fx:id="alreadyHaveAccount" layoutX="386.0" layoutY="342.0" onAction="#changeToLogin" text="Already have account?" textFill="WHITE" />
+      <Hyperlink fx:id="alreadyHaveAccount" layoutX="373.0" layoutY="342.0" onAction="#changeToLogin" text="Already have an account?" textFill="WHITE" />
       <Button fx:id="logInButton" layoutX="421.0" layoutY="291.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="27.0" prefWidth="72.0" style="-fx-background-color: DODGERBLUE; -fx-border-color: white;" text="Sign In" textFill="WHITE" visible="false">
          <font>
             <Font size="12.0" />

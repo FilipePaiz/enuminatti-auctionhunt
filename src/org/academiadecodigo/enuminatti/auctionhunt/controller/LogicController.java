@@ -60,7 +60,7 @@ public class LogicController implements Initializable{
     private Text couldNotRegister;
 
     @FXML
-    void dontHaveAccount(ActionEvent event) {
+    void onLogin(ActionEvent event) {
 
     }
 

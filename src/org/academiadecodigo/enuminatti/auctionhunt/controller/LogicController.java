@@ -19,7 +19,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogicController implements Initializable{
+public class LogicController implements Initializable, Controllers {
 
     private UserService userService;
 
@@ -73,7 +73,7 @@ public class LogicController implements Initializable{
 
     @FXML
     void changeToLogin(ActionEvent event) {
-       showLogin();
+        showLogin();
     }
 
     @FXML
@@ -126,6 +126,8 @@ public class LogicController implements Initializable{
             return;
         }
 
+
+        System.out.println("---------------------- " + userService);
         if (userService.findByName(usernameField.getText()) != null) {
             couldNotRegister.setVisible(true);
             return;
@@ -139,10 +141,6 @@ public class LogicController implements Initializable{
 
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -151,7 +149,7 @@ public class LogicController implements Initializable{
 
         try {
 
-            clientSocket = new Socket(Server.HOST,Server.PORT);
+            clientSocket = new Socket(Server.HOST, Server.PORT);
             Client client = new Client();
             client.sendImage(clientSocket);
 
@@ -180,6 +178,12 @@ public class LogicController implements Initializable{
         alreadyHaveAccount.setVisible(true);
         logInButton.setVisible(false);
         dontHaveAccount.setVisible(false);
+    }
+
+    @Override
+    public void setUserInterface(UserService userService) {
+
+        this.userService = userService;
     }
 }
 

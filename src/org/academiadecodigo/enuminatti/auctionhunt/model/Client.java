@@ -5,6 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.academiadecodigo.enuminatti.auctionhunt.controller.LogicController;
+import org.academiadecodigo.enuminatti.auctionhunt.service.MockUserService;
+import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -13,13 +17,20 @@ import java.net.Socket;
  */
 public class Client extends Application {
 
-    private DataInputStream dataInputStream;
-    private DataOutputStream dataOutputStream;
+    @Override
+    public void init() throws Exception {
+        UserService userService = new MockUserService();
+
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
+
+        if(root == null){
+            System.out.println("------------- O MEU ROOT É NULO LOL");
+        }
 
         primaryStage.setTitle("AuctionHunt");
         primaryStage.setScene(new Scene(root));
@@ -38,8 +49,8 @@ public class Client extends Application {
 
         try {
 
-            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            dataInputStream = new DataInputStream(new FileInputStream("resources/hatchlings_0.jpg"));
+            DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+            DataInputStream dataInputStream = new DataInputStream(new FileInputStream("resources/hatchlings_0.jpg"));
             int bytesReaden = dataInputStream.read(bytes);
 
             while (bytesReaden != -1){

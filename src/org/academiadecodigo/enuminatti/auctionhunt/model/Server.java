@@ -1,5 +1,11 @@
 package org.academiadecodigo.enuminatti.auctionhunt.model;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,7 +16,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by Someone who is not me on 07/11/17.
  */
-public class Server  {
+public class Server {
 
     private LinkedList<ServerThread> clientList;
     public static final int PORT = 9090;
@@ -33,6 +39,9 @@ public class Server  {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("jbh bh");
+
 
     }
 

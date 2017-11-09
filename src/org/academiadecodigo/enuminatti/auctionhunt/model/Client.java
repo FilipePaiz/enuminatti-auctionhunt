@@ -1,5 +1,10 @@
 package org.academiadecodigo.enuminatti.auctionhunt.model;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.academiadecodigo.enuminatti.auctionhunt.auxiliary.Money;
 
 import java.io.*;
@@ -8,7 +13,7 @@ import java.net.Socket;
 /**
  * Created by Someone who is not me on 07/11/17.
  */
-public class Client implements Runnable{
+public class Client extends Application implements Runnable{
 
     private int money;
     private Socket clientSocket;
@@ -22,24 +27,23 @@ public class Client implements Runnable{
         this.clientSocket = clientSocket;
     }
 
-    public static void main(String[] args) {
 
-        Socket clientSocket = null;
+    @Override
+    public void start(Stage primaryStage) throws Exception {
 
-        try {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
+        primaryStage.setTitle("AuctionHunt");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
 
-            clientSocket = new Socket(Server.HOST,Server.PORT);
-            Client client = new Client(400, clientSocket);
-            new Thread(client).start();
-            client.sendImage();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    private void sendImage() {
+    public static void main(String[] args) {
+
+        Application.launch(args);
+    }
+
+    public void sendImage(Socket clientSocket) {
 
         byte[] bytes = new byte[1024];
 
@@ -75,12 +79,13 @@ public class Client implements Runnable{
     @Override
     public void run() {
 
+        while (true){
+            //System.out.println("lindo");
+        }
 
         //controller e todos os métodos da vida do Client!
 
     }
-
-
 
 
 }

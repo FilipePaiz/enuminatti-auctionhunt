@@ -10,9 +10,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import org.academiadecodigo.enuminatti.auctionhunt.model.Client;
+import org.academiadecodigo.enuminatti.auctionhunt.model.Server;
 import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -141,7 +144,22 @@ public class LogicController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        Socket clientSocket = null;
+
+        try {
+
+            clientSocket = new Socket(Server.HOST,Server.PORT);
+            Client client = new Client(400, clientSocket);
+            client.sendImage(clientSocket);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         showLogin();
+
     }
 
     private void showLogin() {

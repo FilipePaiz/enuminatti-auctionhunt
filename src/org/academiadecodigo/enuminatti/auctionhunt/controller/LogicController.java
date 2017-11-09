@@ -128,7 +128,7 @@ public class LogicController implements Initializable{
             return;
         }
 
-        userService.addUser(new Client(clientSocket, usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
+       // userService.addUser(new Client(clientSocket, usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
 
         showLogin();
         succesfullRegister.setVisible(true);

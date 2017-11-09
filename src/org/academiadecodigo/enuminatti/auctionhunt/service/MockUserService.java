@@ -1,3 +1,4 @@
+/*
 package org.academiadecodigo.enuminatti.auctionhunt.service;
 
 import org.academiadecodigo.enuminatti.auctionhunt.model.Client;
@@ -6,9 +7,6 @@ import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by codecadet on 08/11/17.
- */
 public class MockUserService implements UserService {
 
     private Map<String, Client> clients;
@@ -44,3 +42,4 @@ public class MockUserService implements UserService {
         return clients.size();
     }
 }
+*/

@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.academiadecodigo.enuminatti.auctionhunt.auxiliary.Money;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,7 +12,7 @@ import java.net.Socket;
 /**
  * Created by Someone who is not me on 07/11/17.
  */
-public class Client extends Application implements Runnable{
+public class Client extends Application {
 
     private int money;
     private Socket clientSocket;
@@ -22,16 +21,11 @@ public class Client extends Application implements Runnable{
     private DataOutputStream dataOutputStream;
 
 
-    public Client(int money, Socket clientSocket) {
-        this.money = money;
-        this.clientSocket = clientSocket;
-    }
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
+
         primaryStage.setTitle("AuctionHunt");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
@@ -76,7 +70,7 @@ public class Client extends Application implements Runnable{
      * Receive image from the server
      */
 
-    @Override
+   /** @Override
     public void run() {
 
         while (true){
@@ -85,7 +79,7 @@ public class Client extends Application implements Runnable{
 
         //controller e todos os métodos da vida do Client!
 
-    }
+    }*/
 
 
 }

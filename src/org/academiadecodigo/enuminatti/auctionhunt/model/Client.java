@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -14,12 +13,8 @@ import java.net.Socket;
  */
 public class Client extends Application {
 
-    private int money;
-    private Socket clientSocket;
-    private boolean connectionStatus;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -60,26 +55,4 @@ public class Client extends Application {
         }
 
     }
-
-
-    public boolean isConnectionStatus() {
-        return connectionStatus;
-    }
-
-    /**
-     * Receive image from the server
-     */
-
-   /** @Override
-    public void run() {
-
-        while (true){
-            //System.out.println("lindo");
-        }
-
-        //controller e todos os métodos da vida do Client!
-
-    }*/
-
-
 }

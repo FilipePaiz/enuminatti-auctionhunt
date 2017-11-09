@@ -10,7 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.academiadecodigo.enuminatti.auctionhunt.model.Client;
 import org.academiadecodigo.enuminatti.auctionhunt.model.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.model.User;
 import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
@@ -128,8 +131,9 @@ public class LogicController implements Initializable{
             return;
         }
 
-       // userService.addUser(new Client(clientSocket, usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
+        userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
 
+        System.out.println("bem-vindo");
         showLogin();
         succesfullRegister.setVisible(true);
 

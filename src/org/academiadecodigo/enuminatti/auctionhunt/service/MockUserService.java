@@ -2,7 +2,6 @@ package org.academiadecodigo.enuminatti.auctionhunt.service;
 
 import org.academiadecodigo.enuminatti.auctionhunt.model.User;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
-
 import java.util.HashMap;
 import java.util.Map;
 

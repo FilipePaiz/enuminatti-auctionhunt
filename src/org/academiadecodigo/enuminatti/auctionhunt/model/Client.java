@@ -13,16 +13,16 @@ public class Client implements Runnable{
     private int money;
     private Socket clientSocket;
     private boolean connectionStatus;
-    private DataInputStream dataInputStream;
-    private DataOutputStream dataOutputStream;
     private String username;
     private String password;
     private String email;
 
 
-    public Client(int money, Socket clientSocket) {
-        this.money = money;
+    public Client(Socket clientSocket, String username, String email, String password ) {
         this.clientSocket = clientSocket;
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public static void main(String[] args) {
@@ -31,8 +31,9 @@ public class Client implements Runnable{
 
         try {
 
+
             clientSocket = new Socket(Server.HOST,Server.PORT);
-            Client client = new Client(400, clientSocket);
+            Client client = new Client(clientSocket);
             new Thread(client).start();
             client.sendImage();
 
@@ -44,12 +45,14 @@ public class Client implements Runnable{
 
     private void sendImage() {
 
+        DataInputStream dataInputStream;
+        DataOutputStream dataOutputStream;
         byte[] bytes = new byte[1024];
 
         try {
 
             dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            dataInputStream = new DataInputStream(new FileInputStream("resources/hatchlings_0.jpg"));
+            dataInputStream = new DataInputStream(new FileInputStream(Server.PATH + path +".jpg"));
             int bytesReaden = dataInputStream.read(bytes);
 
             while (bytesReaden != -1){
@@ -93,6 +96,14 @@ public class Client implements Runnable{
 
     public String getUsername() {
         return username;
+    }
 
+    public void addMoney(String moneyPlus){
+        int moneyAdded = Integer.parseInt(moneyPlus);
+        this.money = money + moneyAdded;
+    }
+
+    public int getMoney() {
+        return money;
     }
 }

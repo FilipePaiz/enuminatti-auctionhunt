@@ -15,6 +15,7 @@ public class Server  {
     private LinkedList<ServerThread> clientList;
     public static final int PORT = 9090;
     public static final String HOST = "localhost";
+    public static final String PATH = "resources/";
 
 
     public Server(){
@@ -23,26 +24,22 @@ public class Server  {
 
     }
 
-    public static void main(String[] args) {
+    public void start() {
 
-        Server server = new Server();
+        ServerSocket serverSocket = null;
 
         try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
-            server.start(serverSocket);
+            serverSocket = new ServerSocket(PORT);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-    private void start(ServerSocket serverSocket) {
 
         ExecutorService executorService = Executors.newCachedThreadPool();
         ServerThread serverThread;
 
         while(true){
             try {
+
 
                 Socket clientSocket = serverSocket.accept();
 
@@ -88,7 +85,7 @@ public class Server  {
             try {
                 System.out.println("aqui ta");
                 dataInputStream = new DataInputStream(clientSocket.getInputStream());
-                dataOutputStream = new DataOutputStream(new FileOutputStream("resources/badjoraz.jpg"));
+                dataOutputStream = new DataOutputStream(new FileOutputStream(PATH + client.getName() +".jpg"));
                 copyFile();
 
             } catch (IOException e) {

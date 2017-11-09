@@ -99,7 +99,6 @@ public class LogicController implements Initializable{
             couldNotLogIn.setVisible(true);
         }
 
-
     }
 
     @FXML
@@ -129,11 +128,15 @@ public class LogicController implements Initializable{
             return;
         }
 
-        userService.addUser(new Client(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
+        userService.addUser(new Client(clientSocket, usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
 
         showLogin();
         succesfullRegister.setVisible(true);
 
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override

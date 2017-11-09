@@ -4,7 +4,7 @@ import org.academiadecodigo.enuminatti.auctionhunt.model.User;
 /**
  * Created by codecadet on 08/11/17.
  */
-public interface UserService {
+public interface UserService extends Service {
 
     boolean authenticate(String username, String password);
 

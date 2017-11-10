@@ -13,7 +13,6 @@ import org.academiadecodigo.enuminatti.auctionhunt.model.Server;
 import org.academiadecodigo.enuminatti.auctionhunt.model.User;
 import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;

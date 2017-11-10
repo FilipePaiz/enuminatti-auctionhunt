@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.controller;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public class ProfileController implements Controller {
+public class ProfileController {
 
     @FXML
     private Label Photo;

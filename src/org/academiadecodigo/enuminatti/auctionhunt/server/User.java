@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.model;
+package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 /**
  * Created by Someone who is not me on 09/11/17.

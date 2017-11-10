@@ -1,8 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.service;
-
-import com.sun.javafx.collections.MappingChange;
-import org.academiadecodigo.enuminatti.auctionhunt.auxiliary.Item;
-import org.academiadecodigo.enuminatti.auctionhunt.model.User;
+package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import java.util.Map;
 

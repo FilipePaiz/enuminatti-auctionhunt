@@ -1,6 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.auxiliary;
-
-import org.academiadecodigo.enuminatti.auctionhunt.model.User;
+package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 /**
  * Created by Someone who is not me on 07/11/17.

@@ -1,18 +1,15 @@
 package org.academiadecodigo.enuminatti.auctionhunt.model;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
+
+
 import javafx.stage.Stage;
-<<<<<<< HEAD
-import org.academiadecodigo.enuminatti.auctionhunt.controller.LogicController;
+
 import org.academiadecodigo.enuminatti.auctionhunt.service.MockUserService;
 import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
-=======
 import org.academiadecodigo.enuminatti.auctionhunt.Navigation;
 import org.academiadecodigo.enuminatti.auctionhunt.service.*;
->>>>>>> 29e9ac17e82a33716577dfbfeb5a7ea25e801c8e
 
 import java.io.*;
 import java.net.Socket;
@@ -23,13 +20,7 @@ import java.net.Socket;
 public class Client extends Application {
 
     @Override
-    public void init() throws Exception {
-        UserService userService = new MockUserService();
-
-    }
-
-    @Override
-    public void init() throws Exception {
+    public void init() {
 
         UserService userService = new MockUserService();
         BidService bidService = new MockBidService();

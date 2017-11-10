@@ -8,6 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class ProfileController {
 
     @FXML
@@ -65,6 +71,13 @@ public class ProfileController {
     private Button UploadPhoto;
 
     @FXML
+    private TextField InsertPathforPhotoUser;
+
+    private DataOutputStream dataOutputStream;
+    private DataInputStream dataInputStream;
+    private LogicController logicController;
+
+    @FXML
     void onDepositButtonPressed(ActionEvent event) {
 
     }
@@ -91,11 +104,41 @@ public class ProfileController {
 
     @FXML
     void onUploadPhotoButtonPressed(ActionEvent event) {
-
+        uploadPhoto();
     }
 
     @FXML
     void onWithdrawButtonPressed(ActionEvent event) {
+
+    }
+
+    private void uploadPhoto() {
+
+
+        byte[] bytes = new byte[1024];
+
+
+        try {
+
+            Scanner scanner = new Scanner(System.in);
+            String path = InsertPathforPhotoUser.getPromptText();
+
+            System.out.println(logicController.getClientSocket());
+            dataOutputStream = new DataOutputStream(logicController.getClientSocket().getOutputStream());
+            dataInputStream = new DataInputStream(new FileInputStream(path));
+
+            int bytesReader = dataInputStream.read(bytes);
+
+            while (bytesReader != -1) {
+
+                dataOutputStream.write(bytes, 0, bytesReader);
+                dataOutputStream.flush();
+                bytesReader = dataInputStream.read(bytes);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

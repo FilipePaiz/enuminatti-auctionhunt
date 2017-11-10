@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class LogicController implements Initializable{
 
+    private Socket clientSocket = null;
     private UserService userService;
 
     @FXML
@@ -142,15 +143,15 @@ public class LogicController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Socket clientSocket = null;
+
 
 
         try {
 
             clientSocket = new Socket(Server.HOST,Server.PORT);
             Client client = new Client();
-            client.sendImage(clientSocket);
-
+            //client.sendImage(clientSocket);
+            System.out.println(clientSocket);
             showLogin();
 
         } catch (IOException e) {
@@ -176,6 +177,10 @@ public class LogicController implements Initializable{
         alreadyHaveAccount.setVisible(true);
         logInButton.setVisible(false);
         dontHaveAccount.setVisible(false);
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 }
 

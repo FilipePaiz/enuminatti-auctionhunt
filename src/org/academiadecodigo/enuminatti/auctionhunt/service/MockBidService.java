@@ -4,6 +4,7 @@ import org.academiadecodigo.enuminatti.auctionhunt.auxiliary.Item;
 import org.academiadecodigo.enuminatti.auctionhunt.model.User;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,9 +15,9 @@ public class MockBidService implements BidService {
     private HashMap<Integer, Item> items;
     private int itemAddedtoAuction;
 
-    public MockBidService(HashMap<Integer, Item> items) {
+    public MockBidService() {
 
-        this.items = items;
+        this.items = new HashMap<>();
     }
 
     @Override
@@ -38,5 +39,10 @@ public class MockBidService implements BidService {
 
         items.put(itemAddedtoAuction,item);
         itemAddedtoAuction++;
+    }
+
+    @Override
+    public Map<Integer, Item> getItems() {
+        return items;
     }
 }

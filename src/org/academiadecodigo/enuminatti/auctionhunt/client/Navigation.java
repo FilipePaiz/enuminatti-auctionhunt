@@ -1,10 +1,9 @@
-package org.academiadecodigo.enuminatti.auctionhunt;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.academiadecodigo.enuminatti.auctionhunt.controller.Controller;
 
 import java.io.IOException;
 import java.util.HashMap;

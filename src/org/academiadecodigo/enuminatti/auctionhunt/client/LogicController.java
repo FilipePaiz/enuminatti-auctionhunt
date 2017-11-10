@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.controller;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,12 +8,10 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.academiadecodigo.enuminatti.auctionhunt.Navigation;
-import org.academiadecodigo.enuminatti.auctionhunt.model.Client;
-import org.academiadecodigo.enuminatti.auctionhunt.model.Server;
-import org.academiadecodigo.enuminatti.auctionhunt.model.User;
-import org.academiadecodigo.enuminatti.auctionhunt.service.ServiceRegistry;
-import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
+import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.server.User;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
+import org.academiadecodigo.enuminatti.auctionhunt.server.UserService;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
 import java.io.IOException;
@@ -21,7 +19,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogicController implements Initializable, Controller {
+public class LogicController implements Initializable {
 
     private UserService userService;
 
@@ -148,6 +146,8 @@ public class LogicController implements Initializable, Controller {
     public void initialize(URL location, ResourceBundle resources) {
 
         userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
+
+        System.out.println("-----------" + userService + "---------------");
 
         Socket clientSocket = null;
 

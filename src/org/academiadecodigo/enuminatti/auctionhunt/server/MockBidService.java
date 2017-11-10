@@ -1,11 +1,7 @@
-package org.academiadecodigo.enuminatti.auctionhunt.service;
-
-import org.academiadecodigo.enuminatti.auctionhunt.auxiliary.Item;
-import org.academiadecodigo.enuminatti.auctionhunt.model.User;
+package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by codecadet on 09/11/2017.

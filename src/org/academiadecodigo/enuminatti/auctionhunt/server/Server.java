@@ -1,10 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.model;
-
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -31,6 +25,13 @@ public class Server {
 
     public static void main(String[] args) {
 
+
+        UserService userService = new MockUserService();
+        BidService bidService = new MockBidService();
+
+        ServiceRegistry.getInstance().addService("UserService", userService);
+        ServiceRegistry.getInstance().addService("BidService", bidService);
+
         Server server = new Server();
 
         try {
@@ -51,6 +52,7 @@ public class Server {
         ServerThread serverThread;
 
         while(true){
+
             try {
 
                 Socket clientSocket = serverSocket.accept();

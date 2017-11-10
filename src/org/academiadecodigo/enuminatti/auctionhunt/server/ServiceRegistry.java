@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.service;
+package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import java.util.HashMap;
 import java.util.Map;

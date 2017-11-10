@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.service;
+package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 /**
  * Created by codecadet on 09/11/2017.

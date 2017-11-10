@@ -1,15 +1,7 @@
-package org.academiadecodigo.enuminatti.auctionhunt.model;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.application.Application;
-
-
-
 import javafx.stage.Stage;
-
-import org.academiadecodigo.enuminatti.auctionhunt.service.MockUserService;
-import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
-import org.academiadecodigo.enuminatti.auctionhunt.Navigation;
-import org.academiadecodigo.enuminatti.auctionhunt.service.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -19,14 +11,12 @@ import java.net.Socket;
  */
 public class Client extends Application {
 
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
+
     @Override
-    public void init() {
+    public void init() throws Exception {
 
-        UserService userService = new MockUserService();
-        BidService bidService = new MockBidService();
-
-        ServiceRegistry.getInstance().addService("UserService", userService);
-        ServiceRegistry.getInstance().addService("BidService", bidService);
     }
 
     @Override
@@ -36,10 +26,6 @@ public class Client extends Application {
         Navigation.getInstance().loadScreen("login&register");
 
        /* Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
-
-        if(root == null){
-            System.out.println("------------- O MEU ROOT É NULO LOL");
-        }
 
         primaryStage.setTitle("AuctionHunt");
         primaryStage.setScene(new Scene(root));
@@ -58,8 +44,8 @@ public class Client extends Application {
 
         try {
 
-            DataOutputStream dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            DataInputStream dataInputStream = new DataInputStream(new FileInputStream("resources/hatchlings_0.jpg"));
+            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+            dataInputStream = new DataInputStream(new FileInputStream("resources/hatchlings_0.jpg"));
             int bytesReaden = dataInputStream.read(bytes);
 
             while (bytesReaden != -1){

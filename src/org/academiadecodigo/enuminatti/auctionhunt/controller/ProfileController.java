@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public class ProfileController {
+public class ProfileController implements Controller {
 
     @FXML
     private Label Photo;

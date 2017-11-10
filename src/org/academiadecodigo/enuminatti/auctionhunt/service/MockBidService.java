@@ -15,9 +15,9 @@ public class MockBidService implements BidService {
     private HashMap<Integer, Item> items;
     private int itemAddedtoAuction;
 
-    public MockBidService(HashMap<Integer, Item> items) {
+    public MockBidService() {
 
-        this.items = items;
+        this.items = new HashMap<>();
     }
 
     @Override

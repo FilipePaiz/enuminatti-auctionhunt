@@ -60,9 +60,10 @@ public class Server {
                 }
 
                 serverThread = new ServerThread(clientSocket);
-                serverThread.run();
 
                 clientList.add(serverThread);
+
+                executorService.submit(serverThread);
 
                 //  broadcast();
 
@@ -102,6 +103,8 @@ public class Server {
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                closeFiles();
             }
 
         }

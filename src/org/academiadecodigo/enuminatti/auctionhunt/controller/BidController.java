@@ -8,8 +8,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.academiadecodigo.enuminatti.auctionhunt.Navigation;
 import org.academiadecodigo.enuminatti.auctionhunt.auxiliary.Item;
 import org.academiadecodigo.enuminatti.auctionhunt.service.BidService;
+import org.academiadecodigo.enuminatti.auctionhunt.service.ServiceRegistry;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Created by codecadet on 08/11/2017.
  */
-public class BidController {
+public class BidController implements Controller{
 
     private BidService bidService;
     private int itemOnShow;
@@ -85,11 +87,13 @@ public class BidController {
     @FXML
     void onHomeButtonAction(ActionEvent event) {
         //Awaiting for connection between views
+        Navigation.getInstance().back();
     }
 
     @FXML
     void initialize() {
         //setText() with values given by item
+        bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
         showItem(bidService.getItems().get(itemOnShow));
     }
 

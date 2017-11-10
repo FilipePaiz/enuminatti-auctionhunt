@@ -14,7 +14,6 @@ public class Main extends Application {
 
     private UserService userService;
 
-
     @Override
     public void init() throws Exception {
 

@@ -133,5 +133,3 @@ public final class ParseClient implements Runnable {
         }
     }
 }
-
-

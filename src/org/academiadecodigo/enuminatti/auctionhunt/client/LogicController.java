@@ -103,8 +103,6 @@ public class LogicController implements Initializable {
         String string = ParseClient.getInstance().readData();
 
         if (ParseClient.getInstance().decodeServerMessage(string)) {
-            User user = new User("José", "Badjoraz", "nhanha", 100);
-            ParseClient.getInstance().setUser(user);
             succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
 
@@ -116,10 +114,6 @@ public class LogicController implements Initializable {
 
     @FXML
     void onRegister(ActionEvent event) {
-
-        System.out.println(usernameField.getText());
-        System.out.println(passwordfield.getText());
-        System.out.println(emailfield.getText());
 
         if (usernameField.getText().isEmpty()) {
             couldNotRegister.setVisible(true);

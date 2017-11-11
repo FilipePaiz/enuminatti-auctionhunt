@@ -1,6 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
+import org.academiadecodigo.enuminatti.auctionhunt.server.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,6 +12,8 @@ public final class ParseClient implements Runnable {
 
     private Socket clientSocket = null;
     private static ParseClient instance;
+
+    private User user;
 
     private ParseClient() {
     }
@@ -39,6 +41,7 @@ public final class ParseClient implements Runnable {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             line = in.readLine();
+            System.out.println(line);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,21 +95,26 @@ public final class ParseClient implements Runnable {
 
     public String receiveDataServer(String data) {
 
-        System.out.println(data + " data receive");
         String[] dataSplitted = data.split("/");
 
-        System.out.println(dataSplitted[1]);
-        System.out.println("FODA-SE");
         switch (dataSplitted[1]) {
             case "login":
                 return dataSplitted[2];
             case "regist":
                 return dataSplitted[2];
             default:
-                System.out.println("Deu merda no parseClient receiveData");
+                System.out.println("Deu merda no parseClient receiveData by Aires CENAS");
 
         }
         return null;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public enum ProtocolMessage {
@@ -124,8 +132,4 @@ public final class ParseClient implements Runnable {
             return message;
         }
     }
-
-
 }
-
-

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
 
 public class ProfileController {
 
@@ -71,11 +72,24 @@ public class ProfileController {
 
     @FXML
     void onGoToAuctionButtonPressed(ActionEvent event) {
+        String dataHead = HandleClient.getInstance().setDataServer("item", GoToAuctionButton.getText());
+        HandleClient.getInstance().sendData(dataHead);
+        String receiveHead = HandleClient.getInstance().readData();
+        String decodeMessage = HandleClient.getInstance().receiveDataServer(receiveHead);
+
+        if(decodeMessage.equals("item")){
+
+            Navigation.getInstance().loadScreen("bidAuction");
+            return;
+        }
+
+        System.out.println("Something wrong happen");
 
     }
 
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
+        Navigation.getInstance().back();
 
     }
 

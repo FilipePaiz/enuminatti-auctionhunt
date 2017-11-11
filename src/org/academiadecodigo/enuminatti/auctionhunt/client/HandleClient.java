@@ -1,7 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -95,7 +93,7 @@ public final class HandleClient implements Runnable {
             case "regist":
                 return dataSplitted[2];
             default:
-                System.out.println("Deu merda no parseClient receiveData");
+                System.out.println("Deu merda no parseClient receiveData by Aires");
 
         }
         return null;

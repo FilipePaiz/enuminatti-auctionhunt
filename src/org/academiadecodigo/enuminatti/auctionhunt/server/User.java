@@ -8,6 +8,14 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private int money;
+
+    public User(String username, String email, String password, int money) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.money = money;
+    }
 
     public String getUsername() {
         return username;
@@ -34,10 +42,12 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     @Override

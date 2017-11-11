@@ -2,9 +2,7 @@ package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import org.academiadecodigo.enuminatti.auctionhunt.client.ParseClient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -48,7 +46,66 @@ public final class ParseServer implements Runnable {
 
     private void validateData(String line) {
 
-        
+
+        if (line.startsWith("/regist/")) {
+            registerDecodificate(line);
+            return;
+        }
+        if (line.startsWith("/login/")) {
+            loginDecodificate(line);
+        }
+    }
+
+
+    private void loginDecodificate(String line) {
+
+        line = line.replace("/login/", "");
+        String[] words = line.split("#");
+
+        UserService userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
+        try {
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+
+            if (userService.authenticate(words[0], words[1])) {
+                out.write("login done");
+                out.flush();
+                return;
+            }
+
+            out.write("login not done");
+            out.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    private void registerDecodificate(String line) {
+
+        line = line.replace("/regist/", "");
+        String[] words = line.split("#");
+
+        UserService userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
+
+        try {
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+
+            if (userService.findByName(words[0]) != null) {
+                out.write("login done");
+                out.flush();
+                return;
+            }
+
+            out.write("login not done");
+            out.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

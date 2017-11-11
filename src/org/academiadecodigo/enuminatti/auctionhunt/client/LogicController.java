@@ -73,7 +73,7 @@ public class LogicController implements Initializable {
 
     @FXML
     void changeToLogin(ActionEvent event) {
-        showLogin();
+       showLogin();
     }
 
     @FXML
@@ -94,6 +94,7 @@ public class LogicController implements Initializable {
             return;
         }
 
+
         String data = usernameField.getText() + " " + passwordfield.getText() + " " + succesfullLog.getText();
 
         System.out.println(logInButton.getText());
@@ -103,6 +104,7 @@ public class LogicController implements Initializable {
         String string = ParseClient.getInstance().readData();
 
         if (ParseClient.getInstance().decodeServerMessage(string)) {
+
             succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
 
@@ -114,6 +116,10 @@ public class LogicController implements Initializable {
 
     @FXML
     void onRegister(ActionEvent event) {
+
+        System.out.println(usernameField.getText());
+        System.out.println(passwordfield.getText());
+        System.out.println(emailfield.getText());
 
         if (usernameField.getText().isEmpty()) {
             couldNotRegister.setVisible(true);
@@ -139,8 +145,6 @@ public class LogicController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //   userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
-
         Socket clientSocket = null;
 
         try {
@@ -155,7 +159,6 @@ public class LogicController implements Initializable {
         showLogin();
 
     }
-
 
     private void showLogin() {
         if (couldNotRegister.isVisible()) {

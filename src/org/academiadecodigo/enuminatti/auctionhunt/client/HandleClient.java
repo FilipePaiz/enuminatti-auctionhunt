@@ -34,12 +34,12 @@ public final class HandleClient implements Runnable {
 
 
     public String readData() {
-
         String line = null;
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             line = in.readLine();
+            System.out.println(line);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,13 +84,16 @@ public final class HandleClient implements Runnable {
 
     public String receiveDataServer(String data) {
 
+        System.out.println(data + " data receive");
         String[] dataSplitted = data.split("/");
 
-        switch (dataSplitted[0]) {
+        System.out.println(dataSplitted[1]);
+        System.out.println("FODA-SE");
+        switch (dataSplitted[1]) {
             case "login":
-                return dataSplitted[1];
+                return dataSplitted[2];
             case "regist":
-                return dataSplitted[1];
+                return dataSplitted[2];
             default:
                 System.out.println("Deu merda no parseClient receiveData");
 

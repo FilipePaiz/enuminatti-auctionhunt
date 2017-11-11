@@ -106,7 +106,18 @@ public class LogicController implements Initializable {
         System.out.println(logInButton.getText());
         String dataAndHead = HandleClient.getInstance().setDataServer(data, logInButton.getText());
         HandleClient.getInstance().sendData(dataAndHead);
-        
+
+        String receiveData = HandleClient.getInstance().readData();
+        System.out.println(receiveData);
+        String messageDecoded = HandleClient.getInstance().receiveDataServer(receiveData);
+        System.out.println(messageDecoded);
+
+
+        if(messageDecoded.equals("done")){
+            Navigation.getInstance().loadScreen("Profile");
+            return;
+        }
+        couldNotLogIn.setVisible(true);
     }
 
     @FXML

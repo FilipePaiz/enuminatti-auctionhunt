@@ -101,8 +101,12 @@ public class Server {
                 System.out.println("aqui ta");
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 //dataInputStream = new DataInputStream(clientSocket.getInputStream());
-                dataOutputStream = new DataOutputStream(new FileOutputStream("resources/badjoraz.jpg"));
                 System.out.println(in.readLine());
+                PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+                out.println(" /login/done");
+                out.flush();
+               // dataOutputStream = new DataOutputStream(new FileOutputStream("resources/badjoraz.jpg"));
+                //System.out.println(in.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

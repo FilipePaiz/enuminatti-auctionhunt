@@ -64,11 +64,10 @@ public final class ParseServer implements Runnable {
 
         UserService userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
         try {
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
             if (userService.authenticate(words[0], words[1])) {
                 out.write("login done");
-                out.flush();
                 return;
             }
 
@@ -91,11 +90,10 @@ public final class ParseServer implements Runnable {
         UserService userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
 
         try {
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
             if (userService.findByName(words[0]) != null) {
                 out.write("login done");
-                out.flush();
                 return;
             }
 

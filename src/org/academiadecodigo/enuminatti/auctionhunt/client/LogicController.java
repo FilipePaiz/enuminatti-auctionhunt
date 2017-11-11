@@ -14,7 +14,7 @@ import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.server.UserService;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +22,14 @@ import java.util.ResourceBundle;
 public class LogicController implements Initializable {
 
     private UserService userService;
+
+    private Socket clientSocket;
+
+    private ParseClient parseClient;
+
+    private BufferedReader bufferedReader;
+
+    private BufferedWriter bufferedWriter;
 
     @FXML
     private Button logOutButton;
@@ -71,6 +79,31 @@ public class LogicController implements Initializable {
     @FXML
     private TextField emailfield;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+       // userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
+
+        System.out.println("-----------" + userService + "---------------");
+
+        try {
+
+            clientSocket = new Socket(Server.HOST,Server.PORT);
+            bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            parseClient = new ParseClient(clientSocket, bufferedReader, bufferedWriter);
+
+          //  Client client = new Client();
+          //  client.sendImage(clientSocket);
+
+            showLogin();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @FXML
     void changeToLogin(ActionEvent event) {
        showLogin();
@@ -96,12 +129,31 @@ public class LogicController implements Initializable {
             return;
         }
 
-        if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
+        parseClient.createLogInMessage(usernameField.getText(), passwordfield.getText());
+
+        try {
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            String line = bufferedReader.readLine();
+
+            if(!parseClient.receiveMessage(line)){
+                couldNotLogIn.setVisible(true);
+                return;
+            }
+
+            succesfullLog.setVisible(true);
+            Navigation.getInstance().loadScreen("Profile");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*  if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
             succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
         } else {
             couldNotLogIn.setVisible(true);
-        }
+        } */
 
     }
 
@@ -127,6 +179,26 @@ public class LogicController implements Initializable {
             return;
         }
 
+        parseClient.createRegisterMessage(usernameField.getText(), emailfield.getText(), passwordfield.getText());
+
+        try {
+
+            String line = bufferedReader.readLine();
+
+            if(!parseClient.receiveMessage(line)){
+                couldNotRegister.setVisible(true);
+                return;
+            }
+
+            System.out.println("bem-vindo");
+            succesfullRegister.setVisible(true);
+            showLogin();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*
         if (userService.findByName(usernameField.getText()) != null) {
             couldNotRegister.setVisible(true);
             return;
@@ -134,34 +206,7 @@ public class LogicController implements Initializable {
 
         System.out.println(userService.count());
         userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
-
-        System.out.println("bem-vindo");
-        succesfullRegister.setVisible(true);
-        showLogin();
-
-    }
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
-
-        System.out.println("-----------" + userService + "---------------");
-
-        Socket clientSocket = null;
-
-        try {
-
-            clientSocket = new Socket(Server.HOST,Server.PORT);
-            Client client = new Client();
-            client.sendImage(clientSocket);
-
-            showLogin();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+*/
 
     }
 

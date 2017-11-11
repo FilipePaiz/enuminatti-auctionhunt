@@ -38,6 +38,8 @@ public class Client extends Application {
         Application.launch(args);
     }
 
+
+/*
     public void sendImage(Socket clientSocket) {
 
         byte[] bytes = new byte[1024];
@@ -60,5 +62,5 @@ public class Client extends Application {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }

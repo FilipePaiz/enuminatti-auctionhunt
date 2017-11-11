@@ -17,7 +17,7 @@ public class Server {
     public static final String HOST = "localhost";
     public static final String PATH = "resources/";
 
-    public Server(){
+    public Server() {
 
         clientList = new LinkedList<>();
 
@@ -51,13 +51,13 @@ public class Server {
         ExecutorService executorService = Executors.newCachedThreadPool();
         ServerThread serverThread;
 
-        while(true){
+        while (true) {
 
             try {
 
                 Socket clientSocket = serverSocket.accept();
 
-                if(clientSocket.isConnected()){
+                if (clientSocket.isConnected()) {
                     System.out.println("Connection established");
                 }
 
@@ -69,7 +69,7 @@ public class Server {
 
                 //  broadcast();
 
-            } catch (IOException e){
+            } catch (IOException e) {
                 executorService.shutdown();
                 e.printStackTrace();
             }
@@ -78,16 +78,26 @@ public class Server {
 
     }
 
-    private class ServerThread implements Runnable{
+    private class ServerThread implements Runnable {
 
         private Socket clientSocket;
-        private DataOutputStream dataOutputStream;
-        private DataInputStream dataInputStream;
+        private BufferedReader bufferedReader;
+        private BufferedWriter bufferedWriter;
+        private ParseServer parseServer;
 
         public ServerThread(Socket clientSocket) {
 
             this.clientSocket = clientSocket;
 
+            try {
+
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+                bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                parseServer = new ParseServer(clientSocket, bufferedWriter, bufferedReader);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         /**
@@ -97,30 +107,24 @@ public class Server {
         @Override
         public void run() {
 
-            try {
-                System.out.println("aqui ta");
-                dataInputStream = new DataInputStream(clientSocket.getInputStream());
-                dataOutputStream = new DataOutputStream(new FileOutputStream("resources/badjoraz.jpg"));
-                copyFile();
+            System.out.println("aqui ta");
+            while (true) {
+                parseServer.decodeMessage();
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                closeFiles();
             }
-
         }
+/*
+        private void decodeMessage() {
 
-        private void copyFile() {
-
-            byte[] bytes = new byte[1024];
+          //  byte[] bytes = new byte[1024];
 
             try {
-                int bytesReaden = dataInputStream.read(bytes);
+               // int bytesReaden = bufferedReader.read();
 
                 while (bytesReaden != -1){
-                    dataOutputStream.write(bytes, 0, bytesReaden);
-                    bytesReaden = dataInputStream.read(bytes);
+                   // dataOutputStream.write(bytes, 0, bytesReaden);
+
+                    bytesReaden = bufferedReader.read();
                 }
 
             } catch (IOException e){
@@ -131,18 +135,7 @@ public class Server {
             }
 
         }
-
-
-        private void closeFiles() {
-
-            try {
-                dataOutputStream.close();
-                dataInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
+*/
 
 
     }

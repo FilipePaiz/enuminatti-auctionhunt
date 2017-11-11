@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: DODGERBLUE;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.enuminatti.auctionhunt.client.controller.BidController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: DODGERBLUE;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.academiadecodigo.enuminatti.auctionhunt.client.BidController">
    <children>
       <Button fx:id="bidButton" layoutX="507.0" layoutY="338.0" mnemonicParsing="false" onAction="#onBidButtonAction" text="Bid" />
       <TextField fx:id="clientBid" layoutX="478.0" layoutY="302.0" prefHeight="27.0" prefWidth="67.0" />

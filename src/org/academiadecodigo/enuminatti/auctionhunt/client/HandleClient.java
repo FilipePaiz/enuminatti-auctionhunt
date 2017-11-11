@@ -97,7 +97,7 @@ public final class HandleClient implements Runnable {
             case "regist":
                 return dataSplitted[2];
             default:
-                System.out.println("Deu merda no parseClient receiveData by Aires");
+                System.out.println("Deu merda no parseClient receiveData by Aires CENAS");
 
         }
         return null;

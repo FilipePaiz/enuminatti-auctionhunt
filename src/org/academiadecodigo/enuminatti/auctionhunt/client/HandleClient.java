@@ -13,6 +13,7 @@ public final class HandleClient implements Runnable {
     private Socket clientSocket = null;
     private static HandleClient instance;
 
+
     private HandleClient() {
     }
 
@@ -80,6 +81,40 @@ public final class HandleClient implements Runnable {
         }
         return null;
     }
+
+    public String receiveDataServer(String data) {
+
+        String[] dataSplitted = data.split("/");
+
+        switch (dataSplitted[0]) {
+            case "login":
+                return dataSplitted[1];
+            case "regist":
+                return dataSplitted[1];
+            default:
+                System.out.println("Deu merda no parseClient receiveData");
+
+        }
+        return null;
+    }
+
+    public enum ProtocolMessage {
+        LOGIN("login"),
+        REGISTER("register");
+
+        private String message;
+
+        ProtocolMessage(String message) {
+            this.message = message;
+        }
+
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+
 }
 
 

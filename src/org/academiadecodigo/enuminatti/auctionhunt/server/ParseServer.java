@@ -1,6 +1,7 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import org.academiadecodigo.enuminatti.auctionhunt.client.ParseClient;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
 import java.io.*;
 import java.net.Socket;
@@ -8,7 +9,7 @@ import java.net.Socket;
 /**
  * Created by codecadet on 10/11/17.
  */
-public final class ParseServer implements Runnable {
+public final class ParseServer {
 
     private Socket clientSocket = null;
     private static ParseServer instance;
@@ -78,7 +79,6 @@ public final class ParseServer implements Runnable {
             e.printStackTrace();
         }
 
-
     }
 
 
@@ -94,7 +94,7 @@ public final class ParseServer implements Runnable {
 
 
             if (userService.findByName(words[0]) == null) {
-                userService.addUser(new User(words[0], words[1], words[2]));
+                userService.addUser(new User(words[0], words[1], Security.getHash(words[2])));
                 System.out.println(userService.count());
                 out.println("register done");
                 return;
@@ -115,13 +115,4 @@ public final class ParseServer implements Runnable {
         this.clientSocket = clientSocket;
     }
 
-    @Override
-    public void run() {
-
-        while (true) {
-
-            readData();
-        }
-
-    }
 }

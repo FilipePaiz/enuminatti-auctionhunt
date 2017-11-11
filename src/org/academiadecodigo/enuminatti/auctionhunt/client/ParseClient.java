@@ -29,10 +29,18 @@ public final class ParseClient implements Runnable {
         return instance;
     }
 
+
     public void setClientSocket(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
+
+    @Override
+    public void run() {
+        while (true) {
+            readData();
+        }
+    }
 
     public String readData() {
 
@@ -61,12 +69,6 @@ public final class ParseClient implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            readData();
-        }
-    }
 
     public String setDataServer(String data, String buttonId) {
 

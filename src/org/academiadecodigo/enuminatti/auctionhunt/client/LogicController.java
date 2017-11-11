@@ -99,10 +99,10 @@ public class LogicController implements Initializable {
         String message = ParseClient.getInstance().readData();
 
         if (ParseClient.getInstance().decodeServerMessage(message)) {
-            String userData = ParseClient.getInstance().receiveDataServer(message);
+         /*   String userData = ParseClient.getInstance().receiveDataServer(message);
             String [] userDataSplitter = userData.split("#");
             ParseClient.getInstance().getUserClient().setUserName(userDataSplitter[0]);
-            ParseClient.getInstance().getUserClient().setFunds(userDataSplitter[1]);
+            ParseClient.getInstance().getUserClient().setFunds(userDataSplitter[1]);  */
             succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
 

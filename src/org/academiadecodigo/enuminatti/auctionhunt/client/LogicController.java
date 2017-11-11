@@ -3,6 +3,7 @@ package org.academiadecodigo.enuminatti.auctionhunt.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -20,8 +21,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LogicController implements Initializable {
-
-    private UserService userService;
 
     @FXML
     private Button logOutButton;
@@ -101,10 +100,13 @@ public class LogicController implements Initializable {
         String dataAndHead = ParseClient.getInstance().setDataServer(data, logInButton.getText());
         ParseClient.getInstance().sendData(dataAndHead);
 
-        String string = ParseClient.getInstance().readData();
+        String message = ParseClient.getInstance().readData();
 
-        if (ParseClient.getInstance().decodeServerMessage(string)) {
-
+        if (ParseClient.getInstance().decodeServerMessage(message)) {
+            String userData = ParseClient.getInstance().receiveDataServer(message);
+            String [] userDataSplitter = userData.split("#");
+            ParseClient.getInstance().getUserClient().setUserName(userDataSplitter[0]);
+            ParseClient.getInstance().getUserClient().setFunds(userDataSplitter[1]);
             succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
 

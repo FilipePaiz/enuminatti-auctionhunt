@@ -2,6 +2,7 @@ package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -9,7 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
 
-public class ProfileController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ProfileController implements Initializable {
 
     @FXML
     private Label Photo;
@@ -113,5 +117,11 @@ public class ProfileController {
 
     }
 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Money.setText(ParseClient.getInstance().getUserClient().getFunds());
+        NumberOfItems.setText(ParseClient.getInstance().getUserClient().getUserName());
+    }
 }
 

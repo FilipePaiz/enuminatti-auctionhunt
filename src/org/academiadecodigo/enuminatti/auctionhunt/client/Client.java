@@ -16,11 +16,13 @@ public class Client extends Application {
 
     @Override
     public void init() throws Exception {
-
+        UserClient userClient = new UserClient();
+        ParseClient.getInstance().setUserClient(userClient);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
 
         Navigation.getInstance().setStage(primaryStage);
         Navigation.getInstance().loadScreen("login&register");

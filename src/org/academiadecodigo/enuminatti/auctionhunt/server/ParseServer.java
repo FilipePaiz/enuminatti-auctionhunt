@@ -67,12 +67,12 @@ public final class ParseServer implements Runnable {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
-            if (userService.authenticate(words[0], words[1])) {
+            /*if (userService.authenticate(words[0], words[1])) {
                 out.println("login done");
                 return;
-            }
+            }*/
 
-            out.println("login not done");
+            out.println("/login/flavio#1000");
 
         } catch (IOException e) {
             e.printStackTrace();

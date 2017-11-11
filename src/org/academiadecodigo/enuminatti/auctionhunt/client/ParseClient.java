@@ -13,7 +13,7 @@ public final class ParseClient implements Runnable {
     private Socket clientSocket = null;
     private static ParseClient instance;
 
-    private User user;
+    private UserClient userClient;
 
     private ParseClient() {
     }
@@ -93,6 +93,8 @@ public final class ParseClient implements Runnable {
     }
 
 
+
+
     public String receiveDataServer(String data) {
 
         String[] dataSplitted = data.split("/");
@@ -109,17 +111,10 @@ public final class ParseClient implements Runnable {
         return null;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public enum ProtocolMessage {
         LOGIN("login"),
         REGISTER("register");
+
 
         private String message;
 
@@ -127,9 +122,17 @@ public final class ParseClient implements Runnable {
             this.message = message;
         }
 
-
         public String getMessage() {
             return message;
         }
+
+
+    }
+    public UserClient getUserClient(){
+        return userClient;
+    }
+
+    public void setUserClient(UserClient userClient) {
+        this.userClient = userClient;
     }
 }

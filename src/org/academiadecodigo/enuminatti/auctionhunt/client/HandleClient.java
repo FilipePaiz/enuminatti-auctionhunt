@@ -86,11 +86,8 @@ public final class HandleClient implements Runnable {
 
     public String receiveDataServer(String data) {
 
-        System.out.println(data + " data receive");
         String[] dataSplitted = data.split("/");
-
-        System.out.println(dataSplitted[1]);
-        System.out.println("FODA-SE");
+        
         switch (dataSplitted[1]) {
             case "login":
                 return dataSplitted[2];

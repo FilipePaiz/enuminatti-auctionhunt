@@ -17,7 +17,7 @@ public class Server {
     public static final String HOST = "localhost";
     public static final String PATH = "resources/";
 
-    public Server(){
+    public Server() {
 
         clientList = new LinkedList<>();
 
@@ -51,13 +51,13 @@ public class Server {
         ExecutorService executorService = Executors.newCachedThreadPool();
         ServerThread serverThread;
 
-        while(true){
+        while (true) {
 
             try {
 
                 Socket clientSocket = serverSocket.accept();
 
-                if(clientSocket.isConnected()){
+                if (clientSocket.isConnected()) {
                     System.out.println("Connection established");
                 }
 
@@ -69,7 +69,7 @@ public class Server {
 
                 //  broadcast();
 
-            } catch (IOException e){
+            } catch (IOException e) {
                 executorService.shutdown();
                 e.printStackTrace();
             }
@@ -78,7 +78,7 @@ public class Server {
 
     }
 
-    private class ServerThread implements Runnable{
+    private class ServerThread implements Runnable {
 
         private Socket clientSocket;
         private DataOutputStream dataOutputStream;
@@ -88,6 +88,7 @@ public class Server {
 
             this.clientSocket = clientSocket;
 
+            ParseServer.getInstance().setClientSocket(clientSocket);
         }
 
         /**
@@ -97,21 +98,15 @@ public class Server {
         @Override
         public void run() {
 
-            try {
-                System.out.println("aqui ta");
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                //dataInputStream = new DataInputStream(clientSocket.getInputStream());
-                dataOutputStream = new DataOutputStream(new FileOutputStream("resources/badjoraz.jpg"));
-                System.out.println(in.readLine());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                closeFiles();
-            }
+            while (true) {
+                ParseServer.getInstance().readData();
 
+            }
         }
 
-        private void copyFile() {
+
+
+       /* private void copyFile() {
 
             byte[] bytes = new byte[1024];
 
@@ -130,7 +125,7 @@ public class Server {
                 closeFiles();
             }
 
-        }
+        }*/
 
 
         private void closeFiles() {

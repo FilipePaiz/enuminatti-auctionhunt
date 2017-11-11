@@ -94,13 +94,6 @@ public class LogicController implements Initializable {
             return;
         }
 
-        /*if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
-            succesfullLog.setVisible(true);
-            Navigation.getInstance().loadScreen("Profile");
-        } else {
-            couldNotLogIn.setVisible(true);
-        }*/
-
         String data = usernameField.getText() + " " + passwordfield.getText() + " " + succesfullLog.getText();
 
         System.out.println(logInButton.getText());
@@ -109,7 +102,7 @@ public class LogicController implements Initializable {
 
         String string = ParseClient.getInstance().readData();
 
-        if (!ParseClient.getInstance().decodeServerMessage(string)) {
+        if (ParseClient.getInstance().decodeServerMessage(string)) {
             User user = new User("José", "Badjoraz", "nhanha", 100);
             ParseClient.getInstance().setUser(user);
             succesfullLog.setVisible(true);
@@ -143,14 +136,6 @@ public class LogicController implements Initializable {
             return;
         }
 
-       /* if (userService.findByName(usernameField.getText()) != null) {
-            couldNotRegister.setVisible(true);
-            return;
-        }*/
-
-        // System.out.println(userService.count());
-        //userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
-
         succesfullRegister.setVisible(true);
         showLogin();
 
@@ -161,8 +146,6 @@ public class LogicController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //   userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
-
-        System.out.println("-----------" + userService + "---------------");
 
         Socket clientSocket = null;
 

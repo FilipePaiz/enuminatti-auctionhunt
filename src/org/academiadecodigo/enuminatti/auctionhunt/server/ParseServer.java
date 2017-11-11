@@ -12,6 +12,7 @@ public final class ParseServer implements Runnable {
 
     private Socket clientSocket = null;
     private static ParseServer instance;
+    private int count;
 
     private ParseServer() {
     }
@@ -45,7 +46,6 @@ public final class ParseServer implements Runnable {
     }
 
     private void validateData(String line) {
-
 
         if (line.startsWith("/regist/")) {
             registerDecodificate(line);
@@ -92,9 +92,13 @@ public final class ParseServer implements Runnable {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
-            if (userService.findByName(words[0]) != null) {
+
+            if (userService.findByName(words[0]) == null) {
+                userService.addUser(new User(words[0], words[1], words[2]));
+                System.out.println(userService.count());
                 out.println("register done");
                 return;
+
             }
 
             out.println("register not done");

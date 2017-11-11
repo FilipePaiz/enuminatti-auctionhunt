@@ -9,10 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
-import org.academiadecodigo.enuminatti.auctionhunt.server.User;
-import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.server.UserService;
-import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -27,7 +24,7 @@ public class LogicController implements Initializable {
     private Button logOutButton;
 
     @FXML
-    private PasswordField passwordfield;
+    private PasswordField passwordField;
 
     @FXML
     private TextField usernameField;
@@ -69,7 +66,7 @@ public class LogicController implements Initializable {
     private Text couldNotRegister;
 
     @FXML
-    private TextField emailfield;
+    private TextField emailField;
 
     @FXML
     void changeToLogin(ActionEvent event) {
@@ -89,19 +86,12 @@ public class LogicController implements Initializable {
             return;
         }
 
-        if (passwordfield.getText().isEmpty()) {
+        if (passwordField.getText().isEmpty()) {
             couldNotLogIn.setVisible(true);
             return;
         }
 
-        /*if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
-            succesfullLog.setVisible(true);
-            Navigation.getInstance().loadScreen("Profile");
-        } else {
-            couldNotLogIn.setVisible(true);
-        }*/
-
-        String data = usernameField.getText() + " " + passwordfield.getText() + " " + succesfullLog.getText();
+        String data = usernameField.getText() + " " + passwordField.getText();
 
         System.out.println(logInButton.getText());
         String dataAndHead = ParseClient.getInstance().setDataServer(data, logInButton.getText());
@@ -124,35 +114,42 @@ public class LogicController implements Initializable {
     void onRegister(ActionEvent event) {
 
         System.out.println(usernameField.getText());
-        System.out.println(passwordfield.getText());
-        System.out.println(emailfield.getText());
+        System.out.println(passwordField.getText());
+        System.out.println(emailField.getText());
 
         if (usernameField.getText().isEmpty()) {
             couldNotRegister.setVisible(true);
             return;
         }
 
-        if (passwordfield.getText().isEmpty()) {
+        if (passwordField.getText().isEmpty()) {
             couldNotRegister.setVisible(true);
             return;
         }
 
-        if (emailfield.getText().isEmpty()) {
+        if (emailField.getText().isEmpty()) {
             couldNotRegister.setVisible(true);
             return;
         }
 
-       /* if (userService.findByName(usernameField.getText()) != null) {
-            couldNotRegister.setVisible(true);
+        String registerData = usernameField.getText() + " " + emailField.getText() + " " + passwordField.getText();
+        System.out.println(logInButton.getText());
+
+        String register = ParseClient.getInstance().setDataServer(registerData, logOutButton.getText());
+
+        ParseClient.getInstance().sendData(register);
+
+        String readData = ParseClient.getInstance().readData();
+
+        if (ParseClient.getInstance().decodeServerMessage(readData)) {
+
+            System.out.println("bem-vindo");
+            succesfullRegister.setVisible(true);
+            showLogin();
+
             return;
-        }*/
-
-        // System.out.println(userService.count());
-        //userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
-
-        System.out.println("bem-vindo");
-        succesfullRegister.setVisible(true);
-        showLogin();
+        }
+        couldNotRegister.setVisible(true);
 
     }
 
@@ -160,9 +157,6 @@ public class LogicController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //   userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
-
-        System.out.println("-----------" + userService + "---------------");
 
         Socket clientSocket = null;
 
@@ -184,7 +178,7 @@ public class LogicController implements Initializable {
             couldNotRegister.setVisible(false);
         }
         succesfullRegister.setVisible(false);
-        emailfield.setVisible(false);
+        emailField.setVisible(false);
         emailText.setVisible(false);
         logOutButton.setVisible(false);
         alreadyHaveAccount.setVisible(false);
@@ -198,7 +192,7 @@ public class LogicController implements Initializable {
             couldNotLogIn.setVisible(false);
         }
 
-        emailfield.setVisible(true);
+        emailField.setVisible(true);
         emailText.setVisible(true);
         logOutButton.setVisible(true);
         alreadyHaveAccount.setVisible(true);

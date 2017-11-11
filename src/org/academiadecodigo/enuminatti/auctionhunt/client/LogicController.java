@@ -84,8 +84,6 @@ public class LogicController implements Initializable {
     @FXML
     void onLogin(ActionEvent event) {
 
-        System.out.println("cenas");
-
         if (usernameField.getText().isEmpty()) {
             couldNotLogIn.setVisible(true);
             return;
@@ -96,12 +94,18 @@ public class LogicController implements Initializable {
             return;
         }
 
-        if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
+        /*if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
             succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
         } else {
             couldNotLogIn.setVisible(true);
-        }
+        }*/
+
+        String data = usernameField.getText() + " " + passwordfield.getText() + " " + succesfullLog.getText();
+
+        System.out.println(logInButton.getText());
+        String dataAndHead = HandleClient.getInstance().setDataServer(data, logInButton.getText());
+        HandleClient.getInstance().sendData(dataAndHead);
 
     }
 
@@ -154,14 +158,13 @@ public class LogicController implements Initializable {
         try {
 
             clientSocket = new Socket(Server.HOST,Server.PORT);
-            Client client = new Client();
-            client.sendImage(clientSocket);
-
-            showLogin();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        HandleClient.getInstance().setClientSocket(clientSocket);
+        showLogin();
 
     }
 

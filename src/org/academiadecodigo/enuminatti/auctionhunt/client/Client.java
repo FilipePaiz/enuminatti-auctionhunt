@@ -38,27 +38,4 @@ public class Client extends Application {
         Application.launch(args);
     }
 
-    public void sendImage(Socket clientSocket) {
-
-        byte[] bytes = new byte[1024];
-
-        try {
-
-            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            dataInputStream = new DataInputStream(new FileInputStream("resources/hatchlings_0.jpg"));
-            int bytesReaden = dataInputStream.read(bytes);
-
-            while (bytesReaden != -1){
-                System.out.println("uahcuhsuhca");
-                dataOutputStream.write(bytes, 0, bytesReaden);
-                dataOutputStream.flush();
-                bytesReaden = dataInputStream.read(bytes);
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

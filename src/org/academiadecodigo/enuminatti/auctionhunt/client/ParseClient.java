@@ -8,20 +8,19 @@ import java.net.Socket;
 /**
  * Created by codecadet on 10/11/17.
  */
-public final class HandleClient implements Runnable {
+public final class ParseClient implements Runnable {
 
     private Socket clientSocket = null;
-    private static HandleClient instance;
+    private static ParseClient instance;
 
-
-    private HandleClient() {
+    private ParseClient() {
     }
 
-    public static HandleClient getInstance() {
+    public static ParseClient getInstance() {
         if (instance == null) {
-            synchronized (HandleClient.class) {
+            synchronized (ParseClient.class) {
                 if (instance == null) {
-                    instance = new HandleClient();
+                    instance = new ParseClient();
                 }
             }
         }
@@ -34,12 +33,12 @@ public final class HandleClient implements Runnable {
 
 
     public String readData() {
+
         String line = null;
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             line = in.readLine();
-            System.out.println(line);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,7 +70,7 @@ public final class HandleClient implements Runnable {
         String dataToBeSend;
         String[] dataSplitted = data.split(" ");
         switch (buttonId) {
-            case "logOutButton": //it is register button, change to a proper name
+            case "Sign Up": //it is register button, change to a proper name
                 return dataToBeSend = "/regist/" + dataSplitted[0] + "#" + dataSplitted[1] + "#" + dataSplitted[2] + "\r\n";
             case "Sign In":
                 return dataToBeSend = "/login/" + dataSplitted[0] + "#" + dataSplitted[1] + "\r\n";
@@ -81,6 +80,15 @@ public final class HandleClient implements Runnable {
         }
         return null;
     }
+
+    public boolean decodeServerMessage(String string) {
+
+        if(string.equals("login not done")|| string.equals("register not done")){
+            return false;
+        }
+        return true;
+    }
+
 
     public String receiveDataServer(String data) {
 

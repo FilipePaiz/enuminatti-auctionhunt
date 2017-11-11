@@ -73,7 +73,7 @@ public class LogicController implements Initializable {
 
     @FXML
     void changeToLogin(ActionEvent event) {
-       showLogin();
+        showLogin();
     }
 
     @FXML
@@ -104,22 +104,23 @@ public class LogicController implements Initializable {
         String data = usernameField.getText() + " " + passwordfield.getText() + " " + succesfullLog.getText();
 
         System.out.println(logInButton.getText());
-        String dataAndHead = HandleClient.getInstance().setDataServer(data, logInButton.getText());
-        HandleClient.getInstance().sendData(dataAndHead);
+        String dataAndHead = ParseClient.getInstance().setDataServer(data, logInButton.getText());
+        ParseClient.getInstance().sendData(dataAndHead);
 
-        String receiveData = HandleClient.getInstance().readData();
-        System.out.println(receiveData);
-        String messageDecoded = HandleClient.getInstance().receiveDataServer(receiveData);
-        System.out.println(messageDecoded);
+        String string = ParseClient.getInstance().readData();
+
+        if (ParseClient.getInstance().decodeServerMessage(string)) {
 
 
-        if(messageDecoded.equals("done")){
             User user = new User("José", "Badjoraz", "nhanha", 100);
-            HandleClient.getInstance().setUser(user);
+            ParseClient.getInstance().setUser(user);
+            succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
+
             return;
         }
         couldNotLogIn.setVisible(true);
+
     }
 
     @FXML
@@ -144,12 +145,12 @@ public class LogicController implements Initializable {
             return;
         }
 
-        if (userService.findByName(usernameField.getText()) != null) {
+       /* if (userService.findByName(usernameField.getText()) != null) {
             couldNotRegister.setVisible(true);
             return;
-        }
+        }*/
 
-        System.out.println(userService.count());
+        // System.out.println(userService.count());
         //userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
 
         System.out.println("bem-vindo");
@@ -162,7 +163,7 @@ public class LogicController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
+        //   userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
 
         System.out.println("-----------" + userService + "---------------");
 
@@ -170,19 +171,20 @@ public class LogicController implements Initializable {
 
         try {
 
-            clientSocket = new Socket(Server.HOST,Server.PORT);
+            clientSocket = new Socket(Server.HOST, Server.PORT);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        HandleClient.getInstance().setClientSocket(clientSocket);
+        ParseClient.getInstance().setClientSocket(clientSocket);
         showLogin();
 
     }
 
+
     private void showLogin() {
-        if(couldNotRegister.isVisible()){
+        if (couldNotRegister.isVisible()) {
             couldNotRegister.setVisible(false);
         }
         succesfullRegister.setVisible(false);
@@ -196,7 +198,7 @@ public class LogicController implements Initializable {
     }
 
     private void showRegister() {
-        if(couldNotLogIn.isVisible()){
+        if (couldNotLogIn.isVisible()) {
             couldNotLogIn.setVisible(false);
         }
 

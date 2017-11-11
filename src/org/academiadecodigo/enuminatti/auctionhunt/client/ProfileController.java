@@ -72,10 +72,10 @@ public class ProfileController {
 
     @FXML
     void onGoToAuctionButtonPressed(ActionEvent event) {
-        String dataHead = HandleClient.getInstance().setDataServer("item", GoToAuctionButton.getText());
-        HandleClient.getInstance().sendData(dataHead);
-        String receiveHead = HandleClient.getInstance().readData();
-        String decodeMessage = HandleClient.getInstance().receiveDataServer(receiveHead);
+        String dataHead = ParseClient.getInstance().setDataServer("item", GoToAuctionButton.getText());
+        ParseClient.getInstance().sendData(dataHead);
+        String receiveHead = ParseClient.getInstance().readData();
+        String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
         if(decodeMessage.equals("item")){
 

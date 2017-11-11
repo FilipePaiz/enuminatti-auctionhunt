@@ -1,6 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.User;
 
 import java.io.*;
@@ -98,8 +97,6 @@ public final class ParseClient implements Runnable {
 
         String[] dataSplitted = data.split("/");
 
-        System.out.println(dataSplitted[1]);
-        System.out.println("FODA-SE");
         switch (dataSplitted[1]) {
             case "login":
                 return dataSplitted[2];

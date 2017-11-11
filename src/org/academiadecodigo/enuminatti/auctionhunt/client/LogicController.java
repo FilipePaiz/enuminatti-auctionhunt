@@ -109,9 +109,7 @@ public class LogicController implements Initializable {
 
         String string = ParseClient.getInstance().readData();
 
-        if (ParseClient.getInstance().decodeServerMessage(string)) {
-
-
+        if (!ParseClient.getInstance().decodeServerMessage(string)) {
             User user = new User("José", "Badjoraz", "nhanha", 100);
             ParseClient.getInstance().setUser(user);
             succesfullLog.setVisible(true);
@@ -153,7 +151,6 @@ public class LogicController implements Initializable {
         // System.out.println(userService.count());
         //userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
 
-        System.out.println("bem-vindo");
         succesfullRegister.setVisible(true);
         showLogin();
 

@@ -107,6 +107,8 @@ public class LogicController implements Initializable {
         String dataAndHead = HandleClient.getInstance().setDataServer(data, logInButton.getText());
         HandleClient.getInstance().sendData(dataAndHead);
 
+
+
     }
 
     @FXML

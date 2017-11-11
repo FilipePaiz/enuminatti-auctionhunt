@@ -1,5 +1,7 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import org.academiadecodigo.enuminatti.auctionhunt.server.User;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -11,9 +13,11 @@ public final class HandleClient implements Runnable {
     private Socket clientSocket = null;
     private static HandleClient instance;
 
+    private User user;
 
     private HandleClient() {
     }
+
 
     public static HandleClient getInstance() {
         if (instance == null) {
@@ -30,7 +34,6 @@ public final class HandleClient implements Runnable {
         this.clientSocket = clientSocket;
     }
 
-
     public String readData() {
         String line = null;
 
@@ -45,6 +48,7 @@ public final class HandleClient implements Runnable {
 
         return line;
     }
+
 
     public void sendData(String data) {
 
@@ -97,6 +101,14 @@ public final class HandleClient implements Runnable {
 
         }
         return null;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public enum ProtocolMessage {

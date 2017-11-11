@@ -99,10 +99,10 @@ public class Server {
 
             try {
                 System.out.println("aqui ta");
-                dataInputStream = new DataInputStream(clientSocket.getInputStream());
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                //dataInputStream = new DataInputStream(clientSocket.getInputStream());
                 dataOutputStream = new DataOutputStream(new FileOutputStream("resources/badjoraz.jpg"));
-                copyFile();
-
+                System.out.println(in.readLine());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

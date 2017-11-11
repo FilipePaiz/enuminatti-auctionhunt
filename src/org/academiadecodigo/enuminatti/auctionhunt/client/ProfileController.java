@@ -75,7 +75,7 @@ public class ProfileController {
 
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
-    private LogicController logicController;
+    private Navigation.LogicController logicController;
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {

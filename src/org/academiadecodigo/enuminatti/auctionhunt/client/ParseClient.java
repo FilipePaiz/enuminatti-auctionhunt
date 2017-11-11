@@ -5,3 +5,10 @@ package org.academiadecodigo.enuminatti.auctionhunt.client;
  */
 public class ParseClient {
 }
+
+
+
+
+
+
+

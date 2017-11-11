@@ -98,12 +98,34 @@ public class Server {
         @Override
         public void run() {
 
-            while (true) {
+            BufferedReader in = null;
 
-                ParseServer.getInstance().readData();
+            try {
+                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                while (true) {
+
+                    String line = in.readLine();
+                    if(line == null) {
+                        break;
+                    }
+                    ParseServer.getInstance().validateData(line);
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    clientSocket.close();
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
-        }
+
+    }
 
 
 
@@ -129,17 +151,17 @@ public class Server {
         }*/
 
 
-        private void closeFiles() {
+    private void closeFiles() {
 
-            try {
-                dataOutputStream.close();
-                dataInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            dataOutputStream.close();
+            dataInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-
     }
+
+
+}
 }

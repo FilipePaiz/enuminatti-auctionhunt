@@ -30,23 +30,7 @@ public final class ParseServer {
     }
 
 
-    public void readData() {
-
-
-        String line = null;
-
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            line = in.readLine();
-            validateData(line);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void validateData(String line) {
+    public void validateData(String line) {
 
         if (line.startsWith("/regist/")) {
             registerDecodificate(line);

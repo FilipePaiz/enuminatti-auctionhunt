@@ -42,6 +42,7 @@ public final class ParseClient implements Runnable {
             e.printStackTrace();
         }
 
+
         return line;
     }
 
@@ -78,6 +79,15 @@ public final class ParseClient implements Runnable {
         }
         return null;
     }
+
+    public boolean decodeServerMessage(String string) {
+
+        if(string.equals("login not done")|| string.equals("register not done")){
+            return false;
+        }
+        return true;
+    }
+
 }
 
 

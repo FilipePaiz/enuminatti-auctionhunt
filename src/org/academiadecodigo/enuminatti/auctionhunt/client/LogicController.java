@@ -73,7 +73,7 @@ public class LogicController implements Initializable {
 
     @FXML
     void changeToLogin(ActionEvent event) {
-       showLogin();
+        showLogin();
     }
 
     @FXML
@@ -106,7 +106,18 @@ public class LogicController implements Initializable {
         System.out.println(logInButton.getText());
         String dataAndHead = ParseClient.getInstance().setDataServer(data, logInButton.getText());
         ParseClient.getInstance().sendData(dataAndHead);
-        
+
+        String string = ParseClient.getInstance().readData();
+
+        if (ParseClient.getInstance().decodeServerMessage(string)) {
+
+            succesfullLog.setVisible(true);
+            Navigation.getInstance().loadScreen("Profile");
+
+            return;
+        }
+        couldNotLogIn.setVisible(true);
+
     }
 
     @FXML
@@ -136,7 +147,7 @@ public class LogicController implements Initializable {
             return;
         }*/
 
-       // System.out.println(userService.count());
+        // System.out.println(userService.count());
         //userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
 
         System.out.println("bem-vindo");
@@ -149,7 +160,7 @@ public class LogicController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-     //   userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
+        //   userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
 
         System.out.println("-----------" + userService + "---------------");
 
@@ -157,7 +168,7 @@ public class LogicController implements Initializable {
 
         try {
 
-            clientSocket = new Socket(Server.HOST,Server.PORT);
+            clientSocket = new Socket(Server.HOST, Server.PORT);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -169,7 +180,7 @@ public class LogicController implements Initializable {
     }
 
     private void showLogin() {
-        if(couldNotRegister.isVisible()){
+        if (couldNotRegister.isVisible()) {
             couldNotRegister.setVisible(false);
         }
         succesfullRegister.setVisible(false);
@@ -183,7 +194,7 @@ public class LogicController implements Initializable {
     }
 
     private void showRegister() {
-        if(couldNotLogIn.isVisible()){
+        if (couldNotLogIn.isVisible()) {
             couldNotLogIn.setVisible(false);
         }
 

@@ -30,18 +30,18 @@ public final class ParseServer implements Runnable {
 
     public void readData() {
 
+
         String line = null;
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             line = in.readLine();
+            validateData(line);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        validateData(line);
-        //return line;
     }
 
     private void validateData(String line) {
@@ -59,6 +59,7 @@ public final class ParseServer implements Runnable {
 
     private void loginDecodificate(String line) {
 
+
         line = line.replace("/login/", "");
         String[] words = line.split("#");
 
@@ -67,12 +68,11 @@ public final class ParseServer implements Runnable {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
             if (userService.authenticate(words[0], words[1])) {
-                out.write("login done");
+                out.println("login done");
                 return;
             }
 
-            out.write("login not done");
-            out.flush();
+            out.println("login not done");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,12 +93,11 @@ public final class ParseServer implements Runnable {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
             if (userService.findByName(words[0]) != null) {
-                out.write("login done");
+                out.println("register done");
                 return;
             }
 
-            out.write("login not done");
-            out.flush();
+            out.println("register not done");
 
         } catch (IOException e) {
             e.printStackTrace();

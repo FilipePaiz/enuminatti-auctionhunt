@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.controller;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,17 +8,19 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.academiadecodigo.enuminatti.auctionhunt.model.Client;
-import org.academiadecodigo.enuminatti.auctionhunt.model.Server;
-import org.academiadecodigo.enuminatti.auctionhunt.service.UserService;
+import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.server.User;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
+import org.academiadecodigo.enuminatti.auctionhunt.server.UserService;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogicController implements Initializable{
+public class LogicController implements Initializable {
 
-    private Socket clientSocket = null;
     private UserService userService;
 
     @FXML
@@ -96,6 +98,7 @@ public class LogicController implements Initializable{
 
         if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
             succesfullLog.setVisible(true);
+            Navigation.getInstance().loadScreen("Profile");
         } else {
             couldNotLogIn.setVisible(true);
         }
@@ -129,29 +132,31 @@ public class LogicController implements Initializable{
             return;
         }
 
-       // userService.addUser(new Client(clientSocket, usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
+        System.out.println(userService.count());
+        userService.addUser(new User(usernameField.getText(), emailfield.getText(), Security.getHash(passwordfield.getText())));
 
-        showLogin();
+        System.out.println("bem-vindo");
         succesfullRegister.setVisible(true);
+        showLogin();
 
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
 
+        System.out.println("-----------" + userService + "---------------");
 
+        Socket clientSocket = null;
 
         try {
 
             clientSocket = new Socket(Server.HOST,Server.PORT);
             Client client = new Client();
-            //client.sendImage(clientSocket);
-            System.out.println(clientSocket);
+            client.sendImage(clientSocket);
+
             showLogin();
 
         } catch (IOException e) {
@@ -161,6 +166,10 @@ public class LogicController implements Initializable{
     }
 
     private void showLogin() {
+        if(couldNotRegister.isVisible()){
+            couldNotRegister.setVisible(false);
+        }
+        succesfullRegister.setVisible(false);
         emailfield.setVisible(false);
         emailText.setVisible(false);
         logOutButton.setVisible(false);
@@ -171,16 +180,16 @@ public class LogicController implements Initializable{
     }
 
     private void showRegister() {
+        if(couldNotLogIn.isVisible()){
+            couldNotLogIn.setVisible(false);
+        }
+
         emailfield.setVisible(true);
         emailText.setVisible(true);
         logOutButton.setVisible(true);
         alreadyHaveAccount.setVisible(true);
         logInButton.setVisible(false);
         dontHaveAccount.setVisible(false);
-    }
-
-    public Socket getClientSocket() {
-        return clientSocket;
     }
 }
 

@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.controller;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,7 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
+import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +19,9 @@ import java.util.ResourceBundle;
  * Created by codecadet on 08/11/2017.
  */
 public class BidController {
+
+    private BidService bidService;
+    private int itemOnShow;
 
     @FXML
     private ResourceBundle resources;
@@ -58,11 +65,17 @@ public class BidController {
     @FXML
     void OnNextButtonAction(ActionEvent event) {
         //to use this button is needed a linkedlist with items
+        itemOnShow++;
+        Item item = bidService.getItems().get(itemOnShow);
+        showItem(item);
     }
 
     @FXML
     void OnPreviousButtonAction(ActionEvent event) {
         //to use this button is needed a linkedlist with items
+        itemOnShow--;
+        Item item = bidService.getItems().get(itemOnShow);
+        showItem(item);
     }
 
     @FXML
@@ -73,12 +86,25 @@ public class BidController {
     @FXML
     void onHomeButtonAction(ActionEvent event) {
         //Awaiting for connection between views
+        Navigation.getInstance().back();
     }
 
     @FXML
     void initialize() {
         //setText() with values given by item
+        bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
+        showItem(bidService.getItems().get(itemOnShow));
     }
+
+    private void showItem(Item item) {
+        lastBid.setText(item.getActualBid()+"");
+        askingPrice.setText(item.getAskingPrice()+"");
+        itemName.setText(item.getItemName());
+        descriptionText.setText(item.getItemDescription());
+        itemImage.setImage(new Image(item.getPictureURL()));
+    }
+
+
 }
 
 

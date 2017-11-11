@@ -1,4 +1,4 @@
-package org.academiadecodigo.enuminatti.auctionhunt.controller;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

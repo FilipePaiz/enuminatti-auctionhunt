@@ -1,9 +1,6 @@
-package org.academiadecodigo.enuminatti.auctionhunt.model;
+package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -14,22 +11,26 @@ import java.net.Socket;
  */
 public class Client extends Application {
 
-    private int money;
-    private Socket clientSocket;
-    private boolean connectionStatus;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
+    @Override
+    public void init() throws Exception {
+
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
+        Navigation.getInstance().setStage(primaryStage);
+        Navigation.getInstance().loadScreen("login&register");
+
+       /* Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
 
         primaryStage.setTitle("AuctionHunt");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
+*/
     }
 
     public static void main(String[] args) {
@@ -60,26 +61,4 @@ public class Client extends Application {
         }
 
     }
-
-
-    public boolean isConnectionStatus() {
-        return connectionStatus;
-    }
-
-    /**
-     * Receive image from the server
-     */
-
-   /** @Override
-    public void run() {
-
-        while (true){
-            //System.out.println("lindo");
-        }
-
-        //controller e todos os métodos da vida do Client!
-
-    }*/
-
-
 }

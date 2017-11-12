@@ -92,11 +92,11 @@ public class BidController implements Initializable{
 
 
     private void showItem(Item item) {
-        lastBid.setText(item.getActualBid()+"");
+      /*  lastBid.setText(item.getActualBid()+"");
         askingPrice.setText(item.getAskingPrice()+"");
         itemName.setText(item.getItemName());
         descriptionText.setText(item.getItemDescription());
-        itemImage.setImage(new Image(item.getPictureURL()));
+        itemImage.setImage(new Image(item.getPictureURL()));  */
     }
 
 
@@ -104,7 +104,7 @@ public class BidController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         //setText() with values given by item
         bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
-        showItem(bidService.getItems().get(itemOnShow));
+       // showItem(bidService.getItems().get(itemOnShow));
     }
 }
 

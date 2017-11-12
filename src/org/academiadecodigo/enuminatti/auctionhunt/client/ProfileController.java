@@ -111,7 +111,7 @@ public class ProfileController implements Initializable {
     void onLogoutButtonPressed(ActionEvent event) {
 
         try {
-            ItemData.save("src/org/academiadecodigo/enuminatti/auctionhunt/data/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
+            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
         } catch (IOException e) {
             e.printStackTrace();
         }

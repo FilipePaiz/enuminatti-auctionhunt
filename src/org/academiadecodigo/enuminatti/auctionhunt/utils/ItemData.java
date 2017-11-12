@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class ItemData {
 
-    public static void save(String file, String name, String url, String price) throws IOException {
+    public static void save(String file, String name,  String itemName, String url, String price) throws IOException {
 
         BufferedReader read = new BufferedReader(new FileReader(file));
 
@@ -20,7 +20,10 @@ public class ItemData {
 
         BufferedWriter save = new BufferedWriter(new FileWriter(file, true));
 
-        save.write(name + "\n" + url + "\n" + price + "\n<------------------->");
+        save.write("ID: " + name + "\n" +
+                "Item name: " + itemName + "\n" +
+                "Path: " + url + "\n" +
+                "Price: " + price + "€\n<------------------->");
         save.newLine();
         save.flush();
         save.close();

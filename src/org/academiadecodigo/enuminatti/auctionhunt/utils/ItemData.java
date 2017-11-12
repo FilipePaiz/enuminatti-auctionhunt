@@ -16,20 +16,21 @@ public class ItemData {
 
         BufferedWriter save = new BufferedWriter(new FileWriter(file, true));
 
-        int itemnumber = 0;
+        int itemNumber = 0;
 
         String line;
 
         while ((line = read.readLine()) != null) {
             if (line.equals("<------------------->")) {
-                itemnumber = itemnumber + 1;
+                itemNumber = itemNumber + 1;
             }
         }
 
         String newPath = load(file, path);
+        System.out.println(newPath);
 
         save.write("ID: " + name + "\n" +
-                "Item ID: " + itemnumber + "\n" +
+                "Item ID: " + itemNumber + "\n" +
                 "Item name: " + itemName + "\n" +
                 "Path: " + newPath + "\n" +
                 "Price: " + price + "€\n" +
@@ -41,7 +42,8 @@ public class ItemData {
     }
 
     public static String load(String file, String Path) {
-        BufferedReader read;
+
+        BufferedReader read = null;
 
         String newPath = Path;
 
@@ -50,9 +52,12 @@ public class ItemData {
 
             String line = "";
 
+            String[] dataSplitted = newPath.split("/");
+
             while ((line = read.readLine()) != null) {
-                if(line.equals(Path)){
-                    newPath = Path.concat("_1");
+                if(line.contains(String.valueOf(dataSplitted[1]))){
+                   newPath = line.concat("_1");
+                    System.out.println("foda-se");
                 }
             }
 

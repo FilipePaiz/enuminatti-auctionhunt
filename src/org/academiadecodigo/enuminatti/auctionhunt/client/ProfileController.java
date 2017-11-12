@@ -9,7 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
+import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -135,16 +138,28 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
-        String path = UploadImageDirectory.getPromptText();
+        String path = UploadImageDirectory.getText();
+        System.out.println(path);
         ParseClient.getInstance().uploadImage(path);
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         Money.setText(ParseClient.getInstance().getUserFunds());
         NumberOfItems.setText(ParseClient.getInstance().getUserName());
 
+        Socket clientSocket = nullm
+
+        try {
+            clientSocket = new Socket(Server.HOST, Server.PORT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ParseClient.getInstance().setClientSocket(clientSocket);
     }
+
 }
 

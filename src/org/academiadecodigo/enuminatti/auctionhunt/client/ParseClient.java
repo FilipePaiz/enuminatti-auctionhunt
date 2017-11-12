@@ -132,15 +132,19 @@ public final class ParseClient implements Runnable {
 
     public void uploadImage(String path) {
         byte[] bytes = new byte[1024];
-        DataOutputStream dataOutputStream = null;
-        DataInputStream dataInputStream = null;
+        FileOutputStream dataOutputStream;
+        FileInputStream dataInputStream;
 
         try {
-            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            dataInputStream = new DataInputStream(new FileInputStream(path));
+
+            dataOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
+            System.out.println(clientSocket);
+            System.out.println(path);
+            dataInputStream = new FileInputStream(path);
             int bytesRead = dataInputStream.read(bytes);
 
             while (bytesRead != -1) {
+                System.out.println("teste");
                 dataOutputStream.write(bytes, 0, bytesRead);
                 dataOutputStream.flush();
                 bytesRead = dataInputStream.read(bytes);
@@ -156,7 +160,6 @@ public final class ParseClient implements Runnable {
     public enum ProtocolMessage {
         LOGIN("login"),
         REGISTER("register");
-
 
         private String message;
 

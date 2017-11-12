@@ -17,6 +17,7 @@ public class Item {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.askingPrice = askingPrice;
+        this.actualBid = askingPrice;
         this.pictureURL = pictureURL;
     }
 
@@ -50,5 +51,16 @@ public class Item {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean bidOnItem(User user, int money) {
+        if(!MoneyOperations.removeMoney(user,money) || money < actualBid) {
+            System.out.println("Bid not made"); //this will remove the money from bid to the actual bidder
+            return false;
+        }
+        MoneyOperations.addMoney(this.user, actualBid); //this will return the money to the previous bidder
+        this.user = user;
+        this.actualBid = money;
+        return true;
     }
 }

@@ -9,11 +9,12 @@ public class MoneyOperations {
         user.setFunds(user.getFunds() + money);
     }
 
-    public static void removeMoney (User user, int money) {
+    public static boolean removeMoney (User user, int money) {
         if(user.getFunds() < money) {
             System.out.println("Money required not found!");
-            return;
+            return false;
         }
         user.setFunds(user.getFunds()-money);
+        return true;
     }
 }

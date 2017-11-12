@@ -13,11 +13,11 @@ public class ItemData {
 
     /**
      *
-     * @param file
-     * @param name
-     * @param itemName
-     * @param path
-     * @param price
+     * @param file  receives the file to save
+     * @param name  receives the name of the owner
+     * @param itemName  receives the name of the item
+     * @param path  receives the location and the name of the picture
+     * @param price receives the price of the item
      * @throws IOException
      */
     public static void save(String file, String name, String itemName, String path, String price) throws IOException {
@@ -54,8 +54,8 @@ public class ItemData {
 
     /**
      *
-     * @param file
-     * @param Path
+     * @param file  receives the file to save
+     * @param Path  receives the location and the name of the picture
      * @return
      */
     public static String load(String file, String Path) {
@@ -88,7 +88,7 @@ public class ItemData {
 
     /**
      *
-     * @return
+     * @return  returns the present day
      */
     private static String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

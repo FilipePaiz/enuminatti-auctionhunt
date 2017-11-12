@@ -48,6 +48,8 @@ public class ItemData {
 
         String newPath = Path;
 
+        int counternumber = 1;
+
         try {
             read = new BufferedReader(new FileReader(file));
 
@@ -55,7 +57,10 @@ public class ItemData {
 
             while ((line = read.readLine()) != null) {
                 if (line.contains(Path)) {
-                    newPath = newPath.concat("_1");
+                    if(newPath.contains("_" + counternumber)) {
+                        counternumber++;
+                    }
+                    newPath = Path.concat("_" + counternumber);
                 }
             }
 

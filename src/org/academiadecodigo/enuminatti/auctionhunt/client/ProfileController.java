@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -76,13 +76,16 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onGoToAuctionButtonPressed(ActionEvent event) {
+
         String dataHead = ParseClient.getInstance().setDataServer("item", GoToAuctionButton.getText());
+        System.out.println(dataHead);
         ParseClient.getInstance().sendData(dataHead);
+
         String receiveHead = ParseClient.getInstance().readData();
-        String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
+        System.out.println(receiveHead);
+        //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
-        if(decodeMessage.equals("item")){
-
+        if (ParseClient.getInstance().decodeServerMessage(receiveHead)) {
             Navigation.getInstance().loadScreen("bidAuction");
             return;
         }
@@ -93,8 +96,8 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
-        Navigation.getInstance().back();
 
+        Navigation.getInstance().back();
     }
 
     @FXML
@@ -120,8 +123,9 @@ public class ProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Money.setText(ParseClient.getInstance().getUserClient().getFunds());
-        NumberOfItems.setText(ParseClient.getInstance().getUserClient().getUserName());
+        Money.setText(ParseClient.getInstance().getUserFunds());
+        NumberOfItems.setText(ParseClient.getInstance().getUserName());
+
     }
 }
 

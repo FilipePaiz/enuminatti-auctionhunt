@@ -12,8 +12,9 @@ public final class ParseClient implements Runnable {
 
     private Socket clientSocket = null;
     private static ParseClient instance;
+    private String userName;
+    private String funds;
 
-    private UserClient userClient;
 
     private ParseClient() {
     }
@@ -61,9 +62,8 @@ public final class ParseClient implements Runnable {
     public void sendData(String data) {
 
         try {
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-            out.write(data);
-            out.flush();
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            out.println(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,13 +72,16 @@ public final class ParseClient implements Runnable {
 
     public String setDataServer(String data, String buttonId) {
 
-        String dataToBeSend;
         String[] dataSplitted = data.split(" ");
+
         switch (buttonId) {
+
             case "Sign Up": //it is register button, change to a proper name
-                return dataToBeSend = "/regist/" + dataSplitted[0] + "#" + dataSplitted[1] + "#" + dataSplitted[2] + "\r\n";
+                return "/regist/" + dataSplitted[0] + "#" + dataSplitted[1] + "#" + dataSplitted[2] + "\r\n";
             case "Sign In":
-                return dataToBeSend = "/login/" + dataSplitted[0] + "#" + dataSplitted[1] + "\r\n";
+                return "/login/" + dataSplitted[0] + "#" + dataSplitted[1] + "\r\n";
+            case "Go to Auction":
+                return "/item/" + dataSplitted[0] + "#" + "aqui tem" + "\r\n";
             default:
                 System.out.println("Deu merda o parse do client");
 
@@ -91,10 +94,16 @@ public final class ParseClient implements Runnable {
         if(string.equals("login not done")|| string.equals("register not done")){
             return false;
         }
+
+        if(string.startsWith("/login/done/")) {
+            string = string.replace("/login/done/", "");
+            String[] words = string.split("#");
+            userName = words[0];
+            funds = words[1];
+        }
+
         return true;
     }
-
-
 
 
     public String receiveDataServer(String data) {
@@ -113,6 +122,15 @@ public final class ParseClient implements Runnable {
         return null;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUserFunds() {
+        return funds;
+    }
+
+
     public enum ProtocolMessage {
         LOGIN("login"),
         REGISTER("register");
@@ -130,11 +148,5 @@ public final class ParseClient implements Runnable {
 
 
     }
-    public UserClient getUserClient(){
-        return userClient;
-    }
 
-    public void setUserClient(UserClient userClient) {
-        this.userClient = userClient;
-    }
 }

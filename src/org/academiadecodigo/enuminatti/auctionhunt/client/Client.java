@@ -16,8 +16,7 @@ public class Client extends Application {
 
     @Override
     public void init() throws Exception {
-        UserClient userClient = new UserClient();
-        ParseClient.getInstance().setUserClient(userClient);
+
     }
 
     @Override

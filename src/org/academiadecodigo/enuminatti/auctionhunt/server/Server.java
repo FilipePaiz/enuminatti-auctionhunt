@@ -106,9 +106,7 @@ public class Server {
                 while (true) {
 
                     String line = in.readLine();
-                    if(line == null) {
-                        break;
-                    }
+
                     ParseServer.getInstance().validateData(line);
 
                 }

@@ -92,22 +92,19 @@ public class LogicController implements Initializable {
 
         String data = usernameField.getText() + " " + passwordField.getText();
 
-        System.out.println(logInButton.getText());
         String dataAndHead = ParseClient.getInstance().setDataServer(data, logInButton.getText());
         ParseClient.getInstance().sendData(dataAndHead);
 
         String message = ParseClient.getInstance().readData();
 
         if (ParseClient.getInstance().decodeServerMessage(message)) {
-         /*   String userData = ParseClient.getInstance().receiveDataServer(message);
-            String [] userDataSplitter = userData.split("#");
-            ParseClient.getInstance().getUserClient().setUserName(userDataSplitter[0]);
-            ParseClient.getInstance().getUserClient().setFunds(userDataSplitter[1]);  */
+
             succesfullLog.setVisible(true);
             Navigation.getInstance().loadScreen("Profile");
 
             return;
         }
+
         couldNotLogIn.setVisible(true);
 
     }
@@ -115,22 +112,7 @@ public class LogicController implements Initializable {
     @FXML
     void onRegister(ActionEvent event) {
 
-        System.out.println(usernameField.getText());
-        System.out.println(passwordField.getText());
-        System.out.println(emailField.getText());
-
-        if (usernameField.getText().isEmpty()) {
-            couldNotRegister.setVisible(true);
-            return;
-        }
-
-        if (passwordField.getText().isEmpty()) {
-            couldNotRegister.setVisible(true);
-            return;
-        }
-
-        if (emailField.getText().isEmpty()) {
-            couldNotRegister.setVisible(true);
+        if(checkEmptyFields()){
             return;
         }
 
@@ -153,6 +135,26 @@ public class LogicController implements Initializable {
         }
         couldNotRegister.setVisible(true);
 
+    }
+
+    private boolean checkEmptyFields() {
+
+        if (usernameField.getText().isEmpty()) {
+            couldNotRegister.setVisible(true);
+            return true;
+        }
+
+        if (passwordField.getText().isEmpty()) {
+            couldNotRegister.setVisible(true);
+            return true;
+        }
+
+        if (emailField.getText().isEmpty()) {
+            couldNotRegister.setVisible(true);
+            return true;
+        }
+
+        return false;
     }
 
 

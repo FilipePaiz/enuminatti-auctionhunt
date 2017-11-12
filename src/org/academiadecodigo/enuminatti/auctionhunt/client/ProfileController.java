@@ -70,6 +70,15 @@ public class ProfileController implements Initializable {
     private Button UploadPhoto;
 
     @FXML
+    private TextField UploadImageDirectory;
+
+    @FXML
+    private Button OkUpload;
+
+    @FXML
+    private Button CancelUpload;
+
+    @FXML
     void onDepositButtonPressed(ActionEvent event) {
 
     }
@@ -119,6 +128,17 @@ public class ProfileController implements Initializable {
 
     }
 
+    @FXML
+    void onButtonPressedCancelUpload(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onButtonPressedOkPressed(ActionEvent event) {
+        String path = UploadImageDirectory.getPromptText();
+        ParseClient.getInstance().uploadImage(path);
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

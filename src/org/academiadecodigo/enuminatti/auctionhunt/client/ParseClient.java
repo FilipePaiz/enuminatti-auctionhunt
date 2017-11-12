@@ -91,11 +91,11 @@ public final class ParseClient implements Runnable {
 
     public boolean decodeServerMessage(String string) {
 
-        if(string.equals("login not done")|| string.equals("register not done")){
+        if (string.equals("login not done") || string.equals("register not done")) {
             return false;
         }
 
-        if(string.startsWith("/login/done/")) {
+        if (string.startsWith("/login/done/")) {
             string = string.replace("/login/done/", "");
             String[] words = string.split("#");
             userName = words[0];
@@ -128,6 +128,28 @@ public final class ParseClient implements Runnable {
 
     public String getUserFunds() {
         return funds;
+    }
+
+    public void uploadImage(String path) {
+        byte[] bytes = new byte[1024];
+        DataOutputStream dataOutputStream = null;
+        DataInputStream dataInputStream = null;
+
+        try {
+            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+            dataInputStream = new DataInputStream(new FileInputStream(path));
+            int bytesRead = dataInputStream.read(bytes);
+
+            while (bytesRead != -1) {
+                dataOutputStream.write(bytes, 0, bytesRead);
+                dataOutputStream.flush();
+                bytesRead = dataInputStream.read(bytes);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

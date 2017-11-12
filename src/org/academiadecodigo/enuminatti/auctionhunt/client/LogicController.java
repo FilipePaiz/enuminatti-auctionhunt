@@ -3,15 +3,12 @@ package org.academiadecodigo.enuminatti.auctionhunt.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
-import org.academiadecodigo.enuminatti.auctionhunt.server.UserService;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
@@ -77,6 +74,10 @@ public class LogicController implements Initializable {
         showRegister();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onLogin(ActionEvent event) {
 
@@ -109,6 +110,10 @@ public class LogicController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onRegister(ActionEvent event) {
 
@@ -144,6 +149,10 @@ public class LogicController implements Initializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     private boolean checkEmailValidation(String email) {
 
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -172,7 +181,11 @@ public class LogicController implements Initializable {
         return false;
     }
 
-
+    /**
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -192,6 +205,9 @@ public class LogicController implements Initializable {
 
     }
 
+    /**
+     *
+     */
     private void showLogin() {
         if (couldNotRegister.isVisible()) {
             couldNotRegister.setVisible(false);
@@ -206,6 +222,9 @@ public class LogicController implements Initializable {
 
     }
 
+    /**
+     *
+     */
     private void showRegister() {
         if (couldNotLogIn.isVisible()) {
             couldNotLogIn.setVisible(false);

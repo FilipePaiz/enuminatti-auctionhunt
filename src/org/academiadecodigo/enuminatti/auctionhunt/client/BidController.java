@@ -63,6 +63,11 @@ public class BidController implements Initializable{
     @FXML
     private Button homeButton;
 
+
+    /**
+     *
+     * @param event
+     */
     @FXML
     void OnNextButtonAction(ActionEvent event) {
         //to use this button is needed a linkedlist with items
@@ -71,6 +76,10 @@ public class BidController implements Initializable{
         showItem(item);
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void OnPreviousButtonAction(ActionEvent event) {
         //to use this button is needed a linkedlist with items
@@ -79,18 +88,29 @@ public class BidController implements Initializable{
         showItem(item);
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onBidButtonAction(ActionEvent event) {
         //waiting for logic connection
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onHomeButtonAction(ActionEvent event) {
         //Awaiting for connection between views
         Navigation.getInstance().back();
     }
 
-
+    /**
+     *
+     * @param item
+     */
     private void showItem(Item item) {
       /*  lastBid.setText(item.getActualBid()+"");
         askingPrice.setText(item.getAskingPrice()+"");
@@ -99,7 +119,11 @@ public class BidController implements Initializable{
         itemImage.setImage(new Image(item.getPictureURL()));  */
     }
 
-
+    /**
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //setText() with values given by item

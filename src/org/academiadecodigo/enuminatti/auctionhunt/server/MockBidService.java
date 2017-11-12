@@ -11,11 +11,20 @@ public class MockBidService implements BidService {
     private HashMap<Integer, Item> items;
     private int itemAddedtoAuction;
 
+    /**
+     *
+     */
     public MockBidService() {
 
         this.items = new HashMap<>();
     }
 
+    /**
+     *
+     * @param id
+     * @param bidMoney
+     * @param user
+     */
     @Override
     public void bidOnItem(int id, int bidMoney, User user) {
 
@@ -30,6 +39,10 @@ public class MockBidService implements BidService {
         item.setUser(user);
     }
 
+    /**
+     *
+     * @param item
+     */
     @Override
     public void addItemtoAuction(Item item) {
 
@@ -37,6 +50,10 @@ public class MockBidService implements BidService {
         itemAddedtoAuction++;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Map<Integer, Item> getItems() {
         return items;

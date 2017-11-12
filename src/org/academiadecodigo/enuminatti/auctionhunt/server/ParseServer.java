@@ -1,8 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
-import org.academiadecodigo.enuminatti.auctionhunt.client.ParseClient;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -14,9 +12,16 @@ public final class ParseServer {
     private Socket clientSocket = null;
     private static ParseServer instance;
 
+    /**
+     *
+     */
     private ParseServer() {
     }
 
+    /**
+     *
+     * @return
+     */
     public static ParseServer getInstance() {
         if (instance == null) {
             synchronized (ParseServer.class) {
@@ -29,6 +34,10 @@ public final class ParseServer {
     }
 
 
+    /**
+     *
+     * @param line
+     */
     public void validateData(String line) {
 
         System.out.println(line);
@@ -45,6 +54,10 @@ public final class ParseServer {
         }
     }
 
+    /**
+     *
+     * @param line
+     */
     private void itemDecodificate(String line) {
 
         line = line.replace("/item/", "");
@@ -60,6 +73,10 @@ public final class ParseServer {
     }
 
 
+    /**
+     *
+     * @param line
+     */
     private void loginDecodificate(String line) {
 
 
@@ -83,7 +100,10 @@ public final class ParseServer {
 
     }
 
-
+    /**
+     *
+     * @param line
+     */
     private void registerDecodificate(String line) {
 
         line = line.replace("/regist/", "");
@@ -112,7 +132,10 @@ public final class ParseServer {
 
     }
 
-
+    /**
+     *
+     * @param clientSocket
+     */
     public void setClientSocket(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }

@@ -9,7 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -69,11 +71,19 @@ public class ProfileController implements Initializable {
     @FXML
     private Button UploadPhoto;
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onGoToAuctionButtonPressed(ActionEvent event) {
 
@@ -93,33 +103,64 @@ public class ProfileController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
+
+        try {
+            ItemData.save("src/org/academiadecodigo/enuminatti/auctionhunt/data/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Navigation.getInstance().back();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onMyFundsButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onUploadPhotoButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onWithdrawButtonPressed(ActionEvent event) {
 
     }
 
 
+    /**
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Money.setText(ParseClient.getInstance().getUserFunds());

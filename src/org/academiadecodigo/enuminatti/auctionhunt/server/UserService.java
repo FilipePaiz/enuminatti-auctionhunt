@@ -5,11 +5,30 @@ package org.academiadecodigo.enuminatti.auctionhunt.server;
  */
 public interface UserService extends Service {
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     boolean authenticate(String username, String password);
 
+    /**
+     *
+     * @param user
+     */
     void addUser(User user);
 
+    /**
+     *
+     * @param username
+     * @return
+     */
     User findByName(String username);
 
+    /**
+     *
+     * @return
+     */
     int count();
 }

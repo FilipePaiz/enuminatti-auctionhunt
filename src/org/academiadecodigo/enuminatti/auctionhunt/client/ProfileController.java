@@ -71,11 +71,19 @@ public class ProfileController implements Initializable {
     @FXML
     private Button UploadPhoto;
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onGoToAuctionButtonPressed(ActionEvent event) {
 
@@ -95,6 +103,10 @@ public class ProfileController implements Initializable {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
 
@@ -107,27 +119,48 @@ public class ProfileController implements Initializable {
         Navigation.getInstance().back();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onMyFundsButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onUploadPhotoButtonPressed(ActionEvent event) {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     void onWithdrawButtonPressed(ActionEvent event) {
 
     }
 
 
+    /**
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Money.setText(ParseClient.getInstance().getUserFunds());

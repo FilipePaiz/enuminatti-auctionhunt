@@ -14,11 +14,20 @@ public class Client extends Application {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
+    /**
+     *
+     * @throws Exception
+     */
     @Override
     public void init() throws Exception {
 
     }
 
+    /**
+     *
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -34,6 +43,10 @@ public class Client extends Application {
 */
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         Application.launch(args);

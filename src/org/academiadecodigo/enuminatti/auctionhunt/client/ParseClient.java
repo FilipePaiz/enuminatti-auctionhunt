@@ -1,7 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import org.academiadecodigo.enuminatti.auctionhunt.server.User;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -15,10 +13,16 @@ public final class ParseClient implements Runnable {
     private String userName;
     private String funds;
 
-
+    /**
+     *
+     */
     private ParseClient() {
     }
 
+    /**
+     *
+     * @return
+     */
     public static ParseClient getInstance() {
         if (instance == null) {
             synchronized (ParseClient.class) {
@@ -30,12 +34,17 @@ public final class ParseClient implements Runnable {
         return instance;
     }
 
-
+    /**
+     *
+     * @param clientSocket
+     */
     public void setClientSocket(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
-
+    /**
+     *
+     */
     @Override
     public void run() {
         while (true) {
@@ -43,6 +52,10 @@ public final class ParseClient implements Runnable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String readData() {
 
         String line = null;
@@ -59,6 +72,10 @@ public final class ParseClient implements Runnable {
         return line;
     }
 
+    /**
+     *
+     * @param data
+     */
     public void sendData(String data) {
 
         try {
@@ -69,7 +86,12 @@ public final class ParseClient implements Runnable {
         }
     }
 
-
+    /**
+     *
+     * @param data
+     * @param buttonId
+     * @return
+     */
     public String setDataServer(String data, String buttonId) {
 
         String[] dataSplitted = data.split(" ");
@@ -89,6 +111,11 @@ public final class ParseClient implements Runnable {
         return null;
     }
 
+    /**
+     *
+     * @param string
+     * @return
+     */
     public boolean decodeServerMessage(String string) {
 
         if(string.equals("login not done")|| string.equals("register not done")){
@@ -105,7 +132,11 @@ public final class ParseClient implements Runnable {
         return true;
     }
 
-
+    /**
+     * fgrhtjhgr
+     * @param data Data to be received by the server
+     * @return lalal
+     */
     public String receiveDataServer(String data) {
 
         String[] dataSplitted = data.split("/");
@@ -122,15 +153,25 @@ public final class ParseClient implements Runnable {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUserFunds() {
         return funds;
     }
 
-
+    /**
+     *
+     */
     public enum ProtocolMessage {
         LOGIN("login"),
         REGISTER("register");
@@ -138,10 +179,18 @@ public final class ParseClient implements Runnable {
 
         private String message;
 
+        /**
+         *
+         * @param message
+         */
         ProtocolMessage(String message) {
             this.message = message;
         }
 
+        /**
+         *
+         * @return
+         */
         public String getMessage() {
             return message;
         }

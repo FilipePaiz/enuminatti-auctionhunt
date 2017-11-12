@@ -8,8 +8,18 @@ import java.util.Date;
 /**
  * Created by Someone who is not me on 12/11/17.
  */
+
 public class ItemData {
 
+    /**
+     *
+     * @param file
+     * @param name
+     * @param itemName
+     * @param path
+     * @param price
+     * @throws IOException
+     */
     public static void save(String file, String name, String itemName, String path, String price) throws IOException {
 
         BufferedReader read = new BufferedReader(new FileReader(file));
@@ -35,13 +45,19 @@ public class ItemData {
                 "Item name: " + itemName + "\n" +
                 "Path: " + newPath + "\n" +
                 "Price: " + price + "€\n" +
-                "Uploud Date: " + getDateTime() + "\n<------------------->");
+                "Upload Date: " + getDateTime() + "\n<------------------->");
 
         save.newLine();
         save.flush();
         save.close();
     }
 
+    /**
+     *
+     * @param file
+     * @param Path
+     * @return
+     */
     public static String load(String file, String Path) {
 
         BufferedReader read = null;
@@ -70,6 +86,10 @@ public class ItemData {
         return newPath;
     }
 
+    /**
+     *
+     * @return
+     */
     private static String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();

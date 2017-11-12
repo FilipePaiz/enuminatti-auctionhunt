@@ -12,6 +12,14 @@ public class Item {
     private int actualBid; //last bid
     private String pictureURL;
 
+    /**
+     *
+     * @param user
+     * @param itemName
+     * @param itemDescription
+     * @param askingPrice
+     * @param pictureURL
+     */
     public Item(User user, String itemName, String itemDescription, int askingPrice, String pictureURL) {
         this.user = user;
         this.itemName = itemName;
@@ -20,34 +28,66 @@ public class Item {
         this.pictureURL = pictureURL;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getItemName() {
         return itemName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getItemDescription() {
         return itemDescription;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAskingPrice() {
         return askingPrice;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getActualBid() {
         return actualBid;
     }
 
+    /**
+     *
+     * @param actualBid
+     */
     public void setActualBid(int actualBid) {
         this.actualBid = actualBid;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPictureURL() {
         return pictureURL;
     }
 
+    /**
+     *
+     * @return
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     *
+     * @param user
+     */
     public void setUser(User user) {
         this.user = user;
     }

@@ -17,12 +17,19 @@ public class Server {
     public static final String HOST = "localhost";
     public static final String PATH = "resources/";
 
+    /**
+     *
+     */
     public Server() {
 
         clientList = new LinkedList<>();
 
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
 
@@ -46,6 +53,10 @@ public class Server {
 
     }
 
+    /**
+     *
+     * @param serverSocket
+     */
     private void start(ServerSocket serverSocket) {
 
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -78,6 +89,9 @@ public class Server {
 
     }
 
+    /**
+     *
+     */
     private class ServerThread implements Runnable {
 
         private Socket clientSocket;
@@ -150,6 +164,9 @@ public class Server {
         }*/
 
 
+        /**
+         *
+         */
     private void closeFiles() {
 
         try {

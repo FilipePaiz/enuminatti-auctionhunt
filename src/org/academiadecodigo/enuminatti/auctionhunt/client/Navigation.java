@@ -12,7 +12,12 @@ import java.util.Map;
 
 public final class Navigation {
 
-    // static instance of this class
+
+
+    /**
+     *
+     */
+    // static instance of this class\
     private static Navigation instance = null;
     private LinkedList<Scene> scenes = new LinkedList<Scene>(); // Navigation History
     private Map<String, Controller> controllers = new HashMap<>(); //Container of controllers
@@ -21,10 +26,19 @@ public final class Navigation {
     private Stage stage; // reference to the application window
 
     // private constructor so it's not possible to instantiate from outside
+
+    /**
+     *
+     */
     private Navigation() {
     }
 
     // static method that returns the instance
+
+    /**
+     *
+     * @return
+     */
     public static Navigation getInstance() {
 
         if(instance == null){
@@ -37,6 +51,10 @@ public final class Navigation {
         return instance;
     }
 
+    /**
+     *
+     * @param view
+     */
     public void loadScreen(String view) {
 
         try {
@@ -62,6 +80,9 @@ public final class Navigation {
         }
     }
 
+    /**
+     *
+     */
     public void back() {
 
         if (scenes.isEmpty()) {
@@ -75,6 +96,10 @@ public final class Navigation {
         setScene(scenes.peek());
     }
 
+    /**
+     *
+     * @param scene
+     */
     private void setScene(Scene scene) {
 
         // set the scene
@@ -84,10 +109,18 @@ public final class Navigation {
         stage.show();
     }
 
+    /**
+     *
+     * @param stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     *
+     * @return
+     */
     public Controller getController() {
         return fxmlLoader.getController();
     }

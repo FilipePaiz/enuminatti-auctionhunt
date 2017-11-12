@@ -11,6 +11,11 @@ public class Security {
 
     public final static String ALGORITHM = "SHA";
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     public static String getHash(String message) {
 
         try {

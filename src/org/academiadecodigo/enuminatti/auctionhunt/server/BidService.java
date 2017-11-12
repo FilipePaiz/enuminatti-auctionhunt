@@ -7,9 +7,23 @@ import java.util.Map;
  */
 public interface BidService extends Service {
 
+    /**
+     *
+     * @param id
+     * @param bidMoney
+     * @param user
+     */
     void bidOnItem(int id, int bidMoney, User user);
 
+    /**
+     *
+     * @param item
+     */
     void addItemtoAuction(Item item);
 
+    /**
+     *
+     * @return
+     */
     Map<Integer, Item> getItems();
 }

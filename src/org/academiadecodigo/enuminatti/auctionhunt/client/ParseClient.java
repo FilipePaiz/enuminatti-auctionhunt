@@ -59,34 +59,28 @@ public final class ParseClient implements Runnable {
         return line;
     }
 
-    // no SendData verificar se é item ou não  -- (profileController  go To AuctionButton)
-    // se item €), alterar printWirter para DataOutputStream. e não esquecer o flush... ver do exercicio do webServer.
+
 
     public void sendData(String data) {
-
+        byte[] bytes = new byte[1024];
+        DataOutputStream itemOutput;
+        DataInputStream dataInputStream;
 
         try {
             if (data.startsWith("/item/")) {
+                System.out.println("SendData");
+                itemOutput = new DataOutputStream(clientSocket.getOutputStream());
+                dataInputStream = new DataInputStream(new FileInputStream(data));
+                int bytesReaden = dataInputStream.read(bytes);
 
-               int byteReader;
-
-               /// copiar e colar o Bytes [1024]... do webServer.
-
-                while ((byteReader = inFile.read(data))!=-1) {
-                    System.out.println("here");
-
-                    webClientOutput.write(fileInBytes,0,byteCounter);
-
-                    System.out.println("Cute image");
-
+                while (bytesReaden != -1) {
+                    
+                    itemOutput.write(bytes, 0, bytesReaden);
+                    itemOutput.flush();
+                    bytesReaden = dataInputStream.read(bytes);
                 }
-                webClientOutput.flush();
-                DataOutputStream itemOut = new DataOutputStream(clientSocket.getOutputStream());
-                itemOut.write();
-
-                itemOut.flush();
             }
-
+            
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             out.println(data);
 
@@ -117,11 +111,11 @@ public final class ParseClient implements Runnable {
 
     public boolean decodeServerMessage(String string) {
 
-        if(string.equals("login not done")|| string.equals("register not done")){
+        if (string.equals("login not done") || string.equals("register not done")) {
             return false;
         }
 
-        if(string.startsWith("/login/done/")) {
+        if (string.startsWith("/login/done/")) {
             string = string.replace("/login/done/", "");
             String[] words = string.split("#");
             userName = words[0];

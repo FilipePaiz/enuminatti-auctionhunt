@@ -21,13 +21,14 @@ public class ItemData {
         String line;
 
         while ((line = read.readLine()) != null) {
-            if (line.equals("<------------------->")) {
+            if (line.contains("<------------------->")) {
                 itemNumber = itemNumber + 1;
             }
+
+            //itemNumber = 1;
         }
 
         String newPath = load(file, path);
-        System.out.println(newPath);
 
         save.write("ID: " + name + "\n" +
                 "Item ID: " + itemNumber + "\n" +
@@ -52,12 +53,9 @@ public class ItemData {
 
             String line = "";
 
-            String[] dataSplitted = newPath.split("/");
-
             while ((line = read.readLine()) != null) {
-                if(line.contains(String.valueOf(dataSplitted[1]))){
-                   newPath = line.concat("_1");
-                    System.out.println("foda-se");
+                if (line.contains(Path)) {
+                    newPath = newPath.concat("_1");
                 }
             }
 

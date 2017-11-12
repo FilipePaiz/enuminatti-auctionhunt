@@ -2,6 +2,7 @@ package org.academiadecodigo.enuminatti.auctionhunt.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Created by codecadet on 08/11/2017.
  */
-public class BidController {
+public class BidController implements Initializable{
 
     private BidService bidService;
     private int itemOnShow;
@@ -89,12 +90,6 @@ public class BidController {
         Navigation.getInstance().back();
     }
 
-    @FXML
-    void initialize() {
-        //setText() with values given by item
-        bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
-        showItem(bidService.getItems().get(itemOnShow));
-    }
 
     private void showItem(Item item) {
         lastBid.setText(item.getActualBid()+"");
@@ -105,6 +100,12 @@ public class BidController {
     }
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //setText() with values given by item
+        bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
+        showItem(bidService.getItems().get(itemOnShow));
+    }
 }
 
 

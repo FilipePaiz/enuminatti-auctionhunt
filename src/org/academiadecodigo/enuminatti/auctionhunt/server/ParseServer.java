@@ -40,7 +40,7 @@ public final class ParseServer {
             loginDecodificate(line);
             return;
         }
-        if(line.equals("/item/")){
+        if(line.startsWith("/item/")){
             itemDecodificate(line);
         }
     }
@@ -49,7 +49,6 @@ public final class ParseServer {
 
         line = line.replace("/item/", "");
         String[] words = line.split("#");
-        System.out.println(words[0]);
 
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
@@ -98,7 +97,7 @@ public final class ParseServer {
 
             if (userService.findByName(words[0]) == null) {
                 userService.addUser(new User(words[0], words[1], Security.getHash(words[2]), 0));
-                System.out.println(userService.count());
+                System.out.println("User: " + userService.count());
                 out.println("/regist/done/" + line);
                 return;
 

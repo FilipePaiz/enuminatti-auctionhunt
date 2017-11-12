@@ -101,9 +101,10 @@ public class Server {
             BufferedReader in = null;
 
             try {
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 while (true) {
+
+                    in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     String line = in.readLine();
 

@@ -9,7 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -95,6 +97,12 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
+
+        try {
+            ItemData.save("resources/ItemData", "Aires", "URL DO ITEM", "995");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Navigation.getInstance().back();
     }

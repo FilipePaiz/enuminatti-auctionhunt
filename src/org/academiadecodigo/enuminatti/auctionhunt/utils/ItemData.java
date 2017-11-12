@@ -20,7 +20,7 @@ public class ItemData {
 
         BufferedWriter save = new BufferedWriter(new FileWriter(file, true));
 
-        save.write(name + "\n" + url + "\n" + price);
+        save.write(name + "\n" + url + "\n" + price + "\n<------------------->");
         save.newLine();
         save.flush();
         save.close();

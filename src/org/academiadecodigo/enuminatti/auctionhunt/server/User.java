@@ -7,6 +7,11 @@ public class User {
 
     private String username;
     private String email;
+
+    public void setFunds(int funds) {
+        this.funds = funds;
+    }
+
     private String password;
     private int funds;
 

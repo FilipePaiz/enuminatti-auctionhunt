@@ -59,11 +59,25 @@ public final class ParseClient implements Runnable {
         return line;
     }
 
+    // no SendData verificar se é item ou não  -- (profileController  go To AuctionButton)
+    // se item €), alterar printWirter para DataOutputStream. e não esquecer o flush... ver do exercicio do webServer.
+
     public void sendData(String data) {
 
+
         try {
+            if (data.startsWith("/item/")) {
+
+                /// copiar e colar o Bytes [1024]... do webServer
+                DataOutputStream itemOut = new DataOutputStream(clientSocket.getOutputStream());
+                itemOut.write();
+
+                itemOut.flush();
+            }
+
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             out.println(data);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,7 +95,7 @@ public final class ParseClient implements Runnable {
             case "Sign In":
                 return "/login/" + dataSplitted[0] + "#" + dataSplitted[1] + "\r\n";
             case "Go to Auction":
-                return "/item/" + dataSplitted[0] + "#" + "aqui tem" + "\r\n";
+                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";
             default:
                 System.out.println("Deu merda o parse do client");
 

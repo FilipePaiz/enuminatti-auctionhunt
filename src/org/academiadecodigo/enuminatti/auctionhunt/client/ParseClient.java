@@ -62,6 +62,7 @@ public final class ParseClient implements Runnable {
 
 
     public void sendData(String data) {
+
         byte[] bytes = new byte[1024];
         DataOutputStream itemOutput;
         DataInputStream dataInputStream;
@@ -69,8 +70,10 @@ public final class ParseClient implements Runnable {
         try {
             if (data.startsWith("/item/")) {
                 System.out.println("SendData");
+
                 itemOutput = new DataOutputStream(clientSocket.getOutputStream());
                 dataInputStream = new DataInputStream(new FileInputStream(data));
+
                 int bytesReaden = dataInputStream.read(bytes);
 
                 while (bytesReaden != -1) {

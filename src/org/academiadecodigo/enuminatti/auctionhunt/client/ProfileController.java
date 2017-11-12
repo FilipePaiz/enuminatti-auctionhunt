@@ -107,6 +107,12 @@ public class ProfileController implements Initializable {
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
 
+      /*  String data = "aqui";
+        ParseClient.getInstance().sendData(data);
+        String receiveHead = ParseClient.getInstance().readData();
+        ParseClient.getInstance().decodeServerMessage(receiveHead);*/
+
+
     }
 
     @FXML

@@ -68,7 +68,19 @@ public final class ParseClient implements Runnable {
         try {
             if (data.startsWith("/item/")) {
 
-                /// copiar e colar o Bytes [1024]... do webServer
+               int byteReader;
+
+               /// copiar e colar o Bytes [1024]... do webServer.
+
+                while ((byteReader = inFile.read(data))!=-1) {
+                    System.out.println("here");
+
+                    webClientOutput.write(fileInBytes,0,byteCounter);
+
+                    System.out.println("Cute image");
+
+                }
+                webClientOutput.flush();
                 DataOutputStream itemOut = new DataOutputStream(clientSocket.getOutputStream());
                 itemOut.write();
 

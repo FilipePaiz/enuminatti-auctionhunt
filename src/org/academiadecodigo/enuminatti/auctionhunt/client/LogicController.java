@@ -113,6 +113,13 @@ public class LogicController implements Initializable {
     void onRegister(ActionEvent event) {
 
         if(checkEmptyFields()){
+            couldNotRegister.setText("Fill all fields");
+            couldNotRegister.setVisible(true);
+            return;
+        }
+        if(!checkEmailValidation(emailField.getText())){
+            couldNotRegister.setText("Your email isn't in right format");
+            couldNotRegister.setVisible(true);
             return;
         }
 
@@ -134,6 +141,14 @@ public class LogicController implements Initializable {
             return;
         }
         couldNotRegister.setVisible(true);
+
+    }
+
+    private boolean checkEmailValidation(String email) {
+
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
+        return email.matches(regex);
 
     }
 

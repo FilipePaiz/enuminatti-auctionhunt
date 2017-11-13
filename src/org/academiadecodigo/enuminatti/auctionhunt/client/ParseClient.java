@@ -1,7 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import org.academiadecodigo.enuminatti.auctionhunt.server.User;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -59,11 +57,33 @@ public final class ParseClient implements Runnable {
         return line;
     }
 
+
     public void sendData(String data) {
 
+        byte[] bytes = new byte[1024];
+        DataOutputStream itemOutput;
+        DataInputStream dataInputStream;
+
         try {
+            if (data.startsWith("/item/")) {
+                System.out.println("SendData");
+
+                itemOutput = new DataOutputStream(clientSocket.getOutputStream());
+                dataInputStream = new DataInputStream(new FileInputStream(data));
+
+                int bytesReaden = dataInputStream.read(bytes);
+
+                while (bytesReaden != -1) {
+
+                    itemOutput.write(bytes, 0, bytesReaden);
+                    itemOutput.flush();
+                    bytesReaden = dataInputStream.read(bytes);
+                }
+            }
+
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             out.println(data);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,7 +101,7 @@ public final class ParseClient implements Runnable {
             case "Sign In":
                 return "/login/" + dataSplitted[0] + "#" + dataSplitted[1] + "\r\n";
             case "Go to Auction":
-                return "/item/" + dataSplitted[0] + "#" + "aqui tem" + "\r\n";
+                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";
             default:
                 System.out.println("Deu merda o parse do client");
 
@@ -130,36 +150,11 @@ public final class ParseClient implements Runnable {
         return funds;
     }
 
-    public void uploadImage(String path) {
-        byte[] bytes = new byte[1024];
-        FileOutputStream dataOutputStream;
-        FileInputStream dataInputStream;
-
-        try {
-
-            dataOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
-            System.out.println(clientSocket);
-            System.out.println(path);
-            dataInputStream = new FileInputStream(path);
-            int bytesRead = dataInputStream.read(bytes);
-
-            while (bytesRead != -1) {
-                System.out.println("teste");
-                dataOutputStream.write(bytes, 0, bytesRead);
-                dataOutputStream.flush();
-                bytesRead = dataInputStream.read(bytes);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
     public enum ProtocolMessage {
         LOGIN("login"),
         REGISTER("register");
+
 
         private String message;
 
@@ -173,5 +168,39 @@ public final class ParseClient implements Runnable {
 
 
     }
+
+    public void uploadImage(String path) {
+
+
+        byte[] bytes = new byte[1024];
+        FileOutputStream fileOutputStream;
+        FileInputStream fileInputStream;
+
+        try {
+
+            fileOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
+            System.out.println(clientSocket);
+            fileInputStream = new FileInputStream(path);
+            int bytesRead = fileInputStream.read(bytes);
+
+            while (bytesRead != -1) {
+
+                System.out.println("teste");
+                fileOutputStream.write(bytes, 0, bytesRead);
+                bytesRead = fileInputStream.read(bytes);
+
+
+                fileOutputStream.flush();
+            }
+
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            out.println(path);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

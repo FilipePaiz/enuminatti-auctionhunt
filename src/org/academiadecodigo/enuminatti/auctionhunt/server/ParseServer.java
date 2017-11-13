@@ -1,6 +1,7 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import org.academiadecodigo.enuminatti.auctionhunt.client.ParseClient;
+import org.academiadecodigo.enuminatti.auctionhunt.client.ProfileController;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
 import java.io.*;
@@ -40,23 +41,40 @@ public final class ParseServer {
             loginDecodificate(line);
             return;
         }
-        if(line.startsWith("/item/")){
+        if (line.endsWith(".jpg")) {
             itemDecodificate(line);
         }
-    }
+        }
+
 
     private void itemDecodificate(String line) {
 
+        byte[] bytes = new byte[1024];
         line = line.replace("/item/", "");
-        String[] words = line.split("#");
+        String[] words = line.split("€");
+
+
 
         try {
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-            out.println("/item/done");
+
+            FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
+            FileInputStream fileInputStream = new FileInputStream(line);
+            System.out.println(fileInputStream);
+
+            int bytesReaden = fileInputStream.read(bytes);
+
+            while (bytesReaden != -1) {
+
+                itemOutput.write(bytes, 0, bytesReaden);
+                itemOutput.flush();
+                bytesReaden = fileInputStream.read(bytes);
+
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(words[0]);
     }
 
 

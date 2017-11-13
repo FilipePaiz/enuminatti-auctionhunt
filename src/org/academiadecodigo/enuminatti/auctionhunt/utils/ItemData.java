@@ -88,7 +88,7 @@ public class ItemData {
 
     /**
      *
-     * @return  returns the present day
+     * @return  returns the present day in string
      */
     private static String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

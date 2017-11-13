@@ -118,9 +118,9 @@ public final class ParseClient implements Runnable {
      */
     public boolean decodeServerMessage(String string) {
 
-        if(string.equals("login not done")|| string.equals("register not done")){
-            return false;
-        }
+        //if(string.equals("login not done")|| string.equals("register not done")){
+          //  return false;
+        //}
 
         if(string.startsWith("/login/done/")) {
             string = string.replace("/login/done/", "");
@@ -172,30 +172,4 @@ public final class ParseClient implements Runnable {
     /**
      *
      */
-    public enum ProtocolMessage {
-        LOGIN("login"),
-        REGISTER("register");
-
-
-        private String message;
-
-        /**
-         *
-         * @param message
-         */
-        ProtocolMessage(String message) {
-            this.message = message;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public String getMessage() {
-            return message;
-        }
-
-
-    }
-
 }

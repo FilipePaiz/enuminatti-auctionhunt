@@ -60,7 +60,7 @@ public final class UserData {
             read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
             String line = read.readLine();
             while (line != null) {
-                if (line.equals("Username= " + user.getUsername())) {
+                if (line.equals("Username: " + user.getUsername())) {
                     return true;
                 }
                 line = read.readLine();
@@ -85,7 +85,7 @@ public final class UserData {
             read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
             String line = read.readLine();
             while (line != null) {
-                if (line.equals("Username= " + username) && (read.readLine()).equals("Password= " + Security.getHash(password))) {
+                if (line.equals("Username: " + username) && (read.readLine()).equals("Password: " + Security.getHash(password))) {
                     return true;
                 }
                 line = read.readLine();
@@ -106,7 +106,7 @@ public final class UserData {
             read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
             String line = read.readLine();
             while (line != null) {
-                if (line.equals("Username= " + username)) {
+                if (line.equals("Username: " + username)) {
                     return true;
                 }
                 line = read.readLine();
@@ -126,9 +126,9 @@ public final class UserData {
             read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
             String line = read.readLine();
             while (line != null) {
-                if (line.equals("Username= " + username)) {
+                if (line.equals("Username: " + username)) {
                     line = read.readLine();
-                    while (!line.startsWith("Funds= ")) {
+                    while (!line.startsWith("Funds: ")) {
                         line = read.readLine();
                     }
                     String[] words = line.split(" ");

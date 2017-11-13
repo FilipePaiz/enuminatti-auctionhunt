@@ -7,6 +7,7 @@ public class Item {
 
     private User user;
     private String itemName;
+    private int id;
     private String itemDescription;
     private int askingPrice; //price setted by user to sell
     private int actualBid; //last bid
@@ -93,11 +94,18 @@ public class Item {
         this.user = user;
     }
 
+    /**
+     *
+     * @param newBidder
+     * @param money
+     * @return
+     */
     public boolean bidOnItem(User newBidder, int money) {
         if(!MoneyOperations.removeMoney(newBidder,money) || money < actualBid) {
             System.out.println("Bid not made"); //this will remove the money from bid to the actual bidder
             return false;
         }
+
         MoneyOperations.addMoney(user, actualBid); //this will return the money to the previous bidder
         user = newBidder;
         actualBid = money;

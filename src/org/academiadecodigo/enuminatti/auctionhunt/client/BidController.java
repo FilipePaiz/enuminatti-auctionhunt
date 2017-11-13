@@ -19,9 +19,10 @@ import java.util.ResourceBundle;
 /**
  * Created by codecadet on 08/11/2017.
  */
-public class BidController implements Initializable{
+public class BidController implements Initializable {
 
     private BidService bidService;
+
     private int itemOnShow;
 
     @FXML
@@ -65,40 +66,45 @@ public class BidController implements Initializable{
 
 
     /**
-     *
      * @param event
      */
     @FXML
     void OnNextButtonAction(ActionEvent event) {
         //to use this button is needed a linkedlist with items
-        itemOnShow++;
-        Item item = bidService.getItems().get(itemOnShow);
-        showItem(item);
+        //itemOnShow++;
+        //Item item = bidService.getItems().get(itemOnShow);
+        //showItem(item);
+        System.out.println("depois");
+
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void OnPreviousButtonAction(ActionEvent event) {
         //to use this button is needed a linkedlist with items
-        itemOnShow--;
-        Item item = bidService.getItems().get(itemOnShow);
-        showItem(item);
+        // itemOnShow--;
+        // Item item = bidService.getItems().get(itemOnShow);
+        //showItem(item);
+
+        System.out.println("antes");
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void onBidButtonAction(ActionEvent event) {
-        //waiting for logic connection
+
+        int counter = 0;
+
+        int money = Integer.parseInt(clientBid.getText());
+
+        bidService.bidOnItem(++counter, money, ParseClient.getInstance().);
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -108,19 +114,17 @@ public class BidController implements Initializable{
     }
 
     /**
-     *
      * @param item
      */
     private void showItem(Item item) {
-      /*  lastBid.setText(item.getActualBid()+"");
-        askingPrice.setText(item.getAskingPrice()+"");
+        lastBid.setText(item.getActualBid() + "");
+        askingPrice.setText(item.getAskingPrice() + "");
         itemName.setText(item.getItemName());
         descriptionText.setText(item.getItemDescription());
-        itemImage.setImage(new Image(item.getPictureURL()));  */
+        itemImage.setImage(new Image(item.getPictureURL()));
     }
 
     /**
-     *
      * @param location
      * @param resources
      */
@@ -128,7 +132,7 @@ public class BidController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         //setText() with values given by item
         bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
-       // showItem(bidService.getItems().get(itemOnShow));
+        //showItem(bidService.getItems().get(itemOnShow));
     }
 }
 

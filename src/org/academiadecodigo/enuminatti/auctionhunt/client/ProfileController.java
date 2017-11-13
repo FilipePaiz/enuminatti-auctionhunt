@@ -24,28 +24,28 @@ public class ProfileController implements Initializable {
     private Button MyFundsButton;
 
     @FXML
-    private Label Money;
+    private Label funds;
 
     @FXML
-    private Label NumberOfItems;
+    private Label numberOfItems;
 
     @FXML
-    private Button LogOutButton;
+    private Button logOutButton;
 
     @FXML
     private Button GoToAuctionButton;
 
     @FXML
-    private Pane DepositWithdrawMoey;
+    private Pane depositWithdrawMoey;
 
     @FXML
-    private Button DepositButton;
+    private Button depositButton;
 
     @FXML
-    private Button WithdrawButton;
+    private Button withdrawButton;
 
     @FXML
-    private TextField InsertWithdrawMoney;
+    private TextField insertWithdrawMoney;
 
     @FXML
     private Button UploadItemButton;
@@ -77,7 +77,9 @@ public class ProfileController implements Initializable {
      */
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
+        String money = insertWithdrawMoney.getText();
 
+        transferMoney(money,depositButton.getText());
     }
 
     /**
@@ -126,6 +128,8 @@ public class ProfileController implements Initializable {
     @FXML
     void onMyFundsButtonPressed(ActionEvent event) {
 
+
+
     }
 
     /**
@@ -153,6 +157,26 @@ public class ProfileController implements Initializable {
     @FXML
     void onWithdrawButtonPressed(ActionEvent event) {
 
+        String money = insertWithdrawMoney.getText();
+
+        if (Integer.parseInt(money) > Integer.parseInt(funds.getText())) {
+            return;
+        }
+
+        transferMoney(money, withdrawButton.getText());
+
+    }
+
+    private void transferMoney(String money, String buttonText) {
+
+        String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
+        ParseClient.getInstance().sendData(moneyAndHead);
+        String serverMessage = ParseClient.getInstance().readData();
+        if (!ParseClient.getInstance().decodeServerMessage(serverMessage)) {
+            return;
+        }
+        funds.setText(ParseClient.getInstance().getFunds());
+
     }
 
 
@@ -163,8 +187,8 @@ public class ProfileController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Money.setText(ParseClient.getInstance().getUserFunds());
-        NumberOfItems.setText(ParseClient.getInstance().getUserName());
+        funds.setText(ParseClient.getInstance().getUserFunds());
+        numberOfItems.setText(ParseClient.getInstance().getUserName());
 
     }
 }

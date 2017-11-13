@@ -153,6 +153,28 @@ public final class ParseClient implements Runnable {
         return funds;
     }
 
+    public void uploadImage(String path) {
+        byte[] bytes = new byte[1024];
+        DataOutputStream dataOutputStream = null;
+        DataInputStream dataInputStream = null;
+
+        try {
+            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
+            dataInputStream = new DataInputStream(new FileInputStream(path));
+            int bytesRead = dataInputStream.read(bytes);
+
+            while (bytesRead != -1) {
+                dataOutputStream.write(bytes, 0, bytesRead);
+                dataOutputStream.flush();
+                bytesRead = dataInputStream.read(bytes);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public enum ProtocolMessage {
         LOGIN("login"),

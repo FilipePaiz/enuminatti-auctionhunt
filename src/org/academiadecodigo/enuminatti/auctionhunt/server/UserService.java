@@ -24,11 +24,13 @@ public interface UserService extends Service {
      * @param username
      * @return
      */
-    User findByName(String username);
+    boolean findByName(String username);
 
     /**
      *
      * @return
      */
     int count();
+
+    String getUserFunds(String username);
 }

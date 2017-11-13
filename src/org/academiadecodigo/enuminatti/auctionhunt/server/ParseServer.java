@@ -88,7 +88,7 @@ public final class ParseServer {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
             if (userService.authenticate(words[0], words[1])) {
-                out.println("/login/done/" + words[0] + "#" + String.valueOf(userService.findByName(words[0]).getFunds()));
+                out.println("/login/done/" + words[0] + "#" + userService.getUserFunds(words[0]));
                 return;
             }
 
@@ -114,10 +114,9 @@ public final class ParseServer {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
-
-            if (userService.findByName(words[0]) == null) {
+            if (!userService.findByName(words[0])) {
                 userService.addUser(new User(words[0], words[1], Security.getHash(words[2]), 0));
-                System.out.println("User: " + userService.count());
+                System.out.println("Users: " + userService.count());
                 out.println("/regist/done/" + line);
                 return;
 

@@ -1,5 +1,7 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
+import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
+
 /**
  * Created by Someone who is not me on 09/11/17.
  */
@@ -92,11 +94,10 @@ public class User {
      */
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return  "Username= " + username + '\n' +
+                "Password= " + password + '\n' +
+                "Email= " + email + '\n' +
+                "Funds= " + funds;
     }
 }
 

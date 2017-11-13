@@ -172,32 +172,31 @@ public final class ParseClient implements Runnable {
     public void uploadImage(String path) {
 
 
-        byte[] bytes = new byte[1024];
-        FileOutputStream fileOutputStream;
-        FileInputStream fileInputStream;
+       // byte[] bytes = new byte[1024];
+        BufferedWriter bufferedWriter;
+        BufferedReader bufferedReader;
 
         try {
 
-            fileOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
+           bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 //            System.out.println(clientSocket);
-            fileInputStream = new FileInputStream(path);
-            int bytesRead = fileInputStream.read(bytes);
+            bufferedReader = new BufferedReader(new FileReader(path));
+            String bytesRead = bufferedReader.readLine();
 
-            while (bytesRead != -1) {
+            while (bytesRead != null) {
 
-                byte[] bytePath = ("/item/" + path + "€").getBytes();
-                fileOutputStream.write(bytePath, 0, bytePath.length);
+                //String bytePath = ("/item/" + path + "€");
+                //bufferedWriter.write(bytePath);
 
                 System.out.println("teste");
-                fileOutputStream.write(bytes, 0, bytesRead);
-                bytesRead = fileInputStream.read(bytes);
-
-
-                fileOutputStream.flush();
+                bufferedWriter.write(bytesRead);
+                bufferedWriter.flush();
+                bytesRead = bufferedReader.readLine();
+                System.out.println(path);
             }
+           // PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-            out.println(path);
+    //out.println(path);
 
         } catch (IOException e) {
             e.printStackTrace();

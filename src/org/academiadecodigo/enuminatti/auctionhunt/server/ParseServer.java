@@ -57,17 +57,17 @@ public final class ParseServer {
 
         try {
 
-            FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
-            FileInputStream fileInputStream = new FileInputStream(line);
-            System.out.println(fileInputStream);
+            BufferedWriter itemOutput = new BufferedWriter(new FileWriter("resources/test.jpg"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(line));
+            System.out.println(line);
 
-            int bytesReaden = fileInputStream.read(bytes);
+            String bytesReaden = bufferedReader.readLine();
 
-            while (bytesReaden != -1) {
+            while (bytesReaden != null) {
 
-                itemOutput.write(bytes, 0, bytesReaden);
+                itemOutput.write(bytesReaden);
                 itemOutput.flush();
-                bytesReaden = fileInputStream.read(bytes);
+                bytesReaden = bufferedReader.readLine();
 
             }
 

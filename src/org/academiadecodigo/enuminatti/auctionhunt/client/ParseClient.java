@@ -172,4 +172,31 @@ public final class ParseClient implements Runnable {
 
     }
 
+    public void uploadImage(String path) {
+        byte[] bytes = new byte[1024];
+        FileOutputStream dataOutputStream;
+        FileInputStream dataInputStream;
+
+        try {
+
+            dataOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
+            System.out.println(clientSocket);
+            System.out.println(path);
+            dataInputStream = new FileInputStream(path);
+            int bytesRead = dataInputStream.read(bytes);
+
+            while (bytesRead != -1) {
+                System.out.println("teste");
+                dataOutputStream.write(bytes, 0, bytesRead);
+                dataOutputStream.flush();
+                bytesRead = dataInputStream.read(bytes);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }

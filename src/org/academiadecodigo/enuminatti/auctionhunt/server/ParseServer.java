@@ -1,6 +1,8 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -19,7 +21,6 @@ public final class ParseServer {
     }
 
     /**
-     *
      * @return
      */
     public static ParseServer getInstance() {
@@ -35,7 +36,6 @@ public final class ParseServer {
 
 
     /**
-     *
      * @param line
      */
     public void validateData(String line) {
@@ -49,13 +49,68 @@ public final class ParseServer {
             loginDecodificate(line);
             return;
         }
-        if(line.startsWith("/item/")){
+        if (line.startsWith("/item/")) {
             itemDecodificate(line);
+        }
+        if (line.startsWith("/withdraw/")) {
+            withdrawDecodificate(line);
+        }
+        if (line.startsWith("/deposit/")) {
+            depositDecodificate(line);
         }
     }
 
+    private void depositDecodificate(String line) {
+
+        line = line.replace("/deposit/", "");
+        String[] words = line.split("#");
+
+        MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            moneyService.depositMoney(words[0], words[1]);
+
+            out.println("/deposit/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]);
+
+        } catch (
+                IOException e)
+
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+}
+
+    private void withdrawDecodificate(String line) {
+
+        line = line.replace("/withdraw/", "");
+        String[] words = line.split("#");
+
+        MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            if(!moneyService.withdrawMoney(words[0], words[1])) {
+                return;
+            }
+
+            out.println("/withdraw/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]);
+
+        } catch (
+                IOException e)
+
+        {
+            e.printStackTrace();
+        }
+
+    }
+
     /**
-     *
      * @param line
      */
     private void itemDecodificate(String line) {
@@ -74,7 +129,6 @@ public final class ParseServer {
 
 
     /**
-     *
      * @param line
      */
     private void loginDecodificate(String line) {
@@ -101,7 +155,6 @@ public final class ParseServer {
     }
 
     /**
-     *
      * @param line
      */
     private void registerDecodificate(String line) {
@@ -132,7 +185,6 @@ public final class ParseServer {
     }
 
     /**
-     *
      * @param clientSocket
      */
     public void setClientSocket(Socket clientSocket) {

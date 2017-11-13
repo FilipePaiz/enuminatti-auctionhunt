@@ -88,7 +88,7 @@ public class ProfileController implements Initializable {
 
         String dataHead = ParseClient.getInstance().setDataServer("URLitem", GoToAuctionButton.getText());
         System.out.println(dataHead);
-        ParseClient.getInstance().sendData(dataHead);
+        ParseClient.getInstance().uploadImage(dataHead);
 
         String receiveHead = ParseClient.getInstance().readData();
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
@@ -141,7 +141,8 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
-        String path = UploadImageDirectory.getPromptText();
+
+        String path = UploadImageDirectory.getText();
         ParseClient.getInstance().uploadImage(path);
 
     }

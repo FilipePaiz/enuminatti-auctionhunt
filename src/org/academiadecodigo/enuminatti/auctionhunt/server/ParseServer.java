@@ -41,7 +41,7 @@ public final class ParseServer {
             loginDecodificate(line);
             return;
         }
-        if (line.startsWith("/item/")) {
+        if (line.endsWith(".jpg")) {
             itemDecodificate(line);
         }
         }
@@ -57,22 +57,24 @@ public final class ParseServer {
 
         try {
 
-            DataOutputStream itemOutput = new DataOutputStream(clientSocket.getOutputStream());
-            DataInputStream dataInputStream = new DataInputStream(new FileInputStream(line));
+            FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
+            FileInputStream fileInputStream = new FileInputStream(line);
+            System.out.println(fileInputStream);
 
-            int bytesReaden = dataInputStream.read(bytes);
+            int bytesReaden = fileInputStream.read(bytes);
 
             while (bytesReaden != -1) {
 
                 itemOutput.write(bytes, 0, bytesReaden);
                 itemOutput.flush();
-                bytesReaden = dataInputStream.read(bytes);
-               System.out.println("/item/done/" + words[0]);
+                bytesReaden = fileInputStream.read(bytes);
+
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(words[0]);
     }
 
 

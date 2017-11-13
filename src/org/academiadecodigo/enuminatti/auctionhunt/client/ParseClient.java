@@ -1,7 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import org.academiadecodigo.enuminatti.auctionhunt.server.User;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -60,7 +58,6 @@ public final class ParseClient implements Runnable {
     }
 
 
-
     public void sendData(String data) {
 
         byte[] bytes = new byte[1024];
@@ -77,13 +74,13 @@ public final class ParseClient implements Runnable {
                 int bytesReaden = dataInputStream.read(bytes);
 
                 while (bytesReaden != -1) {
-                    
+
                     itemOutput.write(bytes, 0, bytesReaden);
                     itemOutput.flush();
                     bytesReaden = dataInputStream.read(bytes);
                 }
             }
-            
+
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             out.println(data);
 
@@ -153,28 +150,6 @@ public final class ParseClient implements Runnable {
         return funds;
     }
 
-    public void uploadImage(String path) {
-        byte[] bytes = new byte[1024];
-        DataOutputStream dataOutputStream = null;
-        DataInputStream dataInputStream = null;
-
-        try {
-            dataOutputStream = new DataOutputStream(clientSocket.getOutputStream());
-            dataInputStream = new DataInputStream(new FileInputStream(path));
-            int bytesRead = dataInputStream.read(bytes);
-
-            while (bytesRead != -1) {
-                dataOutputStream.write(bytes, 0, bytesRead);
-                dataOutputStream.flush();
-                bytesRead = dataInputStream.read(bytes);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
     public enum ProtocolMessage {
         LOGIN("login"),
@@ -195,24 +170,34 @@ public final class ParseClient implements Runnable {
     }
 
     public void uploadImage(String path) {
+
+
         byte[] bytes = new byte[1024];
-        FileOutputStream dataOutputStream;
-        FileInputStream dataInputStream;
+        FileOutputStream fileOutputStream;
+        FileInputStream fileInputStream;
 
         try {
 
-            dataOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
-            System.out.println(clientSocket);
-            System.out.println(path);
-            dataInputStream = new FileInputStream(path);
-            int bytesRead = dataInputStream.read(bytes);
+            fileOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
+//            System.out.println(clientSocket);
+            fileInputStream = new FileInputStream(path);
+            int bytesRead = fileInputStream.read(bytes);
 
             while (bytesRead != -1) {
+
+                byte[] bytePath = ("/item/" + path + "€").getBytes();
+                fileOutputStream.write(bytePath, 0, bytePath.length);
+
                 System.out.println("teste");
-                dataOutputStream.write(bytes, 0, bytesRead);
-                dataOutputStream.flush();
-                bytesRead = dataInputStream.read(bytes);
+                fileOutputStream.write(bytes, 0, bytesRead);
+                bytesRead = fileInputStream.read(bytes);
+
+
+                fileOutputStream.flush();
             }
+
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            out.println(path);
 
         } catch (IOException e) {
             e.printStackTrace();

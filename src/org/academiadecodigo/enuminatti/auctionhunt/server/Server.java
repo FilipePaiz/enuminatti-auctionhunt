@@ -121,21 +121,8 @@ public class Server {
                 while (true) {
 
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
                     String line = in.readLine();
-
                     ParseServer.getInstance().validateData(line);
-
-                    DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-                    FileOutputStream fout = new FileOutputStream("resources/teste.jpg");
-                    int i;
-                    while ( (i = dis.read()) > -1) {
-                        fout.write(i);
-                    }
-
-                    fout.flush();
-                    fout.close();
-                    dis.close();
 
 
                 }
@@ -153,29 +140,6 @@ public class Server {
             }
 
     }
-
-
-
-       /* private void copyFile() {
-
-            byte[] bytes = new byte[1024];
-
-            try {
-                int bytesReaden = dataInputStream.read(bytes);
-
-                while (bytesReaden != -1){
-                    dataOutputStream.write(bytes, 0, bytesReaden);
-                    bytesReaden = dataInputStream.read(bytes);
-                }
-
-            } catch (IOException e){
-                e.printStackTrace();
-            } finally {
-
-                closeFiles();
-            }
-
-        }*/
 
 
         /**

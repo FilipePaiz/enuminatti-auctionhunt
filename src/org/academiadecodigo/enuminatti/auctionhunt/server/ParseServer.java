@@ -50,8 +50,9 @@ public final class ParseServer {
             return;
         }
         if (line.startsWith("/item/")) {
+            itemDecodificate(line);
         }
-        if(line.endsWith(".jpg")){
+        if (line.endsWith(".jpg")) {
             itemDecodificate(line);
         }
 
@@ -87,7 +88,6 @@ public final class ParseServer {
     }
 
 
-
     private void withdrawDecodificate(String line) {
 
         line = line.replace("/withdraw/", "");
@@ -118,16 +118,15 @@ public final class ParseServer {
      */
     private void itemDecodificate(String line) {
 
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[512 * 1024];
         line = line.replace("/item/", "");
-        String[] words = line.split("€");
-
-
-
+        //String[] words = line.split("€");
+        File file = new File(line);
+                System.out.println(line + "<-----------");
         try {
 
             FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
-            FileInputStream fileInputStream = new FileInputStream(line);
+            DataInputStream fileInputStream = new DataInputStream(clientSocket.getInputStream());
             System.out.println(fileInputStream);
 
             int bytesReaden = fileInputStream.read(bytes);
@@ -135,18 +134,16 @@ public final class ParseServer {
             while (bytesReaden != -1) {
 
                 itemOutput.write(bytes, 0, bytesReaden);
-                itemOutput.flush();
                 bytesReaden = fileInputStream.read(bytes);
 
             }
 
+            itemOutput.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(words[0]);
+        //System.out.println(words[0]);
     }
-
-
 
 
     /**

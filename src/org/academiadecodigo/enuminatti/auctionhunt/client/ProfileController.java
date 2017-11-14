@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
 import java.io.IOException;
 import java.net.URL;
@@ -86,7 +87,7 @@ public class ProfileController implements Initializable {
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
-
+        UserData.getInstance().changeUserFunds("bruno", "400");
     }
 
     /**
@@ -128,7 +129,8 @@ public class ProfileController implements Initializable {
      */
     @FXML
     void onMyFundsButtonPressed(ActionEvent event) {
-
+        UserData.getInstance().changeUserFunds("ana", "400");
+        UserData.getInstance().changeUserFunds("bruno", "230");
     }
 
     /**

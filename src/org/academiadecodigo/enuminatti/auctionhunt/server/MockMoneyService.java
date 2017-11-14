@@ -17,7 +17,7 @@ public class MockMoneyService implements MoneyService{
     @Override
     public void depositMoney(String username, String money) {
         int moneyToAdd = Integer.parseInt(UserData.getInstance().userFunds(username)) + Integer.parseInt(money);
-        UserData.getInstance().changeUserFunds(moneyToAdd);
+        UserData.getInstance().changeUserFunds(username,(moneyToAdd+""));
     }
 
     /*public static void addMoney(String username, int money) {
@@ -31,7 +31,7 @@ public class MockMoneyService implements MoneyService{
             return false;
         }
         int newFunds = Integer.parseInt(UserData.getInstance().userFunds(username))-money;
-        UserData.getInstance().changeUserFunds(newFunds);
+        UserData.getInstance().changeUserFunds(username,(newFunds+""));
         return true;
     }
 

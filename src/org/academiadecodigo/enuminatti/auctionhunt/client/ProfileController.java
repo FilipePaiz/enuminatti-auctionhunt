@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
 import java.io.IOException;
 import java.net.URL;
@@ -80,6 +81,7 @@ public class ProfileController implements Initializable {
         String money = insertWithdrawMoney.getText();
 
         transferMoney(money,depositButton.getText());
+
     }
 
     /**
@@ -127,8 +129,6 @@ public class ProfileController implements Initializable {
      */
     @FXML
     void onMyFundsButtonPressed(ActionEvent event) {
-
-
 
     }
 

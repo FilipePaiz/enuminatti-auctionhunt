@@ -56,7 +56,11 @@
                         <TextField fx:id="InsertWithdrawMoney" layoutX="17.0" layoutY="73.0" />
                      </children>
                   </Pane>
-                  <Button fx:id="UploadItemButton" layoutX="29.0" layoutY="284.0" mnemonicParsing="false" onAction="#onUploadButtonPressed" text="Upload Item" />
+                  <Button fx:id="UploadItemButton" layoutX="29.0" layoutY="271.0" mnemonicParsing="false" onAction="#onUploadButtonPressed" text="Upload Item" />
+                  <Label layoutX="42.0" layoutY="320.0" />
+                  <TextField fx:id="UploadImageDirectory" layoutX="29.0" layoutY="302.0" prefHeight="27.0" prefWidth="223.0" />
+                  <Button fx:id="OkUpload" layoutX="58.0" layoutY="329.0" mnemonicParsing="false" onAction="#onButtonPressedOkPressed" text="Ok" />
+                  <Button fx:id="CancelUpload" layoutX="155.0" layoutY="329.0" mnemonicParsing="false" onAction="#onButtonPressedCancelUpload" text="Cancel" />
                </children></AnchorPane>
       </content>
     </Tab>

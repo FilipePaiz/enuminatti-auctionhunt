@@ -76,6 +76,15 @@ public class ProfileController implements Initializable {
      * @param event
      */
     @FXML
+    private TextField UploadImageDirectory;
+
+    @FXML
+    private Button OkUpload;
+
+    @FXML
+    private Button CancelUpload;
+
+    @FXML
     void onDepositButtonPressed(ActionEvent event) {
 
     }
@@ -89,7 +98,7 @@ public class ProfileController implements Initializable {
 
         String dataHead = ParseClient.getInstance().setDataServer("URLitem", GoToAuctionButton.getText());
         System.out.println(dataHead);
-        ParseClient.getInstance().sendData(dataHead);
+        ParseClient.getInstance().uploadImage(dataHead);
 
         String receiveHead = ParseClient.getInstance().readData();
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
@@ -135,6 +144,12 @@ public class ProfileController implements Initializable {
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
 
+      /*  String data = "aqui";
+        ParseClient.getInstance().sendData(data);
+        String receiveHead = ParseClient.getInstance().readData();
+        ParseClient.getInstance().decodeServerMessage(receiveHead);*/
+
+
     }
 
     /**
@@ -155,6 +170,18 @@ public class ProfileController implements Initializable {
 
     }
 
+    @FXML
+    void onButtonPressedCancelUpload(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onButtonPressedOkPressed(ActionEvent event) {
+
+        String path = UploadImageDirectory.getText();
+        ParseClient.getInstance().uploadImage(path);
+
+    }
 
     /**
      *

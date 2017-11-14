@@ -5,6 +5,11 @@ import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
 import org.academiadecodigo.enuminatti.auctionhunt.server.User;
 
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by codecadet on 12/11/17.
@@ -20,7 +25,6 @@ public final class UserData {
     }
 
     /**
-     *
      * @return
      */
     public static UserData getInstance() {
@@ -45,7 +49,7 @@ public final class UserData {
             save.newLine();
             save.flush();
 
-            save.close();
+            //  save.close();
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -145,4 +149,47 @@ public final class UserData {
         }
         return null;
     }
+
+    public void changeUserFunds(String username, String funds) {
+
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "UserData");
+        try {
+
+            List<String> list = Files.readAllLines(path);
+            readListLines(list, username, funds);
+
+            PrintWriter printWriter = new PrintWriter(new FileWriter(Server.PATH + "UserData"), true);
+
+            for (String newLines : list) {
+                printWriter.println(newLines);
+            }
+            printWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readListLines(List<String> list, String username, String funds) {
+
+        int index = 0;
+        Iterator<String> iterator = list.iterator();
+
+        while (iterator.hasNext()) {
+            index++;
+            String next = iterator.next();
+            if (next.equals("Username= " + username)) {
+                next = iterator.next();
+                while (!next.startsWith("Funds= ")) {
+                    index++;
+                    next = iterator.next();
+                }
+
+                next = next.replace("Funds= " + userFunds(username), "Funds= " + funds);
+                list.set(index, next);
+                break;
+            }
+        }
+    }
+    
 }

@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 
 public class LogicController implements Initializable, Controller {
 
+    private Socket clientSocket;
+
     @FXML
     private Button logOutButton;
 
@@ -26,6 +28,9 @@ public class LogicController implements Initializable, Controller {
 
     @FXML
     private TextField usernameField;
+
+    @FXML
+    private TextField hostField;
 
     @FXML
     private Text usernameText;
@@ -83,6 +88,18 @@ public class LogicController implements Initializable, Controller {
     @FXML
     void onLogin(ActionEvent event) {
 
+        if(clientSocket == null) {
+
+            try {
+
+                clientSocket = new Socket(hostField.getText(), Server.PORT);
+                ParseClient.getInstance().setClientSocket(clientSocket);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (usernameField.getText().isEmpty()) {
             couldNotLogIn.setVisible(true);
             return;
@@ -118,6 +135,18 @@ public class LogicController implements Initializable, Controller {
      */
     @FXML
     void onRegister(ActionEvent event) {
+
+        if(clientSocket == null) {
+
+            try {
+
+                clientSocket = new Socket(hostField.getText(), Server.PORT);
+                ParseClient.getInstance().setClientSocket(clientSocket);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         if(checkEmptyFields()){
             couldNotRegister.setText("Fill all fields");
@@ -191,18 +220,6 @@ public class LogicController implements Initializable, Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-        Socket clientSocket = null;
-
-        try {
-
-            clientSocket = new Socket(Server.HOST, Server.PORT);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ParseClient.getInstance().setClientSocket(clientSocket);
         showLogin();
 
     }

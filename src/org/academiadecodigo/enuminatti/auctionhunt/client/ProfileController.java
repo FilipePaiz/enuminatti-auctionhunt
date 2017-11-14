@@ -98,7 +98,8 @@ public class ProfileController implements Initializable {
 
         String dataHead = ParseClient.getInstance().setDataServer("URLitem", GoToAuctionButton.getText());
         System.out.println(dataHead);
-        ParseClient.getInstance().uploadImage(dataHead);
+
+        ParseClient.getInstance().sendData(dataHead);
 
         String receiveHead = ParseClient.getInstance().readData();
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);

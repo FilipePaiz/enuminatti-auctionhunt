@@ -72,7 +72,7 @@ public final class ParseServer {
 
             moneyService.depositMoney(words[0], words[1]);
 
-            out.println("/deposit/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]);
+            out.println("/deposit/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]));
 
         } catch (
                 IOException e)
@@ -83,7 +83,7 @@ public final class ParseServer {
 
     }
 
-}
+
 
     private void withdrawDecodificate(String line) {
 
@@ -95,11 +95,11 @@ public final class ParseServer {
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
-            if(!moneyService.withdrawMoney(words[0], words[1])) {
+            if (!moneyService.withdrawMoney(words[0], words[1])) {
                 return;
             }
 
-            out.println("/withdraw/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]);
+            out.println("/withdraw/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]));
 
         } catch (
                 IOException e)

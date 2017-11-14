@@ -13,13 +13,14 @@ import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
 import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 
+import javax.naming.ldap.Control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Created by codecadet on 08/11/2017.
  */
-public class BidController implements Initializable{
+public class BidController implements Initializable, Controller{
 
     private BidService bidService;
     private int itemOnShow;

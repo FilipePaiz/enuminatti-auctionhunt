@@ -133,6 +133,8 @@ public final class ParseClient implements Runnable {
             String[] words = string.split("#");
             userName = words[0];
             funds = words[1];
+            System.out.println(userName);
+            System.out.println(funds);
         }
 
         if (string.startsWith("/withdraw/done/")) {

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable {
+public class ProfileController implements Initializable,Controller {
 
     @FXML
     private Label Photo;
@@ -187,9 +187,14 @@ public class ProfileController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println(ParseClient.getInstance().getUserName() + " - ProfileController");
+        System.out.println(ParseClient.getInstance().getUserFunds() + " - ProfileController");
+        showValues();
+    }
+
+    private void showValues() {
         funds.setText(ParseClient.getInstance().getUserFunds());
         numberOfItems.setText(ParseClient.getInstance().getUserName());
-
     }
 }
 

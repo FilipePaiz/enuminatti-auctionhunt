@@ -12,15 +12,15 @@ import java.util.Date;
 public class ItemData {
 
     /**
-     *
-     * @param file  receives the file to save
-     * @param name  receives the name of the owner
-     * @param itemName  receives the name of the item
-     * @param path  receives the location and the name of the picture
-     * @param price receives the price of the item
+     * @param file     receives the file to save
+     * @param name     receives the name of the owner
+     * @param itemName receives the name of the item
+     * @param path     receives the location and the name of the picture
+     * @param price    receives the price of the item
      * @throws IOException
      */
-    public static void save(String file, String name, String itemName, String path, String price) throws IOException {
+    public static void save(String file, String name, String itemName, String path,
+                            String price, boolean deleteItem, String itemToDelete) throws IOException {
 
         BufferedReader read = new BufferedReader(new FileReader(file));
 
@@ -28,9 +28,15 @@ public class ItemData {
 
         int itemNumber = 0;
 
-        String line;
+        String line = "";
 
         while ((line = read.readLine()) != null) {
+            if (deleteItem) {
+                String trimmedLine = line.trim();
+                if (trimmedLine.equals(itemToDelete))
+                    continue;
+                save.write(line + System.getProperty(itemToDelete));
+            }
             if (line.contains("<------------------->")) {
                 itemNumber = itemNumber + 1;
             }
@@ -41,7 +47,7 @@ public class ItemData {
         String newPath = load(file, path);
 
         save.write("ID: " + name + "\n" +
-                "Item ID: " + itemNumber + "\n" +
+                "Item ID: #" + itemNumber + "\n" +
                 "Item name: " + itemName + "\n" +
                 "Path: " + newPath + "\n" +
                 "Price: " + price + "€\n" +
@@ -53,9 +59,8 @@ public class ItemData {
     }
 
     /**
-     *
-     * @param file  receives the file to save
-     * @param Path  receives the location and the name of the picture
+     * @param file receives the file to save
+     * @param Path receives the location and the name of the picture
      * @return
      */
     public static String load(String file, String Path) {
@@ -73,7 +78,7 @@ public class ItemData {
 
             while ((line = read.readLine()) != null) {
                 if (line.contains(Path)) {
-                    if(newPath.contains("_" + counternumber)) {
+                    if (newPath.contains("_" + counternumber)) {
                         counternumber++;
                     }
                     newPath = Path.concat("_" + counternumber);
@@ -87,12 +92,16 @@ public class ItemData {
     }
 
     /**
-     *
-     * @return  returns the present day
+     * @return returns the present day
      */
     private static String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    private static void delete() {
+
+
     }
 }

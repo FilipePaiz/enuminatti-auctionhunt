@@ -7,13 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
 import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
-
-import javax.naming.ldap.Control;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,7 +21,10 @@ import java.util.ResourceBundle;
  */
 public class BidController implements Initializable, Controller{
 
+    private boolean delete = false;
+
     private BidService bidService;
+
     private int itemOnShow;
 
     @FXML
@@ -72,9 +74,7 @@ public class BidController implements Initializable, Controller{
     @FXML
     void OnNextButtonAction(ActionEvent event) {
         //to use this button is needed a linkedlist with items
-        itemOnShow++;
-        Item item = bidService.getItems().get(itemOnShow);
-        showItem(item);
+        delete = true;
     }
 
     /**
@@ -83,10 +83,12 @@ public class BidController implements Initializable, Controller{
      */
     @FXML
     void OnPreviousButtonAction(ActionEvent event) {
-        //to use this button is needed a linkedlist with items
-        itemOnShow--;
-        Item item = bidService.getItems().get(itemOnShow);
-        showItem(item);
+        try {
+            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995", delete, "2");
+            delete = false;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

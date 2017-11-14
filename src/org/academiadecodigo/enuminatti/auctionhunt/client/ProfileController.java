@@ -117,12 +117,6 @@ public class ProfileController implements Initializable,Controller {
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
 
-        try {
-            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         Navigation.getInstance().back();
     }
 

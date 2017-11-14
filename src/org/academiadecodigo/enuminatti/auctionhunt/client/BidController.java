@@ -11,9 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
 import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
+import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.BoughtItem;
 
 import javax.naming.ldap.Control;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -95,7 +98,11 @@ public class BidController implements Initializable, Controller{
      */
     @FXML
     void onBidButtonAction(ActionEvent event) {
-        //waiting for logic connection
+        try {
+            BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

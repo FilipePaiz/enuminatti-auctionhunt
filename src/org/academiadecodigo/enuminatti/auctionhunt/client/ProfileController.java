@@ -118,7 +118,7 @@ public class ProfileController implements Initializable,Controller {
     void onLogoutButtonPressed(ActionEvent event) {
 
         try {
-            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
+            ItemData.save("resources/ItemData", "Aires", "Subaru_Imprenza", "resources/Subaru", "995");
         } catch (IOException e) {
             e.printStackTrace();
         }

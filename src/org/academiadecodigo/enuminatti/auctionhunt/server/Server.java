@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 public class Server {
 
     private LinkedList<ServerThread> clientList;
-    public static final int PORT = 9090;
+    public static final int PORT = 9091;
     public static final String HOST = "localhost";
     public static final String PATH = "resources/";
 
@@ -125,6 +125,18 @@ public class Server {
                     String line = in.readLine();
 
                     ParseServer.getInstance().validateData(line);
+
+                    DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+                    FileOutputStream fout = new FileOutputStream("resources/teste.jpg");
+                    int i;
+                    while ( (i = dis.read()) > -1) {
+                        fout.write(i);
+                    }
+
+                    fout.flush();
+                    fout.close();
+                    dis.close();
+
 
                 }
 

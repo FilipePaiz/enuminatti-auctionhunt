@@ -82,9 +82,30 @@ public final class ParseClient implements Runnable {
      */
     public void sendData(String data) {
 
+        byte[] bytes = new byte[1024];
+        DataOutputStream itemOutput;
+        DataInputStream dataInputStream;
+
         try {
+            if (data.startsWith("/item/")) {
+                System.out.println("SendData");
+
+                itemOutput = new DataOutputStream(clientSocket.getOutputStream());
+                dataInputStream = new DataInputStream(new FileInputStream(data));
+
+                int bytesReaden = dataInputStream.read(bytes);
+
+                while (bytesReaden != -1) {
+
+                    itemOutput.write(bytes, 0, bytesReaden);
+                    itemOutput.flush();
+                    bytesReaden = dataInputStream.read(bytes);
+                }
+            }
+
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             out.println(data);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,6 +132,8 @@ public final class ParseClient implements Runnable {
                 return "/withdraw/" + userName + "#" + dataSplitted[0] + "\r\n";
             case "Deposit":
                 return "/deposit/" + userName + "#" + dataSplitted[0] + "\r\n";
+            /*case "next"
+                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";*/
             default:
                 System.out.println("Deu merda o parse do client");
 
@@ -220,5 +243,37 @@ public final class ParseClient implements Runnable {
 
 
     }
+
+    public void uploadImage(String path) {
+
+
+        byte[] bytes = new byte[1024];
+        FileOutputStream fileOutputStream;
+        FileInputStream fileInputStream;
+
+        try {
+
+            fileOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
+            fileInputStream = new FileInputStream(path);
+            int bytesRead = fileInputStream.read(bytes);
+
+            while (bytesRead != -1) {
+
+                fileOutputStream.write(bytes, 0, bytesRead);
+                bytesRead = fileInputStream.read(bytes);
+
+
+                fileOutputStream.flush();
+            }
+
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            out.println(path);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

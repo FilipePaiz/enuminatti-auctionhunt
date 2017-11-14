@@ -77,6 +77,15 @@ public class ProfileController implements Initializable,Controller {
      * @param event
      */
     @FXML
+    private TextField UploadImageDirectory;
+
+    @FXML
+    private Button OkUpload;
+
+    @FXML
+    private Button CancelUpload;
+
+    @FXML
     void onDepositButtonPressed(ActionEvent event) {
         String money = insertWithdrawMoney.getText();
 
@@ -91,19 +100,13 @@ public class ProfileController implements Initializable,Controller {
     @FXML
     void onGoToAuctionButtonPressed(ActionEvent event) {
 
-        String dataHead = ParseClient.getInstance().setDataServer("URLitem", GoToAuctionButton.getText());
-        System.out.println(dataHead);
-        ParseClient.getInstance().sendData(dataHead);
 
-        String receiveHead = ParseClient.getInstance().readData();
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
-        if (ParseClient.getInstance().decodeServerMessage(receiveHead)) {
             Navigation.getInstance().loadScreen("bidAuction");
             return;
-        }
 
-        System.out.println("Something wrong happen");
+
 
     }
 
@@ -138,6 +141,12 @@ public class ProfileController implements Initializable,Controller {
      */
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
+
+      /*  String data = "aqui";
+        ParseClient.getInstance().sendData(data);
+        String receiveHead = ParseClient.getInstance().readData();
+        ParseClient.getInstance().decodeServerMessage(receiveHead);*/
+
 
     }
 
@@ -179,6 +188,18 @@ public class ProfileController implements Initializable,Controller {
 
     }
 
+    @FXML
+    void onButtonPressedCancelUpload(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onButtonPressedOkPressed(ActionEvent event) {
+
+        String path = UploadImageDirectory.getText();
+        ParseClient.getInstance().uploadImage(path);
+
+    }
 
     /**
      *

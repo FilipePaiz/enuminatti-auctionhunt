@@ -35,12 +35,12 @@
                            </font>
                         </Button>
                         <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="77.0" text="MyItems" GridPane.rowIndex="1" />
-                        <Label fx:id="Money" prefHeight="41.0" prefWidth="60.0" text="Money" GridPane.columnIndex="1">
+                        <Label fx:id="funds" prefHeight="41.0" prefWidth="60.0" text="Money" GridPane.columnIndex="1">
                            <font>
                               <Font size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="NumberOfItems" prefHeight="41.0" prefWidth="60.0" text="number" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="numberOfItems" prefHeight="41.0" prefWidth="60.0" text="number" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="12.0" />
                            </font>
@@ -49,11 +49,11 @@
                   </GridPane>
                   <Button id="LogOut" fx:id="LogOutButton" layoutX="514.0" layoutY="315.0" mnemonicParsing="false" onAction="#onLogoutButtonPressed" text="Log Out" />
                   <Button fx:id="GoToAuctionButton" layoutX="484.0" layoutY="14.0" mnemonicParsing="false" onAction="#onGoToAuctionButtonPressed" text="Go to Auction" />
-                  <Pane fx:id="DepositWithdrawMoey" layoutX="200.0" layoutY="84.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
+                  <Pane fx:id="depositWithdrawMoey" layoutX="200.0" layoutY="84.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
-                        <Button fx:id="DepositButton" layoutX="23.0" layoutY="130.0" mnemonicParsing="false" onAction="#onDepositButtonPressed" text="Deposit" />
-                        <Button fx:id="WithdrawButton" layoutX="117.0" layoutY="130.0" mnemonicParsing="false" onAction="#onWithdrawButtonPressed" text="Withdraw" />
-                        <TextField fx:id="InsertWithdrawMoney" layoutX="17.0" layoutY="73.0" />
+                        <Button fx:id="depositButton" layoutX="23.0" layoutY="130.0" mnemonicParsing="false" onAction="#onDepositButtonPressed" text="Deposit" />
+                        <Button fx:id="withdrawButton" layoutX="117.0" layoutY="130.0" mnemonicParsing="false" onAction="#onWithdrawButtonPressed" text="Withdraw" />
+                        <TextField fx:id="insertWithdrawMoney" layoutX="17.0" layoutY="73.0" />
                      </children>
                   </Pane>
                   <Button fx:id="UploadItemButton" layoutX="29.0" layoutY="271.0" mnemonicParsing="false" onAction="#onUploadButtonPressed" text="Upload Item" />

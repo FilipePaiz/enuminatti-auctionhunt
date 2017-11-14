@@ -19,8 +19,15 @@ public final class ParseClient implements Runnable {
     private ParseClient() {
     }
 
+    public String getFunds() {
+        return funds;
+    }
+
+    public void setFunds(String funds) {
+        this.funds = funds;
+    }
+
     /**
-     *
      * @return
      */
     public static ParseClient getInstance() {
@@ -35,7 +42,6 @@ public final class ParseClient implements Runnable {
     }
 
     /**
-     *
      * @param clientSocket
      */
     public void setClientSocket(Socket clientSocket) {
@@ -53,7 +59,6 @@ public final class ParseClient implements Runnable {
     }
 
     /**
-     *
      * @return
      */
     public String readData() {
@@ -73,7 +78,6 @@ public final class ParseClient implements Runnable {
     }
 
     /**
-     *
      * @param data
      */
     public void sendData(String data) {
@@ -108,7 +112,6 @@ public final class ParseClient implements Runnable {
     }
 
     /**
-     *
      * @param data
      * @param buttonId
      * @return
@@ -124,7 +127,13 @@ public final class ParseClient implements Runnable {
             case "Sign In":
                 return "/login/" + dataSplitted[0] + "#" + dataSplitted[1] + "\r\n";
             case "Go to Auction":
-                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";
+                return "/item/" + dataSplitted[0] + "#" + "aqui tem" + "\r\n";
+            case "Withdraw":
+                return "/withdraw/" + userName + "#" + dataSplitted[0] + "\r\n";
+            case "Deposit":
+                return "/deposit/" + userName + "#" + dataSplitted[0] + "\r\n";
+            /*case "next"
+                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";*/
             default:
                 System.out.println("Deu merda o parse do client");
 
@@ -133,20 +142,39 @@ public final class ParseClient implements Runnable {
     }
 
     /**
-     *
      * @param string
      * @return
      */
     public boolean decodeServerMessage(String string) {
 
-        if(string.equals("login not done")|| string.equals("register not done")){
+        if (string.equals("login not done") || string.equals("register not done")) {
             return false;
         }
 
-        if(string.startsWith("/login/done/")) {
+        if (string.startsWith("/login/done/")) {
             string = string.replace("/login/done/", "");
             String[] words = string.split("#");
             userName = words[0];
+            funds = words[1];
+            System.out.println(userName);
+            System.out.println(funds);
+        }
+
+        if (string.startsWith("/withdraw/done/")) {
+            string = string.replace("/withdraw/done/", "");
+            String[] words = string.split("#");
+            if (!userName.equals(words[0])) {
+                return false;
+            }
+            funds = words[1];
+        }
+
+        if (string.startsWith("/deposit/done/")) {
+            string = string.replace("/deposit/done/", "");
+            String[] words = string.split("#");
+            if (!userName.equals(words[0])) {
+                return false;
+            }
             funds = words[1];
         }
 
@@ -155,6 +183,7 @@ public final class ParseClient implements Runnable {
 
     /**
      * fgrhtjhgr
+     *
      * @param data Data to be received by the server
      * @return lalal
      */
@@ -175,7 +204,6 @@ public final class ParseClient implements Runnable {
     }
 
     /**
-     *
      * @return
      */
     public String getUserName() {
@@ -183,7 +211,6 @@ public final class ParseClient implements Runnable {
     }
 
     /**
-     *
      * @return
      */
     public String getUserFunds() {
@@ -201,7 +228,6 @@ public final class ParseClient implements Runnable {
         private String message;
 
         /**
-         *
          * @param message
          */
         ProtocolMessage(String message) {
@@ -209,7 +235,6 @@ public final class ParseClient implements Runnable {
         }
 
         /**
-         *
          * @return
          */
         public String getMessage() {

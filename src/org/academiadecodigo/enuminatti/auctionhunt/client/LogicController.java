@@ -9,12 +9,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
+
+import javax.naming.ldap.Control;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogicController implements Initializable {
+public class LogicController implements Initializable, Controller {
 
     @FXML
     private Button logOutButton;

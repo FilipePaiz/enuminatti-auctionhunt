@@ -229,13 +229,11 @@ public final class ParseClient implements Runnable {
         try {
 
             fileOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
-            System.out.println(clientSocket);
             fileInputStream = new FileInputStream(path);
             int bytesRead = fileInputStream.read(bytes);
 
             while (bytesRead != -1) {
 
-                System.out.println("teste");
                 fileOutputStream.write(bytes, 0, bytesRead);
                 bytesRead = fileInputStream.read(bytes);
 

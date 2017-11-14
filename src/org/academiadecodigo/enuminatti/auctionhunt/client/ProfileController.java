@@ -96,20 +96,13 @@ public class ProfileController implements Initializable {
     @FXML
     void onGoToAuctionButtonPressed(ActionEvent event) {
 
-        String dataHead = ParseClient.getInstance().setDataServer("URLitem", GoToAuctionButton.getText());
-        System.out.println(dataHead);
 
-        ParseClient.getInstance().sendData(dataHead);
-
-        String receiveHead = ParseClient.getInstance().readData();
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
-        if (ParseClient.getInstance().decodeServerMessage(receiveHead)) {
             Navigation.getInstance().loadScreen("bidAuction");
             return;
-        }
 
-        System.out.println("Something wrong happen");
+
 
     }
 

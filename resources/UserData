@@ -2,10 +2,20 @@
 Username= ana
 Password= 72019bbac0b3dac88beac9ddfef0ca808919104f
 Email= ana@ac.com
-Funds= 400
+Funds= 0
 <------------------->
 Username= bruno
 Password= 660609b171607ff3dcd294929e5d8239736f4298
 Email= bruno@ac.com
-Funds= 230
+Funds= 1220
+<------------------->
+Username= flavio
+Password= 78425c32ad78109b2b4aa7b799549c63868ddfc5
+Email= flavio@ac.com
+Funds= 1111
+<------------------->
+Username= filipe
+Password= 83492e00133365f6cb687f28d18f33c902ff499
+Email= filipe@ac.com
+Funds= 0
 <------------------->

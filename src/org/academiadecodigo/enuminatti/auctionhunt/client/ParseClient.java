@@ -250,12 +250,14 @@ public final class ParseClient implements Runnable {
         byte[] bytes = new byte[512 * 2048];
         DataInputStream dataIn = null;
         DataOutputStream dataOut = null;
-        String msgProtocol = "/item/\r\n";
         try {
 
             dataOut = new DataOutputStream(clientSocket.getOutputStream());
-            dataIn = new DataInputStream(new FileInputStream(path));
+            File file = new File(path);
+            dataIn = new DataInputStream(new FileInputStream(file));
             int bytesRead = dataIn.read(bytes);
+
+            String msgProtocol = "/item/" + file.length() + "\n";
 
             dataOut.write(msgProtocol.getBytes());
             while (bytesRead != -1) {

@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,9 +9,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 
-import javax.naming.ldap.Control;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
@@ -18,7 +19,8 @@ import java.util.ResourceBundle;
 
 public class LogicController implements Initializable, Controller {
 
-    private Socket clientSocket;
+    private CommunicationService communicationService;
+
 
     @FXML
     private Button logoutButton;
@@ -76,7 +78,7 @@ public class LogicController implements Initializable, Controller {
 
     @FXML
     void changeToLogin(ActionEvent event) {
-       showLogin();
+        showLogin();
     }
 
     @FXML
@@ -85,23 +87,10 @@ public class LogicController implements Initializable, Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void onLogin(ActionEvent event) {
-
-        if(clientSocket == null) {
-
-            try {
-
-                clientSocket = new Socket(emailField.getText(), Server.PORT);
-                ParseClient.getInstance().setClientSocket(clientSocket);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         if (usernameField.getText().isEmpty()) {
             couldNotLogIn.setVisible(true);
@@ -116,47 +105,27 @@ public class LogicController implements Initializable, Controller {
         String data = usernameField.getText() + " " + passwordField.getText();
 
         String dataAndHead = ParseClient.getInstance().setDataServer(data, logInButton.getText());
-        ParseClient.getInstance().sendData(dataAndHead);
 
-        String message = ParseClient.getInstance().readData();
+        communicationService.sendData(dataAndHead);
 
-        if (ParseClient.getInstance().decodeServerMessage(message)) {
 
-            succesfullLog.setVisible(true);
-            Navigation.getInstance().loadScreen("Profile");
-
-            return;
-        }
-
-        couldNotLogIn.setVisible(true);
+//        couldNotLogIn.setVisible(true);
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void onRegister(ActionEvent event) {
 
-        if(clientSocket == null) {
 
-            try {
-
-                clientSocket = new Socket(hostField.getText(), Server.PORT);
-                ParseClient.getInstance().setClientSocket(clientSocket);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if(checkEmptyFields()){
+        if (checkEmptyFields()) {
             couldNotRegister.setText("Fill all fields");
             couldNotRegister.setVisible(true);
             return;
         }
-        if(!checkEmailValidation(emailField.getText())){
+        if (!checkEmailValidation(emailField.getText())) {
             couldNotRegister.setText("Your email isn't in right format");
             couldNotRegister.setVisible(true);
             return;
@@ -167,7 +136,7 @@ public class LogicController implements Initializable, Controller {
 
         String register = ParseClient.getInstance().setDataServer(registerData, logoutButton.getText());
 
-        ParseClient.getInstance().sendData(register);
+      /*  ParseClient.getInstance().sendData(register);
 
         String readData = ParseClient.getInstance().readData();
 
@@ -180,11 +149,10 @@ public class LogicController implements Initializable, Controller {
             return;
         }
         couldNotRegister.setVisible(true);
-
+*/
     }
 
     /**
-     *
      * @return
      */
     private boolean checkEmailValidation(String email) {
@@ -216,13 +184,13 @@ public class LogicController implements Initializable, Controller {
     }
 
     /**
-     *
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
         showLogin();
 
     }
@@ -263,6 +231,24 @@ public class LogicController implements Initializable, Controller {
         alreadyHaveAccount.setVisible(true);
         logInButton.setVisible(false);
         dontHaveAccount.setVisible(false);
+    }
+
+    public void changeView(String string) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                switch (string) {
+
+                    case "login":
+                        Navigation.getInstance().loadScreen("Profile");
+                        break;
+                    default:
+                        System.out.println("Cenas by Aires, try again");
+                }
+            }
+        });
     }
 }
 

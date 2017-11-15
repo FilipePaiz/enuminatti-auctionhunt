@@ -1,7 +1,10 @@
-package org.academiadecodigo.enuminatti.auctionhunt.client;
+package org.academiadecodigo.enuminatti.auctionhunt;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.academiadecodigo.enuminatti.auctionhunt.client.CommunicationService;
+import org.academiadecodigo.enuminatti.auctionhunt.client.Navigation;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,18 +16,31 @@ public class Client extends Application {
 
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private CommunicationService communicationService;
 
     /**
-     *
      * @throws Exception
      */
     @Override
     public void init() throws Exception {
 
+        try {
+
+            Socket clientSocket = new Socket(Server.HOST, Server.PORT);
+            communicationService = new CommunicationService();
+            //ParseClient.getInstance().setClientSocket(clientSocket);
+            communicationService.setClientSocket(clientSocket);
+
+
+            ServiceRegistry.getInstance().addService("CommunicationService", communicationService);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
-     *
      * @param primaryStage
      * @throws Exception
      */
@@ -34,7 +50,7 @@ public class Client extends Application {
 
         Navigation.getInstance().setStage(primaryStage);
         Navigation.getInstance().loadScreen("login&register");
-
+        new Thread(communicationService).start();
        /* Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
 
         primaryStage.setTitle("AuctionHunt");
@@ -44,10 +60,10 @@ public class Client extends Application {
     }
 
     /**
-     *
      * @param args
      */
     public static void main(String[] args) {
+
 
         Application.launch(args);
     }

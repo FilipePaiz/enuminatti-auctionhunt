@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable,Controller {
 
+    private CommunicationService communicationService;
     @FXML
     private Label photo;
 
@@ -169,14 +170,18 @@ public class ProfileController implements Initializable,Controller {
 
     private void transferMoney(String money, String buttonText) {
 
-        String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
+      /*  String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
         ParseClient.getInstance().sendData(moneyAndHead);
         String serverMessage = ParseClient.getInstance().readData();
         if (!ParseClient.getInstance().decodeServerMessage(serverMessage)) {
             return;
         }
+<<<<<<< HEAD
         fundsAvailable.setText(ParseClient.getInstance().getFunds());
 
+=======
+        funds.setText(ParseClient.getInstance().getFunds());
+*/
     }
 
     @FXML
@@ -186,9 +191,6 @@ public class ProfileController implements Initializable,Controller {
 
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
-
-        String path = uploadImageDirectory.getText();
-        ParseClient.getInstance().uploadImage(path);
 
     }
 

@@ -1,4 +1,6 @@
-package org.academiadecodigo.enuminatti.auctionhunt.server;
+package org.academiadecodigo.enuminatti.auctionhunt;
+
+import org.academiadecodigo.enuminatti.auctionhunt.server.*;
 
 import java.io.*;
 import java.net.ServerSocket;

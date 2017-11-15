@@ -6,7 +6,7 @@ import java.net.Socket;
 /**
  * Created by codecadet on 10/11/17.
  */
-public final class ParseClient implements Runnable {
+public final class ParseClient {
 
     private Socket clientSocket = null;
     private static ParseClient instance;
@@ -51,65 +51,11 @@ public final class ParseClient implements Runnable {
     /**
      *
      */
-    @Override
-    public void run() {
-        while (true) {
-            readData();
-        }
-    }
+
 
     /**
      * @return
      */
-    public String readData() {
-
-        String line = null;
-
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            line = in.readLine();
-            System.out.println(line);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return line;
-    }
-
-    /**
-     * @param data
-     */
-    public void sendData(String data) {
-
-        byte[] bytes = new byte[1024];
-        DataOutputStream itemOutput;
-        DataInputStream dataInputStream;
-
-        try {
-            if (data.startsWith("/item/")) {
-                System.out.println("SendData");
-
-                itemOutput = new DataOutputStream(clientSocket.getOutputStream());
-                dataInputStream = new DataInputStream(new FileInputStream(data));
-
-                int bytesReaden = dataInputStream.read(bytes);
-
-                while (bytesReaden != -1) {
-
-                    itemOutput.write(bytes, 0, bytesReaden);
-                    itemOutput.flush();
-                    bytesReaden = dataInputStream.read(bytes);
-                }
-            }
-
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-            out.println(data);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * @param data
@@ -145,10 +91,10 @@ public final class ParseClient implements Runnable {
      * @param string
      * @return
      */
-    public boolean decodeServerMessage(String string) {
+    public String decodeServerMessage(String string) {
 
         if (string.equals("login not done") || string.equals("register not done")) {
-            return false;
+            return null;
         }
 
         if (string.startsWith("/login/done/")) {
@@ -158,27 +104,30 @@ public final class ParseClient implements Runnable {
             funds = words[1];
             System.out.println(userName);
             System.out.println(funds);
+            return "login";
         }
 
         if (string.startsWith("/withdraw/done/")) {
             string = string.replace("/withdraw/done/", "");
             String[] words = string.split("#");
             if (!userName.equals(words[0])) {
-                return false;
+                return null;
             }
             funds = words[1];
+            return "withdraw";
         }
 
         if (string.startsWith("/deposit/done/")) {
             string = string.replace("/deposit/done/", "");
             String[] words = string.split("#");
             if (!userName.equals(words[0])) {
-                return false;
+                return null;
             }
             funds = words[1];
+            return "deposit";
         }
 
-        return true;
+        return "register";
     }
 
     /**
@@ -244,36 +193,7 @@ public final class ParseClient implements Runnable {
 
     }
 
-    public void uploadImage(String path) {
 
-
-        byte[] bytes = new byte[1024];
-        FileOutputStream fileOutputStream;
-        FileInputStream fileInputStream;
-
-        try {
-
-            fileOutputStream = new FileOutputStream(String.valueOf(clientSocket.getOutputStream()));
-            fileInputStream = new FileInputStream(path);
-            int bytesRead = fileInputStream.read(bytes);
-
-            while (bytesRead != -1) {
-
-                fileOutputStream.write(bytes, 0, bytesRead);
-                bytesRead = fileInputStream.read(bytes);
-
-
-                fileOutputStream.flush();
-            }
-
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-            out.println(path);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
 }

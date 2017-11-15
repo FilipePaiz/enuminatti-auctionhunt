@@ -34,12 +34,14 @@ public class CommunicationService implements Runnable, Service {
      */
     public void sendData(String data) {
 
+        System.out.println(data + "                SEND DATA");
+
         byte[] bytes = new byte[1024];
         DataOutputStream itemOutput;
         DataInputStream dataInputStream;
 
         try {
-            if (data.startsWith("/item/")) {
+           /* if (data.startsWith("/item/")) {
 
                 itemOutput = new DataOutputStream(clientSocket.getOutputStream());
                 dataInputStream = new DataInputStream(new FileInputStream(data));
@@ -52,9 +54,10 @@ public class CommunicationService implements Runnable, Service {
                     itemOutput.flush();
                     bytesReaden = dataInputStream.read(bytes);
                 }
-            }
+            }*/
 
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            System.out.println("isto é cenas fixes ------------------");
             out.println(data);
 
         } catch (IOException e) {

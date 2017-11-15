@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
+import org.academiadecodigo.enuminatti.auctionhunt.client.ParseClient;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
@@ -40,7 +41,6 @@ public final class ParseServer {
      */
     public void validateData(String line) {
 
-        System.out.println(line);
         if (line.startsWith("/regist/")) {
             registerDecodificate(line);
             return;
@@ -51,15 +51,14 @@ public final class ParseServer {
         }
         if (line.startsWith("/item/")) {
         }
-        if(line.endsWith(".jpg")){
-            itemDecodificate(line);
-        }
-
         if (line.startsWith("/withdraw/")) {
             withdrawDecodificate(line);
         }
         if (line.startsWith("/deposit/")) {
             depositDecodificate(line);
+        }
+        if (line.startsWith("/bid/")) {
+            bidDecodificate(line);
         }
     }
 
@@ -197,6 +196,31 @@ public final class ParseServer {
             }
 
             out.println("register not done");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void bidDecodificate(String line) {
+
+        line = line.replace("/bid/", "");
+        String[] words = line.split("#");
+
+        MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            int money = Integer.parseInt(words[1]);
+
+            if(!moneyService.removeMoney(words[0], money)){
+                return;
+            }
+
+            out.println("/bid/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]));
 
         } catch (IOException e) {
             e.printStackTrace();

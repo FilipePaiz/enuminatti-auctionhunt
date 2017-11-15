@@ -24,7 +24,7 @@ public class MockMoneyService implements MoneyService{
         user.setFunds(user.getFunds() + money);
     }*/
 
-    private boolean removeMoney (String username,int money) {
+    public boolean removeMoney(String username, int money) {
 
         if(Integer.parseInt(UserData.getInstance().userFunds(username)) < money) {
             System.out.println("Money required not found!");

@@ -11,7 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
 import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
-import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.BoughtItem;
 
@@ -91,6 +92,11 @@ public class BidController implements Initializable, Controller{
      */
     @FXML
     void onBidButtonAction(ActionEvent event) {
+
+        String moneyData = clientBid.getText();
+        String data = ParseClient.getInstance().setDataServer(moneyData, bidButton.getText());
+        communicationService.sendData(data);
+
         try {
             BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
         } catch (IOException e) {
@@ -128,7 +134,7 @@ public class BidController implements Initializable, Controller{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //setText() with values given by item
-
+        communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
        // showItem(bidService.getItems().get(itemOnShow));
     }
 }

@@ -1,6 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import java.io.*;
 import java.net.Socket;
 
 /**
@@ -80,6 +79,8 @@ public final class ParseClient {
                 return "/deposit/" + userName + "#" + dataSplitted[0] + "\r\n";
             /*case "next"
                 return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";*/
+            case "Bid":
+                return "/bid/" + userName + "#" + dataSplitted[0] + "\r\n";
             default:
                 System.out.println("Deu merda o parse do client");
 
@@ -125,6 +126,16 @@ public final class ParseClient {
             }
             funds = words[1];
             return "deposit";
+        }
+
+        if (string.startsWith("/bid/done/")) {
+            string = string.replace("/bid/done/", "");
+            String[] words = string.split("#");
+            if (!userName.equals(words[0])) {
+                return null;
+            }
+            funds = words[1];
+            return "bid";
         }
 
         return "register";

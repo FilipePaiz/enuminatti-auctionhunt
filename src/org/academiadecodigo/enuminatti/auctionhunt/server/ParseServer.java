@@ -54,6 +54,9 @@ public final class ParseServer {
         if(line.endsWith(".jpg")){
             itemDecodificate(line);
         }
+        if(line.endsWith(".jpeg")){
+            itemDecodificate(line);
+        }
 
         if (line.startsWith("/withdraw/")) {
             withdrawDecodificate(line);

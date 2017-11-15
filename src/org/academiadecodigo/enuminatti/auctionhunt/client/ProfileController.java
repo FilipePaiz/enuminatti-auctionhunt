@@ -8,15 +8,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable,Controller {
+public class ProfileController implements Initializable, Controller {
 
     @FXML
     private Label Photo;
@@ -73,11 +79,11 @@ public class ProfileController implements Initializable,Controller {
     private Button UploadPhoto;
 
     /**
-     *
      * @param event
      */
     @FXML
     private TextField UploadImageDirectory;
+
 
     @FXML
     private Button OkUpload;
@@ -89,12 +95,11 @@ public class ProfileController implements Initializable,Controller {
     void onDepositButtonPressed(ActionEvent event) {
         String money = insertWithdrawMoney.getText();
 
-        transferMoney(money,depositButton.getText());
+        transferMoney(money, depositButton.getText());
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -103,15 +108,13 @@ public class ProfileController implements Initializable,Controller {
 
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
-            Navigation.getInstance().loadScreen("bidAuction");
-            return;
-
+        Navigation.getInstance().loadScreen("bidAuction");
+        return;
 
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -127,7 +130,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -136,22 +138,28 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
 
-      /*  String data = "aqui";
-        ParseClient.getInstance().sendData(data);
-        String receiveHead = ParseClient.getInstance().readData();
-        ParseClient.getInstance().decodeServerMessage(receiveHead);*/
 
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("png", "jpg", "jpeg");
+        chooser.setFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+            File fileToSave = chooser.getSelectedFile();
+            System.out.println("Uploading file: " + fileToSave.getAbsolutePath());
+            UploadImageDirectory.setText(fileToSave.getAbsolutePath());
+        }
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -160,7 +168,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -202,7 +209,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param location
      * @param resources
      */

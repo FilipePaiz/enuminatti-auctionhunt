@@ -114,6 +114,8 @@ public class CommunicationService implements Runnable, Service {
 
                 }
 
+                if (Navigation.getInstance().getController() instanceof ProfileController)
+                    ((ProfileController) Navigation.getInstance().getController()).changeView(answer);
 
             }
         }

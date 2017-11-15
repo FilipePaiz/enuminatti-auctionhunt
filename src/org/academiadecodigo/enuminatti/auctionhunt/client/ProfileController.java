@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
@@ -16,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable,Controller {
+public class ProfileController implements Initializable, Controller {
 
     private CommunicationService communicationService;
     @FXML
@@ -81,12 +83,11 @@ public class ProfileController implements Initializable,Controller {
     void onDepositButtonPressed(ActionEvent event) {
         String money = insertWithdrawMoney.getText();
 
-        transferMoney(money,depositButton.getText());
+        transferMoney(money, depositButton.getText());
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -95,15 +96,13 @@ public class ProfileController implements Initializable,Controller {
 
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
-            Navigation.getInstance().loadScreen("bidAuction");
-            return;
-
+        Navigation.getInstance().loadScreen("bidAuction");
+        return;
 
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -119,7 +118,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -128,7 +126,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -143,7 +140,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -152,7 +148,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -170,18 +165,8 @@ public class ProfileController implements Initializable,Controller {
 
     private void transferMoney(String money, String buttonText) {
 
-      /*  String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
-        ParseClient.getInstance().sendData(moneyAndHead);
-        String serverMessage = ParseClient.getInstance().readData();
-        if (!ParseClient.getInstance().decodeServerMessage(serverMessage)) {
-            return;
-        }
-<<<<<<< HEAD
-        fundsAvailable.setText(ParseClient.getInstance().getFunds());
-
-=======
-        funds.setText(ParseClient.getInstance().getFunds());
-*/
+       String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
+       communicationService.sendData(moneyAndHead);
     }
 
     @FXML
@@ -195,20 +180,37 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(ParseClient.getInstance().getUserName() + " - ProfileController");
-        System.out.println(ParseClient.getInstance().getUserFunds() + " - ProfileController");
+        communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
         showValues();
     }
 
     private void showValues() {
         fundsAvailable.setText(ParseClient.getInstance().getUserFunds());
         username.setText(ParseClient.getInstance().getUserName());
+    }
+
+    public void changeView(String string) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                switch (string) {
+
+                    case "deposit":
+                    case "withdraw":
+                        fundsAvailable.setText(ParseClient.getInstance().getFunds());
+                        break;
+                    default:
+                        System.out.println("Cenas by Aires, try again");
+                }
+            }
+        });
     }
 }
 

@@ -13,7 +13,6 @@ import java.util.Map;
 public final class Navigation {
 
 
-
     /**
      *
      */
@@ -24,7 +23,7 @@ public final class Navigation {
     private final String VIEW_PATH = "org/academiadecodigo/enuminatti/auctionhunt/view/";
     private FXMLLoader fxmlLoader;
     private Stage stage; // reference to the application window
-
+    public static Parent root;
     // private constructor so it's not possible to instantiate from outside
 
     /**
@@ -36,12 +35,11 @@ public final class Navigation {
     // static method that returns the instance
 
     /**
-     *
      * @return
      */
     public static Navigation getInstance() {
 
-        if(instance == null){
+        if (instance == null) {
             synchronized (Navigation.class) {
                 if (instance == null) {
                     return instance = new Navigation();
@@ -52,7 +50,6 @@ public final class Navigation {
     }
 
     /**
-     *
      * @param view
      */
     public void loadScreen(String view) {
@@ -61,7 +58,7 @@ public final class Navigation {
 
             // Instantiate the view and the controller
             fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(VIEW_PATH + view + ".fxml"));
-            Parent root = fxmlLoader.load();
+             root = fxmlLoader.load();
 
             stage.setTitle("AuctionHunt");
 
@@ -97,7 +94,6 @@ public final class Navigation {
     }
 
     /**
-     *
      * @param scene
      */
     private void setScene(Scene scene) {
@@ -110,7 +106,6 @@ public final class Navigation {
     }
 
     /**
-     *
      * @param stage
      */
     public void setStage(Stage stage) {
@@ -118,7 +113,6 @@ public final class Navigation {
     }
 
     /**
-     *
      * @return
      */
     public Controller getController() {

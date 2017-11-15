@@ -3,6 +3,7 @@ package org.academiadecodigo.enuminatti.auctionhunt.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
@@ -144,17 +146,20 @@ public class ProfileController implements Initializable, Controller {
     void onUploadButtonPressed(ActionEvent event) {
 
 
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("png", "jpg", "jpeg");
-        chooser.setFileFilter(filter);
+        FileChooser chooser = new FileChooser();
+        System.out.println(chooser);
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        File selected = chooser.showOpenDialog(Navigation.root.getScene().getWindow());
+        Window file =Navigation.root.getScene().getWindow();
 
-        int returnVal = chooser.showOpenDialog(null);
 
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
-            File fileToSave = chooser.getSelectedFile();
-            System.out.println("Uploading file: " + fileToSave.getAbsolutePath());
-            UploadImageDirectory.setText(fileToSave.getAbsolutePath());
+        if (selected != null) {
+            selected.getAbsolutePath();
+
+           // System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
+            //File fileToSave = chooser.getSelectedFile();
+           // System.out.println("Uploading file: " + fileToSave.getAbsolutePath());
+            UploadImageDirectory.setText(selected.getAbsolutePath());
         }
 
     }

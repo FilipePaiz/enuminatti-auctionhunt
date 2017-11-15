@@ -22,8 +22,7 @@ import java.util.ResourceBundle;
  */
 public class BidController implements Initializable, Controller{
 
-    private BidService bidService;
-    private int itemOnShow;
+   private CommunicationService communicationService;
 
     @FXML
     private ResourceBundle resources;
@@ -69,12 +68,9 @@ public class BidController implements Initializable, Controller{
      *
      * @param event
      */
-    @FXML
+   @FXML
     void OnNextButtonAction(ActionEvent event) {
-        //to use this button is needed a linkedlist with items
-        itemOnShow++;
-        Item item = bidService.getItems().get(itemOnShow);
-        showItem(item);
+
     }
 
     /**
@@ -83,10 +79,7 @@ public class BidController implements Initializable, Controller{
      */
     @FXML
     void OnPreviousButtonAction(ActionEvent event) {
-        //to use this button is needed a linkedlist with items
-        itemOnShow--;
-        Item item = bidService.getItems().get(itemOnShow);
-        showItem(item);
+
     }
 
     /**
@@ -128,7 +121,7 @@ public class BidController implements Initializable, Controller{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //setText() with values given by item
-        bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
+
        // showItem(bidService.getItems().get(itemOnShow));
     }
 }

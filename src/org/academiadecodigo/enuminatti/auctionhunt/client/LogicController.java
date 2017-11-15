@@ -233,14 +233,17 @@ public class LogicController implements Initializable, Controller {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
-                switch (string){
+                System.out.println(Thread.currentThread().getName());
+                switch (string) {
 
                     case "login":
                         Navigation.getInstance().loadScreen("Profile");
                         break;
-                        default:
-                            System.out.println("Cenas by Aires, try again");
+                    case "register":
+                        showLogin();
+                        break;
+                    default:
+                        System.out.println("Cenas by Aires, try again");
                 }
             }
         });

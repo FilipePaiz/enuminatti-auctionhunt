@@ -54,6 +54,9 @@ public final class ParseServer {
         if(line.endsWith(".jpg")){
             itemDecodificate(line);
         }
+        if(line.endsWith(".jpeg")){
+            itemDecodificate(line);
+        }
 
         if (line.startsWith("/withdraw/")) {
             withdrawDecodificate(line);
@@ -120,13 +123,14 @@ public final class ParseServer {
 
         byte[] bytes = new byte[1024];
         line = line.replace("/item/", "");
-        String[] words = line.split("€");
+        String[] words = line.split("/");
+        int lenght = words.length-1;
 
 
 
         try {
 
-            FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
+            FileOutputStream itemOutput = new FileOutputStream("resources/" +words[lenght]);
             FileInputStream fileInputStream = new FileInputStream(line);
             System.out.println(fileInputStream);
 

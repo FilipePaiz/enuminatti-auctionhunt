@@ -26,11 +26,11 @@ public class BoughtItem {
             }
 
         }
-        save.write("ID: " + name + "\n" +
-                "Item: " + itemName + "\n" +
-                "Item ID: " + itemID + "\n" +
-                "Price: " + price + "€\n" +
-                "Date: " + getDateTime() + "\n<------------------->");
+        save.write("ID: " + name + "|\n" +
+                "Item: " + itemName + "|\n" +
+                "Item ID: " + itemID + "|\n" +
+                "Price: " + price + "€|\n" +
+                "Date: " + getDateTime() + "|\n<------------------->");
 
         save.newLine();
         save.flush();

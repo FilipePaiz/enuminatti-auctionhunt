@@ -19,37 +19,40 @@ import java.util.ResourceBundle;
 public class ProfileController implements Initializable,Controller {
 
     @FXML
-    private Label Photo;
+    private Label photo;
 
     @FXML
-    private Button MyFundsButton;
+    private Button logoutButton;
 
     @FXML
-    private Label funds;
+    private Button goToAuctionButton;
 
     @FXML
-    private Label numberOfItems;
+    private Button uploadItemButton;
 
     @FXML
-    private Button logOutButton;
+    private TextField uploadImageDirectory;
 
     @FXML
-    private Button GoToAuctionButton;
+    private Button okUpload;
 
     @FXML
-    private Pane depositWithdrawMoey;
+    private Button cancelUpload;
 
     @FXML
     private Button depositButton;
 
     @FXML
-    private Button withdrawButton;
-
-    @FXML
     private TextField insertWithdrawMoney;
 
     @FXML
-    private Button UploadItemButton;
+    private Button withdrawButton;
+
+    @FXML
+    private Label fundsAvailable;
+
+    @FXML
+    private Label username;
 
     @FXML
     private Label readHistory1;
@@ -72,18 +75,6 @@ public class ProfileController implements Initializable,Controller {
     @FXML
     private Button UploadPhoto;
 
-    /**
-     *
-     * @param event
-     */
-    @FXML
-    private TextField UploadImageDirectory;
-
-    @FXML
-    private Button OkUpload;
-
-    @FXML
-    private Button CancelUpload;
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
@@ -168,7 +159,7 @@ public class ProfileController implements Initializable,Controller {
 
         String money = insertWithdrawMoney.getText();
 
-        if (Integer.parseInt(money) > Integer.parseInt(funds.getText())) {
+        if (Integer.parseInt(money) > Integer.parseInt(fundsAvailable.getText())) {
             return;
         }
 
@@ -184,7 +175,7 @@ public class ProfileController implements Initializable,Controller {
         if (!ParseClient.getInstance().decodeServerMessage(serverMessage)) {
             return;
         }
-        funds.setText(ParseClient.getInstance().getFunds());
+        fundsAvailable.setText(ParseClient.getInstance().getFunds());
 
     }
 
@@ -196,7 +187,7 @@ public class ProfileController implements Initializable,Controller {
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
 
-        String path = UploadImageDirectory.getText();
+        String path = uploadImageDirectory.getText();
         ParseClient.getInstance().uploadImage(path);
 
     }
@@ -214,8 +205,8 @@ public class ProfileController implements Initializable,Controller {
     }
 
     private void showValues() {
-        funds.setText(ParseClient.getInstance().getUserFunds());
-        numberOfItems.setText(ParseClient.getInstance().getUserName());
+        fundsAvailable.setText(ParseClient.getInstance().getUserFunds());
+        username.setText(ParseClient.getInstance().getUserName());
     }
 }
 

@@ -47,6 +47,7 @@ public final class ParseClient implements Runnable {
      */
     @Override
     public void run() {
+
         while (true) {
             readData();
         }
@@ -57,8 +58,8 @@ public final class ParseClient implements Runnable {
      * @return
      */
     public String readData() {
-
-        String line = null;
+        System.out.println("Read data thread " + Thread.currentThread().getName());
+   /*     String line = null;
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -68,8 +69,8 @@ public final class ParseClient implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return line;
+*/
+        return null;
     }
 
     /**
@@ -77,6 +78,8 @@ public final class ParseClient implements Runnable {
      * @param data
      */
     public void sendData(String data) {
+
+        System.out.println("Send data thread " + Thread.currentThread().getName());
 
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
@@ -116,20 +119,22 @@ public final class ParseClient implements Runnable {
      * @param string
      * @return
      */
-    public boolean decodeServerMessage(String string) {
+    public String decodeServerMessage(String string) {
 
         if(string.equals("login not done")|| string.equals("register not done")){
-            return false;
+            return null;
         }
 
         if(string.startsWith("/login/done/")) {
+            String protocol = "login";
             string = string.replace("/login/done/", "");
             String[] words = string.split("#");
             userName = words[0];
             funds = words[1];
+            return protocol;
         }
 
-        return true;
+        return "register";
     }
 
     /**

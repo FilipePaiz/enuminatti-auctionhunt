@@ -1,5 +1,7 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,7 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +23,10 @@ public class LogicController implements Initializable {
 
     @FXML
     private Button logOutButton;
+
+    private Service<Void> readThread;
+
+    private Socket clientSocket;
 
     @FXML
     private PasswordField passwordField;
@@ -64,9 +73,11 @@ public class LogicController implements Initializable {
     @FXML
     private TextField emailField;
 
+    private ClientWorker clientWorker;
+
     @FXML
     void changeToLogin(ActionEvent event) {
-       showLogin();
+        showLogin();
     }
 
     @FXML
@@ -75,7 +86,6 @@ public class LogicController implements Initializable {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -96,33 +106,21 @@ public class LogicController implements Initializable {
         String dataAndHead = ParseClient.getInstance().setDataServer(data, logInButton.getText());
         ParseClient.getInstance().sendData(dataAndHead);
 
-        String message = ParseClient.getInstance().readData();
-
-        if (ParseClient.getInstance().decodeServerMessage(message)) {
-
-            succesfullLog.setVisible(true);
-            Navigation.getInstance().loadScreen("Profile");
-
-            return;
-        }
-
-        couldNotLogIn.setVisible(true);
-
+        clientWorker.start();
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void onRegister(ActionEvent event) {
 
-        if(checkEmptyFields()){
+        if (checkEmptyFields()) {
             couldNotRegister.setText("Fill all fields");
             couldNotRegister.setVisible(true);
             return;
         }
-        if(!checkEmailValidation(emailField.getText())){
+        if (!checkEmailValidation(emailField.getText())) {
             couldNotRegister.setText("Your email isn't in right format");
             couldNotRegister.setVisible(true);
             return;
@@ -135,24 +133,14 @@ public class LogicController implements Initializable {
 
         ParseClient.getInstance().sendData(register);
 
-        String readData = ParseClient.getInstance().readData();
-
-        if (ParseClient.getInstance().decodeServerMessage(readData)) {
-
-            System.out.println("bem-vindo");
-            succesfullRegister.setVisible(true);
-            showLogin();
-
-            return;
-        }
-        couldNotRegister.setVisible(true);
+        clientWorker.start();
 
     }
 
     /**
-     *
      * @return
      */
+
     private boolean checkEmailValidation(String email) {
 
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -182,15 +170,11 @@ public class LogicController implements Initializable {
     }
 
     /**
-     *
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
-        Socket clientSocket = null;
 
         try {
 
@@ -201,6 +185,7 @@ public class LogicController implements Initializable {
         }
 
         ParseClient.getInstance().setClientSocket(clientSocket);
+        clientWorker = new ClientWorker();
         showLogin();
 
     }
@@ -236,6 +221,63 @@ public class LogicController implements Initializable {
         alreadyHaveAccount.setVisible(true);
         logInButton.setVisible(false);
         dontHaveAccount.setVisible(false);
+    }
+
+    private class ClientWorker extends Service<Void> {
+
+
+        @Override
+        protected Task<Void> createTask() {
+            return new Task<Void>() {
+
+                @Override
+                protected Void call() throws Exception {
+                    System.out.println("Read data thread " + Thread.currentThread().getName());
+
+                    while (true) {
+                        handleRead();
+                        clientWorker.restart();
+                        clientWorker.ready();
+                    }
+                }
+            };
+        }
+
+        private void handleRead() {
+
+            String line = null;
+
+            try {
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                line = in.readLine();
+                System.out.println(line);
+
+
+                if (ParseClient.getInstance().decodeServerMessage(line).startsWith("login")) {
+
+                    succesfullLog.setVisible(true);
+                    Navigation.getInstance().loadScreen("Profile");
+                    clientWorker.restart();
+                    return;
+                }
+
+                couldNotLogIn.setVisible(true);
+
+                if (ParseClient.getInstance().decodeServerMessage(line).startsWith("register")) {
+                    System.out.println("bem-vindo");
+                    succesfullRegister.setVisible(true);
+                    showLogin();
+                    clientWorker.restart();
+
+                    return;
+                }
+                couldNotRegister.setVisible(true);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

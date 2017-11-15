@@ -95,7 +95,7 @@ public class ProfileController implements Initializable {
         String receiveHead = ParseClient.getInstance().readData();
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
-        if (ParseClient.getInstance().decodeServerMessage(receiveHead)) {
+        if (ParseClient.getInstance().decodeServerMessage(receiveHead).equals("item")) {
             Navigation.getInstance().loadScreen("bidAuction");
             return;
         }

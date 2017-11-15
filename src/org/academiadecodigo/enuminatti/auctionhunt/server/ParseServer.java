@@ -118,27 +118,28 @@ public final class ParseServer {
      */
     private void itemDecodificate(String line) {
 
-        byte[] bytes = new byte[512 * 1024];
+        byte[] bytes = new byte[512 * 2048];
+        byte [] file = line.getBytes();
         line = line.replace("/item/", "");
         //String[] words = line.split("€");
-        File file = new File(line);
+
                 System.out.println(line + "<-----------");
         try {
 
             FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
-            DataInputStream fileInputStream = new DataInputStream(clientSocket.getInputStream());
-            System.out.println(fileInputStream);
+            DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
+            System.out.println(dataIn);
 
-            int bytesReaden = fileInputStream.read(bytes);
+            int bytesReaden = dataIn.read(bytes);
 
             while (bytesReaden != -1) {
-
+                System.out.println("1");
                 itemOutput.write(bytes, 0, bytesReaden);
-                bytesReaden = fileInputStream.read(bytes);
+                bytesReaden = dataIn.read(bytes);
 
+                itemOutput.flush();
             }
 
-            itemOutput.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -247,7 +247,7 @@ public final class ParseClient implements Runnable {
     public void uploadImage(String path) {
 
 
-        byte[] bytes = new byte[512 * 1024];
+        byte[] bytes = new byte[512 * 2048];
         DataInputStream dataIn = null;
         DataOutputStream dataOut = null;
         String msgProtocol = "/item/\r\n";

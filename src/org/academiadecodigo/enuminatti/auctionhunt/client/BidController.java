@@ -96,17 +96,23 @@ public class BidController implements Initializable, Controller {
     @FXML
     void onBidButtonAction(ActionEvent event) {
 
+       if (clientBid.getText().equals("")){
+           clientBid.setText("0");
+       }
+
         String moneyData = clientBid.getText();
         String data = ParseClient.getInstance().setDataServer(moneyData, bidButton.getText());
         communicationService.sendData(data);
 
         ParseClient.getInstance().decodeServerMessage("bid");
 
-        try {
+        clientBid.clear();
+
+       /** try {
             BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**
@@ -114,8 +120,9 @@ public class BidController implements Initializable, Controller {
      */
     @FXML
     void onHomeButtonAction(ActionEvent event) {
-        //Awaiting for connection between views
         Navigation.getInstance().back();
+        Navigation.getInstance().back();
+        Navigation.getInstance().loadScreen("Profile");
     }
 
     /**
@@ -138,25 +145,6 @@ public class BidController implements Initializable, Controller {
         //setText() with values given by item
         communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
         // showItem(bidService.getItems().get(itemOnShow));
-    }
-
-    public void changeView(String answer) {
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                switch (answer) {
-
-                    case "bid":
-                        Navigation.getInstance().back();
-                        Navigation.getInstance().loadScreen("Profile");
-                        break;
-                    default:
-                        System.out.println("Cenas by Aires, try again");
-                }
-            }
-        });
     }
 }
 

@@ -15,6 +15,7 @@ public final class ParseServer {
     private Socket clientSocket = null;
     private static ParseServer instance;
     private boolean itemUpload;
+    private int bytesReadTotal = 0;
 
     /**
      *
@@ -133,7 +134,6 @@ public final class ParseServer {
         int length = Integer.parseInt(lineArray[4]);
         System.out.println(length);
 
-        int bytesReadTotal = 0;
 
                 System.out.println(line + "<-----------");
         try {

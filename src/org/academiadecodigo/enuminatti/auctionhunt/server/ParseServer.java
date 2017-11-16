@@ -212,6 +212,30 @@ public final class ParseServer {
 
 
     }
+    private void bidDecodificate(String line) {
+
+        line = line.replace("/bid/", "");
+        String[] words = line.split("#");
+
+        MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            int money = Integer.parseInt(words[1]);
+
+            if(!moneyService.removeMoney(words[0], money)){
+                return;
+            }
+
+            out.println("/bid/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
     /**
      * @param clientSocket

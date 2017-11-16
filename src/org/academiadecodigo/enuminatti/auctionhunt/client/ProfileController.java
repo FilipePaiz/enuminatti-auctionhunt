@@ -157,15 +157,12 @@ public class ProfileController implements Initializable, Controller {
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         File selected = chooser.showOpenDialog(Navigation.root.getScene().getWindow());
         Window file = Navigation.root.getScene().getWindow();
-
+        System.out.println(selected);
 
         if (selected != null) {
             selected.getAbsolutePath();
-
-            System.out.println("You chose to open this file: " + chooser.getInitialFileName());
-
             System.out.println("Uploading file: " + selected.getAbsolutePath());
-            UploadImageDirectory.setText(selected.getAbsolutePath());
+            uploadImageDirectory.setText(selected.getAbsolutePath());
         }
 
     }
@@ -208,8 +205,9 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
 
-        String path = UploadImageDirectory.getText();
+        String path = uploadImageDirectory.getText();
         // ParseClient.getInstance().uploadImage(path);
+        
 
     }
 

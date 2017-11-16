@@ -1,7 +1,7 @@
 package org.academiadecodigo.enuminatti.auctionhunt.utils;
 
+import org.academiadecodigo.enuminatti.auctionhunt.Server;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
-import org.academiadecodigo.enuminatti.auctionhunt.server.Server;
 import org.academiadecodigo.enuminatti.auctionhunt.server.User;
 
 import java.io.*;

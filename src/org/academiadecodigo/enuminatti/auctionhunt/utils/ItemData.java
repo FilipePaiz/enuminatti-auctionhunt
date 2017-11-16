@@ -1,15 +1,28 @@
 package org.academiadecodigo.enuminatti.auctionhunt.utils;
 
+
+import org.academiadecodigo.enuminatti.auctionhunt.Server;
+
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Someone who is not me on 12/11/17.
  */
 
 public class ItemData {
+
+    private static int itemNumber = 0;
+
+    private static BufferedWriter save;
+    private static BufferedReader read;
 
     /**
      *
@@ -22,30 +35,19 @@ public class ItemData {
      */
     public static void save(String file, String name, String itemName, String path, String price) throws IOException {
 
-        BufferedReader read = new BufferedReader(new FileReader(file));
-
-        BufferedWriter save = new BufferedWriter(new FileWriter(file, true));
-
-        int itemNumber = 0;
-
-        String line;
-
-        while ((line = read.readLine()) != null) {
-            if (line.contains("<------------------->")) {
-                itemNumber = itemNumber + 1;
-            }
-
-            //itemNumber = 1;
-        }
+        save = new BufferedWriter(new FileWriter(file, true));
 
         String newPath = load(file, path);
 
-        save.write("ID: " + name + "\n" +
-                "Item ID: " + itemNumber + "\n" +
+        save.write("Item ID: " + itemNumber + "\n" +
+                "ID: " + name + "\n" +
                 "Item name: " + itemName + "\n" +
                 "Path: " + newPath + "\n" +
                 "Price: " + price + "€\n" +
-                "Upload Date: " + getDateTime() + "\n<------------------->");
+                "Upload Date: " + getDateTime() +
+                "\n<------------------->");
+
+        itemNumber++;
 
         save.newLine();
         save.flush();
@@ -94,5 +96,73 @@ public class ItemData {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    public String auctionItems(String itemID) {
+        try {
+            read = new BufferedReader(new FileReader(Server.PATH + "ItemData"));
+            String line = read.readLine();
+            while (line != null) {
+                if (line.equals("Item ID: " + itemID)) {
+                    line = read.readLine();
+                    while (!line.startsWith("Upload Date: ")) {
+                        line = read.readLine();
+                    }
+                    String[] words = line.split(" ");
+                    return words[1];
+                }
+
+                line = read.readLine();
+            }
+            read.close();
+            return null;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    public void changeOwner(String username) {
+
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "ItemData");
+        try {
+
+            List<String> list = Files.readAllLines(path);
+            readListLines(list, username);
+
+            PrintWriter printWriter = new PrintWriter(new FileWriter(Server.PATH + "ItemData"), true);
+
+            for (String newLines : list) {
+                printWriter.println(newLines);
+            }
+            printWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readListLines(List<String> list, String itemID) {
+
+        int index = 0;
+        Iterator<String> iterator = list.iterator();
+
+        while (iterator.hasNext()) {
+            index++;
+            String next = iterator.next();
+            if (next.equals("Item ID: " + itemID)) {
+                next = iterator.next();
+                while (!next.startsWith("Upload Date: ")) {
+                    index++;
+                    next = iterator.next();
+                }
+
+                next = next.replace("Item ID: " + itemID , "");
+                list.set(index, next);
+                break;
+            }
+        }
     }
 }

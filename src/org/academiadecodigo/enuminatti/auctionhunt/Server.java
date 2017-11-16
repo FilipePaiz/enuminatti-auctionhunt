@@ -1,4 +1,6 @@
-package org.academiadecodigo.enuminatti.auctionhunt.server;
+package org.academiadecodigo.enuminatti.auctionhunt;
+
+import org.academiadecodigo.enuminatti.auctionhunt.server.*;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -13,7 +15,7 @@ import java.util.concurrent.Executors;
 public class Server {
 
     private LinkedList<ServerThread> clientList;
-    public static final int PORT = 9091;
+    public static final int PORT = 9090;
     public static final String HOST = "localhost";
     public static final String PATH = "resources/";
 
@@ -121,9 +123,12 @@ public class Server {
                 while (true) {
 
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                    String line = in.readLine();
-                    ParseServer.getInstance().validateData(line);
 
+                    String line = in.readLine();
+                    synchronized (this) {
+                        ParseServer.getInstance().setClientSocket(clientSocket);
+                        ParseServer.getInstance().validateData(line);
+                    }
 
                 }
 
@@ -139,7 +144,7 @@ public class Server {
 
             }
 
-    }
+        }
 
 
         /**

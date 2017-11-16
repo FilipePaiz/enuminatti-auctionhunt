@@ -53,6 +53,7 @@ public class Client extends Application {
         Navigation.getInstance().setStage(primaryStage);
         Navigation.getInstance().loadScreen("login&register");
         new Thread(communicationService).start();
+
        /* Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("org/academiadecodigo/enuminatti/auctionhunt/view/login&register.fxml"));
 
         primaryStage.setTitle("AuctionHunt");
@@ -62,6 +63,7 @@ public class Client extends Application {
     }
 
     /**
+     *
      * @param args
      */
     public static void main(String[] args) {

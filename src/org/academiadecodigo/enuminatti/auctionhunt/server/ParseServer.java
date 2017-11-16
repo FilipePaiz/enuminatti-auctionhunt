@@ -40,7 +40,6 @@ public final class ParseServer {
      */
     public void validateData(String line) {
 
-        System.out.println(line);
         if (line.startsWith("/regist/")) {
             registerDecodificate(line);
             return;
@@ -55,6 +54,9 @@ public final class ParseServer {
         if (line.endsWith(".jpg")) {
             itemDecodificate(line);
         }
+        if(line.endsWith(".jpeg")){
+            itemDecodificate(line);
+        }
 
         if (line.startsWith("/withdraw/")) {
             withdrawDecodificate(line);
@@ -62,12 +64,18 @@ public final class ParseServer {
         if (line.startsWith("/deposit/")) {
             depositDecodificate(line);
         }
+        if (line.startsWith("/bid/")) {
+            bidDecodificate(line);
+        }
     }
 
     private void depositDecodificate(String line) {
 
         line = line.replace("/deposit/", "");
         String[] words = line.split("#");
+
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
 
         MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
 
@@ -196,6 +204,30 @@ public final class ParseServer {
             }
 
             out.println("register not done");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    private void bidDecodificate(String line) {
+
+        line = line.replace("/bid/", "");
+        String[] words = line.split("#");
+
+        MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            int money = Integer.parseInt(words[1]);
+
+            if(!moneyService.removeMoney(words[0], money)){
+                return;
+            }
+
+            out.println("/bid/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]));
 
         } catch (IOException e) {
             e.printStackTrace();

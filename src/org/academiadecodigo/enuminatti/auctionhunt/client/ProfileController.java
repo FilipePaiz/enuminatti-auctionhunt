@@ -82,7 +82,7 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     private TextField InsertPathforPhotoUser;
 
-    private Navigation.LogicController logicController;
+
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
@@ -136,8 +136,9 @@ public class ProfileController implements Initializable, Controller {
         Window file = Navigation.root.getScene().getWindow();
         System.out.println(selected);
 
+
         if (selected != null) {
-            selected.getAbsolutePath();
+
             System.out.println("Uploading file: " + selected.getAbsolutePath());
             uploadImageDirectory.setText(selected.getAbsolutePath());
         }
@@ -180,6 +181,13 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
+
+        if (itemNameField.getText().equals("") || descriptionField.getText().equals("") || priceField.getText().equals("")) {
+            notOkSubmit.setText("Please, complete all fields");
+            notOkSubmit.setVisible(true);
+
+        }
+
         String username = ParseClient.getInstance().getUserName();
 
         String data = username + "#" + itemNameField.getText() + "#" + descriptionField.getText() + "#" + priceField.getText();
@@ -235,6 +243,7 @@ public class ProfileController implements Initializable, Controller {
             }
         });
     }
+
 
 }
 

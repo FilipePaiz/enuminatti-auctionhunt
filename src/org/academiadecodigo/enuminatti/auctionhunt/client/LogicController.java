@@ -135,20 +135,7 @@ public class LogicController implements Initializable, Controller {
 
         String register = ParseClient.getInstance().setDataServer(registerData, logoutButton.getText());
 
-      /*  ParseClient.getInstance().sendData(register);
 
-        String readData = ParseClient.getInstance().readData();
-
-        if (ParseClient.getInstance().decodeServerMessage(readData)) {
-
-            System.out.println("bem-vindo");
-            succesfullRegister.setVisible(true);
-            showLogin();
-
-            return;
-        }
-        couldNotRegister.setVisible(true);
-*/
     }
 
     /**

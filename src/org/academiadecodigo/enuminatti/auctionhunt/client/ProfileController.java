@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,7 @@ import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
+
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -30,6 +32,9 @@ public class ProfileController implements Initializable, Controller {
 
     private CommunicationService communicationService;
     @FXML
+    private TabPane secondScene;
+
+    @FXML
     private Label photo;
 
     @FXML
@@ -37,18 +42,6 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     private Button goToAuctionButton;
-
-    @FXML
-    private Button uploadItemButton;
-
-    @FXML
-    private TextField uploadImageDirectory;
-
-    @FXML
-    private Button okUpload;
-
-    @FXML
-    private Button cancelUpload;
 
     @FXML
     private Button depositButton;
@@ -63,25 +56,31 @@ public class ProfileController implements Initializable, Controller {
     private Label fundsAvailable;
 
     @FXML
-    private Button UploadItemButton;
-
-    @FXML
     private Label username;
 
     @FXML
-    private Label readHistory1;
+    private Button uploadItemButton;
 
     @FXML
-    private Label readHistory2;
+    private TextField uploadImageDirectory;
 
     @FXML
-    private Label readHistory3;
+    private Button okUpload;
 
     @FXML
-    private Label readHistory4;
+    private TextField itemNameField;
 
     @FXML
-    private Label readHistory5;
+    private TextField descriptionField;
+
+    @FXML
+    private TextField priceField;
+
+    @FXML
+    private Label notOkSubmit;
+
+    @FXML
+    private Label okSubmit;
 
     @FXML
     private AnchorPane UploadPhotoButton;
@@ -89,18 +88,11 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     private Button UploadPhoto;
 
-    /**
-     * @param event
-     */
-    @FXML
-    private TextField UploadImageDirectory;
-
 
     @FXML
-    private Button OkUpload;
+    private TextField InsertPathforPhotoUser;
 
-    @FXML
-    private Button CancelUpload;
+    private Navigation.LogicController logicController;
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
@@ -147,11 +139,6 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
 
-      /*  String data = "aqui";
-        ParseClient.getInstance().sendData(data);
-        String receiveHead = ParseClient.getInstance().readData();
-        ParseClient.getInstance().decodeServerMessage(receiveHead);*/
-
         FileChooser chooser = new FileChooser();
         System.out.println(chooser);
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
@@ -172,7 +159,6 @@ public class ProfileController implements Initializable, Controller {
      */
     @FXML
     void onUploadPhotoButtonPressed(ActionEvent event) {
-
     }
 
     /**
@@ -204,9 +190,17 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
+        String username = ParseClient.getInstance().getUserName();
+
+        String data = username + "#" + itemNameField.getText() + "#" + descriptionField.getText() + "#" + priceField.getText();
+
+        String dataAndHead = ParseClient.getInstance().setDataServer(data, okUpload.getText());
 
         String path = uploadImageDirectory.getText();
-        communicationService.uploadImage(path);
+
+        System.out.println("PATH:" + path);
+        System.out.println("DATA:" + dataAndHead);
+        communicationService.uploadImage(path, dataAndHead);
     }
 
     /**
@@ -222,6 +216,8 @@ public class ProfileController implements Initializable, Controller {
     private void showValues() {
         fundsAvailable.setText(ParseClient.getInstance().getUserFunds());
         username.setText(ParseClient.getInstance().getUserName());
+        okSubmit.setVisible(false);
+        notOkSubmit.setVisible(false);
     }
 
     public void changeView(String string) {
@@ -236,11 +232,19 @@ public class ProfileController implements Initializable, Controller {
                     case "withdraw":
                         fundsAvailable.setText(ParseClient.getInstance().getFunds());
                         break;
+                    case "item":
+                        okSubmit.setVisible(true);
+                        itemNameField.setText("");
+                        priceField.setText("");
+                        descriptionField.setText("");
+                        uploadImageDirectory.setText("");
+                        break;
                     default:
                         System.out.println("Cenas by Aires, try again");
                 }
             }
         });
     }
+
 }
 

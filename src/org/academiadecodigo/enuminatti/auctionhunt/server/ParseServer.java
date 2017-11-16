@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
+import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
@@ -13,6 +14,7 @@ public final class ParseServer {
 
     private Socket clientSocket = null;
     private static ParseServer instance;
+    private boolean itemUpload;
 
     /**
      *
@@ -50,12 +52,7 @@ public final class ParseServer {
         }
         if (line.startsWith("/item/")) {
             itemDecodificate(line);
-        }
-        if (line.endsWith(".jpg")) {
-            itemDecodificate(line);
-        }
-        if(line.endsWith(".jpeg")){
-            itemDecodificate(line);
+            return;
         }
 
         if (line.startsWith("/withdraw/")) {
@@ -67,6 +64,7 @@ public final class ParseServer {
         if (line.startsWith("/bid/")) {
             bidDecodificate(line);
         }
+
     }
 
     private void depositDecodificate(String line) {
@@ -126,10 +124,13 @@ public final class ParseServer {
      */
     private void itemDecodificate(String line) {
 
+        System.out.println("LINE SERVER:" + line);
         byte[] bytes = new byte[1024];
         line = line.replace("/item/", "");
-        //String[] words = line.split("€");
-        int length = Integer.parseInt(line);
+
+        String[] lineArray = line.split("#");
+
+        int length = Integer.parseInt(lineArray[4]);
         System.out.println(length);
 
         int bytesReadTotal = 0;
@@ -137,7 +138,8 @@ public final class ParseServer {
                 System.out.println(line + "<-----------");
         try {
 
-            FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
+            String path = "resources/" +  lineArray[0] + ".jpg";
+            FileOutputStream itemOutput = new FileOutputStream(path);
             DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
             int bytesReaden;
 
@@ -147,7 +149,18 @@ public final class ParseServer {
                 bytesReadTotal += bytesReaden;
                 itemOutput.flush();
             }
+
+            bytesReaden = 0;
+
+            //itemOutput.close();
             System.out.println("done reading");
+
+            ItemData.save(lineArray[0],lineArray[1],path,lineArray[3]);
+            System.out.println("Item save ");
+
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            out.println("/item/done/");
+            System.out.println("message sent");
 
         } catch (IOException e) {
             e.printStackTrace();

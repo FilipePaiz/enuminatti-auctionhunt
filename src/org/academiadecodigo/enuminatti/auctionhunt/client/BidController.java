@@ -93,9 +93,9 @@ ItemData.getInstance().loadItem("resources/ItemData","2");
     @FXML
     void onBidButtonAction(ActionEvent event) {
 
-        if (clientBid.getText().equals("")) {
-            clientBid.setText("0");
-        }
+       if (clientBid.getText().equals("")){
+           clientBid.setText("0");
+       }
 
         String moneyData = clientBid.getText();
         String data = ParseClient.getInstance().setDataServer(moneyData, bidButton.getText());
@@ -105,11 +105,11 @@ ItemData.getInstance().loadItem("resources/ItemData","2");
 
         clientBid.clear();
 
-        /** try {
-         BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
-         } catch (IOException e) {
-         e.printStackTrace();
-         }*/
+       /** try {
+            BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
     /**

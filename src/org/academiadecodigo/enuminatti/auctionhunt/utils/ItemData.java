@@ -2,7 +2,6 @@ package org.academiadecodigo.enuminatti.auctionhunt.utils;
 
 
 import org.academiadecodigo.enuminatti.auctionhunt.Server;
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -19,9 +18,7 @@ import java.util.List;
  * Created by Someone who is not me on 12/11/17.
  */
 
-public final class ItemData {
-
-
+public class ItemData {
 
     private static int itemNumber = 0;
 
@@ -56,7 +53,7 @@ public final class ItemData {
      * @param price receives the price of the item
      * @throws IOException
      */
-    public  void save(String file, String name, String itemName, String path, String price) throws IOException {
+    public static void save(String file, String name, String itemName, String path, String price) throws IOException {
 
         save = new BufferedWriter(new FileWriter(file, true));
 
@@ -167,7 +164,7 @@ public final class ItemData {
         }
     }
 
-    public void readListLines(List<String> list, String itemID) {
+    private void readListLines(List<String> list, String itemID) {
 
         int index = 0;
         Iterator<String> iterator = list.iterator();
@@ -188,7 +185,7 @@ public final class ItemData {
                     next = iterator.next();
                 }
 
-                //next = next.replace("Item ID: " + itemID , "");
+                next = next.replace("Item ID: " + itemID , "");
                 list.set(index, next);
                 break;
             }

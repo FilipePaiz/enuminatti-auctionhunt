@@ -36,11 +36,11 @@ public class Server {
 
 
         UserService userService = new MockUserService();
-        BidService bidService = new MockBidService();
+       // BidService bidService = new MockBidService();
         MoneyService moneyService = new MockMoneyService();
 
         ServiceRegistry.getInstance().addService("UserService", userService);
-        ServiceRegistry.getInstance().addService("BidService", bidService);
+       // ServiceRegistry.getInstance().addService("BidService", bidService);
         ServiceRegistry.getInstance().addService("MoneyService", moneyService);
 
         Server server = new Server();

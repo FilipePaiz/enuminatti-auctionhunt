@@ -1,6 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import org.academiadecodigo.enuminatti.auctionhunt.server.*;
 
 import java.io.*;
@@ -98,14 +97,13 @@ public class Server {
     private class ServerThread implements Runnable {
 
         private Socket clientSocket;
-        private DataOutputStream dataOutputStream;
-        private DataInputStream dataInputStream;
+        private ParseServer parseServer;
 
         public ServerThread(Socket clientSocket) {
 
             this.clientSocket = clientSocket;
 
-            //ParseServer.getInstance().setClientSocket(clientSocket);
+            parseServer = new ParseServer(clientSocket);
         }
 
         /**
@@ -125,10 +123,8 @@ public class Server {
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     String line = in.readLine();
-                    synchronized (this) {
-                        ParseServer.getInstance().setClientSocket(clientSocket);
-                        ParseServer.getInstance().validateData(line);
-                    }
+                    parseServer.validateData(line);
+
 
                 }
 
@@ -145,45 +141,6 @@ public class Server {
             }
 
         }
-
-
-
-       /* private void copyFile() {
-
-            byte[] bytes = new byte[1024];
-
-            try {
-                int bytesReaden = dataInputStream.read(bytes);
-
-                while (bytesReaden != -1){
-                    dataOutputStream.write(bytes, 0, bytesReaden);
-                    bytesReaden = dataInputStream.read(bytes);
-                }
-
-            } catch (IOException e){
-                e.printStackTrace();
-            } finally {
-
-                closeFiles();
-            }
-
-        }*/
-
-
-        /**
-         *
-         */
-        private void closeFiles() {
-
-            try {
-                dataOutputStream.close();
-                dataInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
 
     }
 }

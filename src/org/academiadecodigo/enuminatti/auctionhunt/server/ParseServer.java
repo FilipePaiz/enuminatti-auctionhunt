@@ -1,6 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
-import org.academiadecodigo.enuminatti.auctionhunt.client.ParseClient;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
@@ -10,7 +9,7 @@ import java.net.Socket;
 /**
  * Created by codecadet on 10/11/17.
  */
-public final class ParseServer {
+public class ParseServer {
 
     private Socket clientSocket = null;
     private static ParseServer instance;
@@ -18,21 +17,8 @@ public final class ParseServer {
     /**
      *
      */
-    private ParseServer() {
-    }
-
-    /**
-     * @return
-     */
-    public static ParseServer getInstance() {
-        if (instance == null) {
-            synchronized (ParseServer.class) {
-                if (instance == null) {
-                    instance = new ParseServer();
-                }
-            }
-        }
-        return instance;
+    public ParseServer(Socket clientSocket) {
+        this.clientSocket = clientSocket;
     }
 
 

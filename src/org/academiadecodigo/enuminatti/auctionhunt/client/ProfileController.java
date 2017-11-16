@@ -111,7 +111,6 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -124,11 +123,9 @@ public class ProfileController implements Initializable, Controller {
         return;
 
 
-
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -137,7 +134,6 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -146,7 +142,6 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -161,22 +156,21 @@ public class ProfileController implements Initializable, Controller {
         System.out.println(chooser);
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         File selected = chooser.showOpenDialog(Navigation.root.getScene().getWindow());
-        Window file =Navigation.root.getScene().getWindow();
+        Window file = Navigation.root.getScene().getWindow();
 
 
         if (selected != null) {
             selected.getAbsolutePath();
 
-           // System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
-            //File fileToSave = chooser.getSelectedFile();
-           // System.out.println("Uploading file: " + fileToSave.getAbsolutePath());
+            System.out.println("You chose to open this file: " + chooser.getInitialFileName());
+
+            System.out.println("Uploading file: " + selected.getAbsolutePath());
             UploadImageDirectory.setText(selected.getAbsolutePath());
         }
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -185,7 +179,6 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -203,8 +196,8 @@ public class ProfileController implements Initializable, Controller {
 
     private void transferMoney(String money, String buttonText) {
 
-       String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
-       communicationService.sendData(moneyAndHead);
+        String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
+        communicationService.sendData(moneyAndHead);
     }
 
     @FXML
@@ -216,12 +209,11 @@ public class ProfileController implements Initializable, Controller {
     void onButtonPressedOkPressed(ActionEvent event) {
 
         String path = UploadImageDirectory.getText();
-       // ParseClient.getInstance().uploadImage(path);
+        // ParseClient.getInstance().uploadImage(path);
 
     }
 
     /**
-     *
      * @param location
      * @param resources
      */

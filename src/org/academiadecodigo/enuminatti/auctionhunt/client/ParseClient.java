@@ -8,7 +8,6 @@ import java.net.Socket;
  */
 public final class ParseClient {
 
-    private Socket clientSocket = null;
     private static ParseClient instance;
     private String userName;
     private String funds;
@@ -44,9 +43,6 @@ public final class ParseClient {
     /**
      * @param clientSocket
      */
-    public void setClientSocket(Socket clientSocket) {
-        this.clientSocket = clientSocket;
-    }
 
     /**
      *

@@ -19,6 +19,7 @@ import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
@@ -89,6 +90,11 @@ public class ProfileController implements Initializable, Controller {
 
 
     @FXML
+    private TextField InsertPathforPhotoUser;
+
+    private Navigation.LogicController logicController;
+
+    @FXML
     void onDepositButtonPressed(ActionEvent event) {
         String money = insertWithdrawMoney.getText();
 
@@ -153,7 +159,6 @@ public class ProfileController implements Initializable, Controller {
      */
     @FXML
     void onUploadPhotoButtonPressed(ActionEvent event) {
-
     }
 
     /**
@@ -233,12 +238,6 @@ public class ProfileController implements Initializable, Controller {
                         priceField.setText("");
                         descriptionField.setText("");
                         uploadImageDirectory.setText("");
-                        try {
-                            Thread.sleep(5000);
-                            okSubmit.setVisible(false);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                         break;
                     default:
                         System.out.println("Cenas by Aires, try again");
@@ -246,5 +245,6 @@ public class ProfileController implements Initializable, Controller {
             }
         });
     }
+
 }
 

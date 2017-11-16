@@ -144,13 +144,14 @@ public final class ParseServer {
             int bytesReaden;
 
             while (bytesReadTotal != length) {
+                System.out.println("filipe");
                 bytesReaden = dataIn.read(bytes);
                 itemOutput.write(bytes, 0, bytesReaden);
                 bytesReadTotal += bytesReaden;
                 itemOutput.flush();
             }
 
-            bytesReaden = 0;
+            bytesReadTotal = 0;
 
             //itemOutput.close();
             System.out.println("done reading");

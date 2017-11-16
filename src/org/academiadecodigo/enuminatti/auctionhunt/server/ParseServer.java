@@ -155,7 +155,7 @@ public final class ParseServer {
             //itemOutput.close();
             System.out.println("done reading");
 
-            ItemData.save(lineArray[0],lineArray[1],path,lineArray[3]);
+            ItemData.getInstance().save(lineArray[0],lineArray[1],path,lineArray[3]);
             System.out.println("Item save ");
 
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);

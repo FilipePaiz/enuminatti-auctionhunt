@@ -82,8 +82,6 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     private TextField InsertPathforPhotoUser;
 
-    private Navigation.LogicController logicController;
-
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
         String money = insertWithdrawMoney.getText();

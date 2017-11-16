@@ -107,9 +107,6 @@ public class LogicController implements Initializable, Controller {
 
         communicationService.sendData(dataAndHead);
 
-
-//        couldNotLogIn.setVisible(true);
-
     }
 
     /**
@@ -135,7 +132,7 @@ public class LogicController implements Initializable, Controller {
 
         String register = ParseClient.getInstance().setDataServer(registerData, logoutButton.getText());
 
-
+        communicationService.sendData(register);
     }
 
     /**

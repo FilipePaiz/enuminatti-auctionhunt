@@ -15,6 +15,7 @@ public final class ParseServer {
     private Socket clientSocket = null;
     private static ParseServer instance;
     private boolean itemUpload;
+    private int bytesReadTotal = 0;
 
     /**
      *
@@ -125,35 +126,34 @@ public final class ParseServer {
     private void itemDecodificate(String line) {
 
         System.out.println("LINE SERVER:" + line);
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[512 *2048];
         line = line.replace("/item/", "");
 
         String[] lineArray = line.split("#");
 
         int length = Integer.parseInt(lineArray[4]);
         System.out.println(length);
+        int bytesReaden = 0;
 
-        int bytesReadTotal = 0;
-
-                System.out.println(line + "<-----------");
+        System.out.println(line + "<-----------");
         try {
 
             String path = "resources/" +  lineArray[0] + ".jpg";
             FileOutputStream itemOutput = new FileOutputStream(path);
             DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
-            int bytesReaden;
+            bytesReadTotal = 0;
 
             while (bytesReadTotal != length) {
-                System.out.println("filipe");
                 bytesReaden = dataIn.read(bytes);
                 itemOutput.write(bytes, 0, bytesReaden);
                 bytesReadTotal += bytesReaden;
+                System.out.println(bytesReadTotal);
+                System.out.println(bytesReaden);
                 itemOutput.flush();
             }
 
-            bytesReadTotal = 0;
+            bytesReaden = 0;
 
-            //itemOutput.close();
             System.out.println("done reading");
 
             ItemData.getInstance().save(lineArray[0],lineArray[1],path,lineArray[3]);

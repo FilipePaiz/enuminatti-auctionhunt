@@ -13,12 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
-import org.academiadecodigo.enuminatti.auctionhunt.server.User;
 import org.academiadecodigo.enuminatti.auctionhunt.server.UserService;
-import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -73,7 +70,7 @@ public final class Navigation {
 
             // Instantiate the view and the controller
             fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(VIEW_PATH + view + ".fxml"));
-             root = fxmlLoader.load();
+            root = fxmlLoader.load();
 
             stage.setTitle("AuctionHunt");
 
@@ -128,162 +125,11 @@ public final class Navigation {
     }
 
     /**
+     * @param
      * @return
      */
     public Controller getController() {
         return fxmlLoader.getController();
     }
 
-    public static class LogicController implements Initializable {
-
-        private UserService userService;
-
-        @FXML
-        private Button logOutButton;
-
-        @FXML
-        private PasswordField passwordfield;
-
-        @FXML
-        private TextField usernameField;
-
-        @FXML
-        private Text usernameText;
-
-        @FXML
-        private Text passwordText;
-
-        @FXML
-        private Text welcomeText;
-
-        @FXML
-        private Text auctionText;
-
-        @FXML
-        private Hyperlink dontHaveAccount;
-
-        @FXML
-        private Text succesfullLog;
-
-        @FXML
-        private Text couldNotLogIn;
-
-        @FXML
-        private Text emailText;
-
-        @FXML
-        private Hyperlink alreadyHaveAccount;
-
-        @FXML
-        private Button logInButton;
-
-        @FXML
-        private Text succesfullRegister;
-
-        @FXML
-        private Text couldNotRegister;
-
-        @FXML
-        private TextField emailfield;
-
-        @FXML
-        void changeToLogin(ActionEvent event) {
-           showLogin();
-        }
-
-        @FXML
-        void changeToRegister(ActionEvent event) {
-            showRegister();
-        }
-
-        @FXML
-        void onLogin(ActionEvent event) {
-
-            System.out.println("cenas");
-
-            if (usernameField.getText().isEmpty()) {
-                couldNotLogIn.setVisible(true);
-                return;
-            }
-
-            if (passwordfield.getText().isEmpty()) {
-                couldNotLogIn.setVisible(true);
-                return;
-            }
-
-            if (userService.authenticate(usernameField.getText(), passwordfield.getText())) {
-                succesfullLog.setVisible(true);
-                getInstance().loadScreen("Profile");
-            } else {
-                couldNotLogIn.setVisible(true);
-            }
-
-        }
-
-        @FXML
-        void onRegister(ActionEvent event) {
-
-            System.out.println(usernameField.getText());
-            System.out.println(passwordfield.getText());
-            System.out.println(emailfield.getText());
-
-            if (usernameField.getText().isEmpty()) {
-                couldNotRegister.setVisible(true);
-                return;
-            }
-
-            if (passwordfield.getText().isEmpty()) {
-                couldNotRegister.setVisible(true);
-                return;
-            }
-
-            if (emailfield.getText().isEmpty()) {
-                couldNotRegister.setVisible(true);
-                return;
-            }
-
-            System.out.println("bem-vindo");
-            succesfullRegister.setVisible(true);
-            showLogin();
-
-        }
-
-
-        @Override
-        public void initialize(URL location, ResourceBundle resources) {
-
-            userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
-
-            System.out.println("-----------" + userService + "---------------");
-
-
-        }
-
-        private void showLogin() {
-            if(couldNotRegister.isVisible()){
-                couldNotRegister.setVisible(false);
-            }
-            succesfullRegister.setVisible(false);
-            emailfield.setVisible(false);
-            emailText.setVisible(false);
-            logOutButton.setVisible(false);
-            alreadyHaveAccount.setVisible(false);
-            logInButton.setVisible(true);
-            dontHaveAccount.setVisible(true);
-
-        }
-
-        private void showRegister() {
-            if(couldNotLogIn.isVisible()){
-                couldNotLogIn.setVisible(false);
-            }
-
-            emailfield.setVisible(true);
-            emailText.setVisible(true);
-            logOutButton.setVisible(true);
-            alreadyHaveAccount.setVisible(true);
-            logInButton.setVisible(false);
-            dontHaveAccount.setVisible(false);
-        }
-    }
 }

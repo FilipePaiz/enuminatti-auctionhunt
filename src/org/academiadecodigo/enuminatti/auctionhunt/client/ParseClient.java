@@ -77,8 +77,8 @@ public final class ParseClient {
                 return "/withdraw/" + userName + "#" + dataSplitted[0] + "\r\n";
             case "Deposit":
                 return "/deposit/" + userName + "#" + dataSplitted[0] + "\r\n";
-            /*case "next"
-                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";*/
+            case "Submit":
+                return "/item/" + data;
             case "Bid":
                 return "/bid/" + userName + "#" + dataSplitted[0] + "\r\n";
             case "Next":
@@ -149,6 +149,10 @@ public final class ParseClient {
             itemDescription = words[3];
             return "sellItem";
 
+        }
+
+        if(string.startsWith("/item/done/")) {
+            return "item";
         }
 
         return "register";

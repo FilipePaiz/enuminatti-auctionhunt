@@ -82,7 +82,6 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     private TextField InsertPathforPhotoUser;
 
-    private Navigation.LogicController logicController;
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
@@ -113,6 +112,8 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
         Navigation.getInstance().back();
+        Navigation.getInstance().back();
+        Navigation.getInstance().loadScreen("login&register");
     }
 
     /**

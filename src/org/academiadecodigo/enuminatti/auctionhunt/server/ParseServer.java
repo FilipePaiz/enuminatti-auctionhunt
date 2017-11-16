@@ -138,7 +138,8 @@ public final class ParseServer {
                 System.out.println(line + "<-----------");
         try {
 
-            FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
+            String path = "resources/" +  lineArray[0] + ".jpg";
+            FileOutputStream itemOutput = new FileOutputStream(path);
             DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
             int bytesReaden;
 
@@ -148,11 +149,18 @@ public final class ParseServer {
                 bytesReadTotal += bytesReaden;
                 itemOutput.flush();
             }
+
+            bytesReaden = 0;
+
+            //itemOutput.close();
             System.out.println("done reading");
 
-            ItemData.save(lineArray[0],lineArray[1],"resources/test.jpg", lineArray[3]);
+            ItemData.save(lineArray[0],lineArray[1],path,lineArray[3]);
+            System.out.println("Item save ");
 
-            //PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            out.println("/item/done/");
+            System.out.println("message sent");
 
         } catch (IOException e) {
             e.printStackTrace();

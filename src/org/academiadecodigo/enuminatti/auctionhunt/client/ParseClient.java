@@ -92,6 +92,7 @@ public final class ParseClient {
      */
     public String decodeServerMessage(String string) {
 
+        System.out.println(string + "ParseClient decode");
         if (string.equals("login not done") || string.equals("register not done")) {
             return null;
         }
@@ -134,6 +135,10 @@ public final class ParseClient {
             }
             funds = words[1];
             return "bid";
+        }
+
+        if (string.startsWith("/item/done/")) {
+            return "item";
         }
 
         return "register";

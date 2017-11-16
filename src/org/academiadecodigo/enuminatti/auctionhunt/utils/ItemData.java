@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ItemData {
 
-    private static int itemNumber = 0;
+    private static int itemNumber = (int) (Math.random()*99999999);
     private static final String FILEPATH = "resources/ItemData";
 
     private static BufferedWriter save;

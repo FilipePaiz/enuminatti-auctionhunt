@@ -211,6 +211,8 @@ public class ProfileController implements Initializable, Controller {
     private void showValues() {
         fundsAvailable.setText(ParseClient.getInstance().getUserFunds());
         username.setText(ParseClient.getInstance().getUserName());
+        okSubmit.setVisible(false);
+        notOkSubmit.setVisible(false);
     }
 
     public void changeView(String string) {
@@ -224,6 +226,19 @@ public class ProfileController implements Initializable, Controller {
                     case "deposit":
                     case "withdraw":
                         fundsAvailable.setText(ParseClient.getInstance().getFunds());
+                        break;
+                    case "item":
+                        okSubmit.setVisible(true);
+                        itemNameField.setText("");
+                        priceField.setText("");
+                        descriptionField.setText("");
+                        uploadImageDirectory.setText("");
+                        try {
+                            Thread.sleep(5000);
+                            okSubmit.setVisible(false);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     default:
                         System.out.println("Cenas by Aires, try again");

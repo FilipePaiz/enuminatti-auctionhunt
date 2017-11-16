@@ -73,10 +73,12 @@ public final class ParseClient {
                 return "/withdraw/" + userName + "#" + dataSplitted[0] + "\r\n";
             case "Deposit":
                 return "/deposit/" + userName + "#" + dataSplitted[0] + "\r\n";
-            /*case "next"
-                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";*/
+            case "next":
+                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";
             case "Bid":
                 return "/bid/" + userName + "#" + dataSplitted[0] + "\r\n";
+            case "Submit":
+                return "/item/" + data;
             default:
                 System.out.println("Deu merda o parse do client");
 

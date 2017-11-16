@@ -74,11 +74,11 @@ public class BidController implements Initializable, Controller {
      */
     @FXML
     void OnNextButtonAction(ActionEvent event) {
-        try {
-            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
+       /* try {
+            //ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**

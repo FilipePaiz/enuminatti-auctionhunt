@@ -5,28 +5,25 @@ package org.academiadecodigo.enuminatti.auctionhunt.server;
  */
 public class Item {
 
-    private User user;
+    private String username;
     private String itemName;
     private String itemDescription;
-    private int askingPrice; //price setted by user to sell
-    private int actualBid; //last bid
+    private int askingPrice;
     private String pictureURL;
+
 
     /**
      *
-     * @param user
      * @param itemName
      * @param itemDescription
+
      * @param askingPrice
-     * @param pictureURL
      */
-    public Item(User user, String itemName, String itemDescription, int askingPrice, String pictureURL) {
-        this.user = user;
+    public Item(String username, String itemName, String itemDescription, int askingPrice) {
+        this.username = username;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.askingPrice = askingPrice;
-        this.actualBid = askingPrice;
-        this.pictureURL = pictureURL;
     }
 
     /**
@@ -57,22 +54,6 @@ public class Item {
      *
      * @return
      */
-    public int getActualBid() {
-        return actualBid;
-    }
-
-    /**
-     *
-     * @param actualBid
-     */
-    public void setActualBid(int actualBid) {
-        this.actualBid = actualBid;
-    }
-
-    /**
-     *
-     * @return
-     */
     public String getPictureURL() {
         return pictureURL;
     }
@@ -81,26 +62,29 @@ public class Item {
      *
      * @return
      */
-    public User getUser() {
-        return user;
+
+    public String getUsername() {
+        return username;
     }
 
-    /**
-     *
-     * @param user
-     */
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    /*public boolean bidOnItem(User newBidder, int money) {
-        if(!MockMoneyService.removeMoney(newBidder,money) || money < actualBid) {
-            System.out.println("Bid not made"); //this will remove the money from bid to the actual bidder
-            return false;
-        }
-        MockMoneyService.addMoney(user, actualBid); //this will return the money to the previous bidder
-        user = newBidder;
-        actualBid = money;
-        return true;
-    }*/
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
+    public void setAskingPrice(int askingPrice) {
+        this.askingPrice = askingPrice;
+    }
+
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
+    }
+
 }

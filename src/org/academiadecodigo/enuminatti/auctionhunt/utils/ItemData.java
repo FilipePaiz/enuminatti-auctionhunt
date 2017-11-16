@@ -20,24 +20,24 @@ import java.util.List;
 public class ItemData {
 
     private static int itemNumber = 0;
+    private static final String FILEPATH = "resources/ItemData";
 
     private static BufferedWriter save;
     private static BufferedReader read;
 
     /**
      *
-     * @param file  receives the file to save
      * @param name  receives the name of the owner
      * @param itemName  receives the name of the item
      * @param path  receives the location and the name of the picture
      * @param price receives the price of the item
      * @throws IOException
      */
-    public static void save(String file, String name, String itemName, String path, String price) throws IOException {
+    public static void save(String name, String itemName, String path, String price) throws IOException {
 
-        save = new BufferedWriter(new FileWriter(file, true));
+        save = new BufferedWriter(new FileWriter(FILEPATH, true));
 
-        String newPath = load(file, path);
+        String newPath = load(FILEPATH, path);
 
         save.write("Item ID: " + itemNumber + "\n" +
                 "ID: " + name + "\n" +

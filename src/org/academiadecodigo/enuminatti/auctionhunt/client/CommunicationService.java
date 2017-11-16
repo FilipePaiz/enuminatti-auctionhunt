@@ -62,7 +62,7 @@ public class CommunicationService implements Runnable, Service {
         }
     }
 
-    public void uploadImage(String path) {
+    public void uploadImage(String path, String data) {
 
 
         byte[] bytes = new byte[512 * 2048];
@@ -70,13 +70,17 @@ public class CommunicationService implements Runnable, Service {
         DataOutputStream dataOut = null;
         try {
 
+            System.out.println("PATH:" + path);
             dataOut = new DataOutputStream(clientSocket.getOutputStream());
             File file = new File(path);
             dataIn = new DataInputStream(new FileInputStream(file));
             int bytesRead = dataIn.read(bytes);
 
-            String msgProtocol = "/item/" + file.length() + "\n";
+            String msgProtocol = data + "#" + file.length() + "\n";
 
+            System.out.println("PROTOCOL:"+ msgProtocol);
+
+            System.out.println("FLENGTH:" + file.length());
             dataOut.write(msgProtocol.getBytes());
             while (bytesRead != -1) {
 

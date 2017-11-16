@@ -1,7 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
-import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
-
 /**
  * Created by Someone who is not me on 09/11/17.
  */

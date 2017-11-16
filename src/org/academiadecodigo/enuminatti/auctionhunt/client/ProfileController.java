@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
@@ -28,37 +30,43 @@ public class ProfileController implements Initializable, Controller {
 
     private CommunicationService communicationService;
     @FXML
-    private Label Photo;
+    private Label photo;
 
     @FXML
-    private Button MyFundsButton;
+    private Button logoutButton;
 
     @FXML
-    private Label funds;
+    private Button goToAuctionButton;
 
     @FXML
-    private Label numberOfItems;
+    private Button uploadItemButton;
 
     @FXML
-    private Button logOutButton;
+    private TextField uploadImageDirectory;
 
     @FXML
-    private Button GoToAuctionButton;
+    private Button okUpload;
 
     @FXML
-    private Pane depositWithdrawMoey;
+    private Button cancelUpload;
 
     @FXML
     private Button depositButton;
 
     @FXML
-    private Button withdrawButton;
-
-    @FXML
     private TextField insertWithdrawMoney;
 
     @FXML
+    private Button withdrawButton;
+
+    @FXML
+    private Label fundsAvailable;
+
+    @FXML
     private Button UploadItemButton;
+
+    @FXML
+    private Label username;
 
     @FXML
     private Label readHistory1;
@@ -103,6 +111,7 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
+     *
      * @param event
      */
     @FXML
@@ -115,24 +124,20 @@ public class ProfileController implements Initializable, Controller {
         return;
 
 
+
     }
 
     /**
+     *
      * @param event
      */
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
-
-        try {
-            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         Navigation.getInstance().back();
     }
 
     /**
+     *
      * @param event
      */
     @FXML
@@ -141,11 +146,16 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
+     *
      * @param event
      */
     @FXML
     void onUploadButtonPressed(ActionEvent event) {
 
+      /*  String data = "aqui";
+        ParseClient.getInstance().sendData(data);
+        String receiveHead = ParseClient.getInstance().readData();
+        ParseClient.getInstance().decodeServerMessage(receiveHead);*/
 
         FileChooser chooser = new FileChooser();
         System.out.println(chooser);
@@ -166,6 +176,7 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
+     *
      * @param event
      */
     @FXML
@@ -174,6 +185,7 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
+     *
      * @param event
      */
     @FXML
@@ -181,7 +193,7 @@ public class ProfileController implements Initializable, Controller {
 
         String money = insertWithdrawMoney.getText();
 
-        if (Integer.parseInt(money) > Integer.parseInt(funds.getText())) {
+        if (Integer.parseInt(money) > Integer.parseInt(fundsAvailable.getText())) {
             return;
         }
 
@@ -191,14 +203,8 @@ public class ProfileController implements Initializable, Controller {
 
     private void transferMoney(String money, String buttonText) {
 
-      /*  String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
-        ParseClient.getInstance().sendData(moneyAndHead);
-        String serverMessage = ParseClient.getInstance().readData();
-        if (!ParseClient.getInstance().decodeServerMessage(serverMessage)) {
-            return;
-        }
-        funds.setText(ParseClient.getInstance().getFunds());
-*/
+       String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
+       communicationService.sendData(moneyAndHead);
     }
 
     @FXML
@@ -215,19 +221,38 @@ public class ProfileController implements Initializable, Controller {
     }
 
     /**
+     *
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(ParseClient.getInstance().getUserName() + " - ProfileController");
-        System.out.println(ParseClient.getInstance().getUserFunds() + " - ProfileController");
+        communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
         showValues();
     }
 
     private void showValues() {
-        funds.setText(ParseClient.getInstance().getUserFunds());
-        numberOfItems.setText(ParseClient.getInstance().getUserName());
+        fundsAvailable.setText(ParseClient.getInstance().getUserFunds());
+        username.setText(ParseClient.getInstance().getUserName());
+    }
+
+    public void changeView(String string) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                switch (string) {
+
+                    case "deposit":
+                    case "withdraw":
+                        fundsAvailable.setText(ParseClient.getInstance().getFunds());
+                        break;
+                    default:
+                        System.out.println("Cenas by Aires, try again");
+                }
+            }
+        });
     }
 }
 

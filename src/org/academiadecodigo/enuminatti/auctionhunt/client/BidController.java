@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,18 +12,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
 import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
+import org.academiadecodigo.enuminatti.auctionhunt.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.BoughtItem;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 
 import javax.naming.ldap.Control;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Created by codecadet on 08/11/2017.
  */
-public class BidController implements Initializable, Controller{
+public class BidController implements Initializable, Controller {
 
-   private CommunicationService communicationService;
+    private CommunicationService communicationService;
 
     @FXML
     private ResourceBundle resources;
@@ -65,16 +71,18 @@ public class BidController implements Initializable, Controller{
 
 
     /**
-     *
      * @param event
      */
-   @FXML
+    @FXML
     void OnNextButtonAction(ActionEvent event) {
-
+        try {
+            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -83,26 +91,41 @@ public class BidController implements Initializable, Controller{
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void onBidButtonAction(ActionEvent event) {
-        //waiting for logic connection
+
+       if (clientBid.getText().equals("")){
+           clientBid.setText("0");
+       }
+
+        String moneyData = clientBid.getText();
+        String data = ParseClient.getInstance().setDataServer(moneyData, bidButton.getText());
+        communicationService.sendData(data);
+
+        ParseClient.getInstance().decodeServerMessage("bid");
+
+        clientBid.clear();
+
+       /** try {
+            BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
     /**
-     *
      * @param event
      */
     @FXML
     void onHomeButtonAction(ActionEvent event) {
-        //Awaiting for connection between views
         Navigation.getInstance().back();
+        Navigation.getInstance().back();
+        Navigation.getInstance().loadScreen("Profile");
     }
 
     /**
-     *
      * @param item
      */
     private void showItem(Item item) {
@@ -114,15 +137,14 @@ public class BidController implements Initializable, Controller{
     }
 
     /**
-     *
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //setText() with values given by item
-
-       // showItem(bidService.getItems().get(itemOnShow));
+        communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
+        // showItem(bidService.getItems().get(itemOnShow));
     }
 }
 

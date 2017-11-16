@@ -40,7 +40,6 @@ public final class ParseServer {
      */
     public void validateData(String line) {
 
-        System.out.println(line);
         if (line.startsWith("/regist/")) {
             registerDecodificate(line);
             return;
@@ -64,12 +63,18 @@ public final class ParseServer {
         if (line.startsWith("/deposit/")) {
             depositDecodificate(line);
         }
+        if (line.startsWith("/bid/")) {
+            bidDecodificate(line);
+        }
     }
 
     private void depositDecodificate(String line) {
 
         line = line.replace("/deposit/", "");
         String[] words = line.split("#");
+
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
 
         MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
 
@@ -123,14 +128,13 @@ public final class ParseServer {
 
         byte[] bytes = new byte[1024];
         line = line.replace("/item/", "");
-        String[] words = line.split("/");
-        int lenght = words.length-1;
+        String[] words = line.split("€");
 
 
 
         try {
 
-            FileOutputStream itemOutput = new FileOutputStream("resources/" +words[lenght]);
+            FileOutputStream itemOutput = new FileOutputStream("resources/test.jpg");
             FileInputStream fileInputStream = new FileInputStream(line);
             System.out.println(fileInputStream);
 

@@ -10,4 +10,6 @@ public interface MoneyService extends Service {
     boolean withdrawMoney(String name, String money);
 
     void depositMoney(String name, String money);
+
+    boolean removeMoney(String username, int money);
 }

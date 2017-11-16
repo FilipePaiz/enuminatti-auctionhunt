@@ -67,6 +67,9 @@ public final class ParseServer {
         line = line.replace("/deposit/", "");
         String[] words = line.split("#");
 
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
+
         MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
 
         try {
@@ -91,6 +94,9 @@ public final class ParseServer {
 
         line = line.replace("/withdraw/", "");
         String[] words = line.split("#");
+
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
 
         MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
 
@@ -121,7 +127,8 @@ public final class ParseServer {
         line = line.replace("/item/", "");
         String[] words = line.split("€");
 
-
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
 
         try {
 
@@ -157,6 +164,9 @@ public final class ParseServer {
         line = line.replace("/login/", "");
         String[] words = line.split("#");
 
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
+
         UserService userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
@@ -181,6 +191,9 @@ public final class ParseServer {
 
         line = line.replace("/regist/", "");
         String[] words = line.split("#");
+
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
 
         UserService userService = (UserService) ServiceRegistry.getInstance().getService("UserService");
 

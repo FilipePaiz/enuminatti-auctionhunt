@@ -23,13 +23,16 @@ public class LogicController implements Initializable, Controller {
 
 
     @FXML
-    private Button logOutButton;
+    private Button logoutButton;
+
+    @FXML
+    private TextField usernameField;
 
     @FXML
     private PasswordField passwordField;
 
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
 
     @FXML
     private TextField hostField;
@@ -71,7 +74,7 @@ public class LogicController implements Initializable, Controller {
     private Text couldNotRegister;
 
     @FXML
-    private TextField emailField;
+    private Text hostText;
 
     @FXML
     void changeToLogin(ActionEvent event) {
@@ -88,9 +91,6 @@ public class LogicController implements Initializable, Controller {
      */
     @FXML
     void onLogin(ActionEvent event) {
-
-        //  if (clientSocket == null) {
-
 
         if (usernameField.getText().isEmpty()) {
             couldNotLogIn.setVisible(true);
@@ -134,7 +134,7 @@ public class LogicController implements Initializable, Controller {
         String registerData = usernameField.getText() + " " + emailField.getText() + " " + passwordField.getText();
         System.out.println(logInButton.getText());
 
-        String register = ParseClient.getInstance().setDataServer(registerData, logOutButton.getText());
+        String register = ParseClient.getInstance().setDataServer(registerData, logoutButton.getText());
 
       /*  ParseClient.getInstance().sendData(register);
 
@@ -203,12 +203,15 @@ public class LogicController implements Initializable, Controller {
             couldNotRegister.setVisible(false);
         }
         succesfullRegister.setVisible(false);
-        emailField.setVisible(false);
-        emailText.setVisible(false);
-        logOutButton.setVisible(false);
+        emailField.setVisible(true);
+        emailText.setVisible(true);
+        emailText.setText("Host");
+        logoutButton.setVisible(false);
         alreadyHaveAccount.setVisible(false);
         logInButton.setVisible(true);
         dontHaveAccount.setVisible(true);
+        hostField.setVisible(false);
+        hostText.setVisible(false);
 
     }
 
@@ -219,10 +222,12 @@ public class LogicController implements Initializable, Controller {
         if (couldNotLogIn.isVisible()) {
             couldNotLogIn.setVisible(false);
         }
-
+        hostField.setVisible(true);
+        hostText.setVisible(true);
         emailField.setVisible(true);
+        emailText.setText("Email");
         emailText.setVisible(true);
-        logOutButton.setVisible(true);
+        logoutButton.setVisible(true);
         alreadyHaveAccount.setVisible(true);
         logInButton.setVisible(false);
         dontHaveAccount.setVisible(false);
@@ -234,13 +239,13 @@ public class LogicController implements Initializable, Controller {
             @Override
             public void run() {
 
-                switch (string){
+                switch (string) {
 
                     case "login":
                         Navigation.getInstance().loadScreen("Profile");
                         break;
-                        default:
-                            System.out.println("Cenas by Aires, try again");
+                    default:
+                        System.out.println("Cenas by Aires, try again");
                 }
             }
         });

@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
@@ -16,41 +18,44 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileController implements Initializable,Controller {
+public class ProfileController implements Initializable, Controller {
 
     private CommunicationService communicationService;
     @FXML
-    private Label Photo;
+    private Label photo;
 
     @FXML
-    private Button MyFundsButton;
+    private Button logoutButton;
 
     @FXML
-    private Label funds;
+    private Button goToAuctionButton;
 
     @FXML
-    private Label numberOfItems;
+    private Button uploadItemButton;
 
     @FXML
-    private Button logOutButton;
+    private TextField uploadImageDirectory;
 
     @FXML
-    private Button GoToAuctionButton;
+    private Button okUpload;
 
     @FXML
-    private Pane depositWithdrawMoey;
+    private Button cancelUpload;
 
     @FXML
     private Button depositButton;
 
     @FXML
-    private Button withdrawButton;
-
-    @FXML
     private TextField insertWithdrawMoney;
 
     @FXML
-    private Button UploadItemButton;
+    private Button withdrawButton;
+
+    @FXML
+    private Label fundsAvailable;
+
+    @FXML
+    private Label username;
 
     @FXML
     private Label readHistory1;
@@ -73,29 +78,16 @@ public class ProfileController implements Initializable,Controller {
     @FXML
     private Button UploadPhoto;
 
-    /**
-     *
-     * @param event
-     */
-    @FXML
-    private TextField UploadImageDirectory;
-
-    @FXML
-    private Button OkUpload;
-
-    @FXML
-    private Button CancelUpload;
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
         String money = insertWithdrawMoney.getText();
 
-        transferMoney(money,depositButton.getText());
+        transferMoney(money, depositButton.getText());
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -104,15 +96,13 @@ public class ProfileController implements Initializable,Controller {
 
         //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
 
-            Navigation.getInstance().loadScreen("bidAuction");
-            return;
-
+        Navigation.getInstance().loadScreen("bidAuction");
+        return;
 
 
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -121,7 +111,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -130,7 +119,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -145,7 +133,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -154,7 +141,6 @@ public class ProfileController implements Initializable,Controller {
     }
 
     /**
-     *
      * @param event
      */
     @FXML
@@ -162,7 +148,7 @@ public class ProfileController implements Initializable,Controller {
 
         String money = insertWithdrawMoney.getText();
 
-        if (Integer.parseInt(money) > Integer.parseInt(funds.getText())) {
+        if (Integer.parseInt(money) > Integer.parseInt(fundsAvailable.getText())) {
             return;
         }
 
@@ -172,14 +158,8 @@ public class ProfileController implements Initializable,Controller {
 
     private void transferMoney(String money, String buttonText) {
 
-      /*  String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
-        ParseClient.getInstance().sendData(moneyAndHead);
-        String serverMessage = ParseClient.getInstance().readData();
-        if (!ParseClient.getInstance().decodeServerMessage(serverMessage)) {
-            return;
-        }
-        funds.setText(ParseClient.getInstance().getFunds());
-*/
+       String moneyAndHead = ParseClient.getInstance().setDataServer(money, buttonText);
+       communicationService.sendData(moneyAndHead);
     }
 
     @FXML
@@ -190,26 +170,40 @@ public class ProfileController implements Initializable,Controller {
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
 
-        String path = UploadImageDirectory.getText();
-       // ParseClient.getInstance().uploadImage(path);
-
     }
 
     /**
-     *
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(ParseClient.getInstance().getUserName() + " - ProfileController");
-        System.out.println(ParseClient.getInstance().getUserFunds() + " - ProfileController");
+        communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
         showValues();
     }
 
     private void showValues() {
-        funds.setText(ParseClient.getInstance().getUserFunds());
-        numberOfItems.setText(ParseClient.getInstance().getUserName());
+        fundsAvailable.setText(ParseClient.getInstance().getUserFunds());
+        username.setText(ParseClient.getInstance().getUserName());
+    }
+
+    public void changeView(String string) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                switch (string) {
+
+                    case "deposit":
+                    case "withdraw":
+                        fundsAvailable.setText(ParseClient.getInstance().getFunds());
+                        break;
+                    default:
+                        System.out.println("Cenas by Aires, try again");
+                }
+            }
+        });
     }
 }
 

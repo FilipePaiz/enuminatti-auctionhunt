@@ -99,12 +99,15 @@ public class CommunicationService implements Runnable, Service {
     @Override
     public void run() {
 
+        System.out.println(this);
+        System.out.println(Thread.currentThread().getName());
 
         while (true) {
 
-
             String answer = ParseClient.getInstance().decodeServerMessage(readData());
 
+            System.out.println(Thread.currentThread().getName());
+            System.out.println(this);
 
             if (answer != null) {
 
@@ -117,6 +120,8 @@ public class CommunicationService implements Runnable, Service {
 
                 }
 
+                if (Navigation.getInstance().getController() instanceof ProfileController)
+                    ((ProfileController) Navigation.getInstance().getController()).changeView(answer);
 
             }
         }

@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import org.academiadecodigo.enuminatti.auctionhunt.server.*;
 
 import java.io.*;
@@ -16,7 +17,7 @@ public class Server {
 
     private LinkedList<ServerThread> clientList;
     public static final int PORT = 9090;
-    public static final String HOST = "localhost";
+    public static final String HOST = "192.168.1.28";
     public static final String PATH = "resources/";
 
     /**
@@ -29,7 +30,6 @@ public class Server {
     }
 
     /**
-     *
      * @param args
      */
     public static void main(String[] args) {
@@ -58,7 +58,6 @@ public class Server {
     }
 
     /**
-     *
      * @param serverSocket
      */
     private void start(ServerSocket serverSocket) {
@@ -106,7 +105,7 @@ public class Server {
 
             this.clientSocket = clientSocket;
 
-            ParseServer.getInstance().setClientSocket(clientSocket);
+            //ParseServer.getInstance().setClientSocket(clientSocket);
         }
 
         /**
@@ -122,11 +121,14 @@ public class Server {
 
                 while (true) {
 
+
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     String line = in.readLine();
-
-                    ParseServer.getInstance().validateData(line);
+                    synchronized (this) {
+                        ParseServer.getInstance().setClientSocket(clientSocket);
+                        ParseServer.getInstance().validateData(line);
+                    }
 
                 }
 
@@ -142,7 +144,7 @@ public class Server {
 
             }
 
-    }
+        }
 
 
 
@@ -171,17 +173,17 @@ public class Server {
         /**
          *
          */
-    private void closeFiles() {
+        private void closeFiles() {
 
-        try {
-            dataOutputStream.close();
-            dataInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                dataOutputStream.close();
+                dataInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
+
     }
-
-
-}
 }

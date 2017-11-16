@@ -84,7 +84,7 @@ public class BidController implements Initializable, Controller {
      */
     @FXML
     void OnPreviousButtonAction(ActionEvent event) {
-ItemData.getInstance().loadItem("resources/ItemData","2");
+  //ItemData.getInstance().loadItem("resources/ItemData","2");
     }
 
     /**

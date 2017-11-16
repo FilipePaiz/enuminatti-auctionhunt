@@ -33,7 +33,7 @@ public class ItemData {
      * @return
      */
 
-    public static ItemData getInstance() {
+    /*public static ItemData getInstance() {
         if (instance == null) {
             synchronized (ParseServer.class) {
                 if (instance == null) {
@@ -42,19 +42,19 @@ public class ItemData {
             }
         }
         return instance;
-    }
+    }*/
 
     /**
-     *
-     * @param file  receives the file to save
+
      * @param name  receives the name of the owner
      * @param itemName  receives the name of the item
      * @param path  receives the location and the name of the picture
      * @param price receives the price of the item
      * @throws IOException
      */
-    public static void save(String file, String name, String itemName, String path, String price) throws IOException {
+    public static void save(String name, String itemName, String path, String price) throws IOException {
 
+        String file = "resources/ItemData";
         save = new BufferedWriter(new FileWriter(file, true));
 
         String newPath = load(file, path);
@@ -80,7 +80,7 @@ public class ItemData {
      * @param Path  receives the location and the name of the picture
      * @return
      */
-    public  String load(String file, String Path) {
+    public static String load(String file, String Path) {
 
         BufferedReader read = null;
 
@@ -112,7 +112,7 @@ public class ItemData {
      *
      * @return  returns the present day
      */
-    private String getDateTime() {
+    private static String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return dateFormat.format(date);

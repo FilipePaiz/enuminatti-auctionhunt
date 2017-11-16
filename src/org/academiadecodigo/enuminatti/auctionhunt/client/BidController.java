@@ -8,16 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
-import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
-import org.academiadecodigo.enuminatti.auctionhunt.utils.BoughtItem;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
-
-import javax.naming.ldap.Control;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -75,10 +69,14 @@ public class BidController implements Initializable, Controller {
     @FXML
     void OnNextButtonAction(ActionEvent event) {
        /* try {
-            //ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
+            ItemData.save("resources/ItemData", "Aires", "Subaru Imprenza", "resources/Subaru", "995");
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+
+       String next = nextButton.getText();
+       String data = ParseClient.getInstance().setDataServer(next,nextButton.getText());
+       communicationService.sendData(data);
     }
 
     /**
@@ -86,7 +84,7 @@ public class BidController implements Initializable, Controller {
      */
     @FXML
     void OnPreviousButtonAction(ActionEvent event) {
-
+  //ItemData.getInstance().loadItem("resources/ItemData","2");
     }
 
     /**
@@ -124,15 +122,9 @@ public class BidController implements Initializable, Controller {
         Navigation.getInstance().loadScreen("Profile");
     }
 
-    /**
-     * @param item
-     */
-    private void showItem(Item item) {
-      /*  lastBid.setText(item.getActualBid()+"");
-        askingPrice.setText(item.getAskingPrice()+"");
-        itemName.setText(item.getItemName());
-        descriptionText.setText(item.getItemDescription());
-        itemImage.setImage(new Image(item.getPictureURL()));  */
+
+    private void showItem() {
+
     }
 
     /**
@@ -141,6 +133,8 @@ public class BidController implements Initializable, Controller {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        ParseClient.getInstance().setItemId("1");
         //setText() with values given by item
         communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
         // showItem(bidService.getItems().get(itemOnShow));

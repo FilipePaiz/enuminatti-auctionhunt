@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,14 +20,32 @@ import java.util.List;
 
 public class ItemData {
 
-    private static int itemNumber = (int) (Math.random()*99999999);
-    private static final String FILEPATH = "resources/ItemData";
+    private static int itemNumber = 0;
 
     private static BufferedWriter save;
     private static BufferedReader read;
+    private static ItemData instance;
+
+    private ItemData() {
+    }
 
     /**
-     *
+     * @return
+     */
+
+    /*public static ItemData getInstance() {
+        if (instance == null) {
+            synchronized (ParseServer.class) {
+                if (instance == null) {
+                    instance = new ItemData();
+                }
+            }
+        }
+        return instance;
+    }*/
+
+    /**
+
      * @param name  receives the name of the owner
      * @param itemName  receives the name of the item
      * @param path  receives the location and the name of the picture
@@ -35,9 +54,10 @@ public class ItemData {
      */
     public static void save(String name, String itemName, String path, String price) throws IOException {
 
-        save = new BufferedWriter(new FileWriter(FILEPATH, true));
+        String file = "resources/ItemData";
+        save = new BufferedWriter(new FileWriter(file, true));
 
-        String newPath = load(FILEPATH, path);
+        String newPath = load(file, path);
 
         save.write("Item ID: " + itemNumber + "\n" +
                 "ID: " + name + "\n" +
@@ -149,12 +169,18 @@ public class ItemData {
         int index = 0;
         Iterator<String> iterator = list.iterator();
 
+        LinkedList<String> item = new LinkedList<>();
+        int countArray = 0;
+
         while (iterator.hasNext()) {
             index++;
             String next = iterator.next();
             if (next.equals("Item ID: " + itemID)) {
                 next = iterator.next();
                 while (!next.startsWith("Upload Date: ")) {
+                    countArray++;
+                    item.add(next);
+                    System.out.println(next);
                     index++;
                     next = iterator.next();
                 }
@@ -164,5 +190,32 @@ public class ItemData {
                 break;
             }
         }
+    }
+
+    public  String loadItem(String file, String id) {
+
+        BufferedReader read = null;
+
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "ItemData");
+        System.out.println(id);
+        try {
+
+            List<String> list = Files.readAllLines(path);
+
+            read = new BufferedReader(new FileReader(file));
+            String line = "";
+
+            System.out.println("<---------");
+            while ((line = read.readLine()) != null) {
+                if (line.contains(id)) {
+                     readListLines(list, id);
+                    }
+                }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

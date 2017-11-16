@@ -236,6 +236,13 @@ public final class ParseServer {
 
     }
 
+    private void sellItemDecodificate(String line) {
+
+        line = line.replace("/sellItem/", "");
+        String[] words = line.split("#");
+
+
+    }
     /**
      * @param clientSocket
      */

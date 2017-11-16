@@ -10,6 +10,10 @@ public final class ParseClient {
     private static ParseClient instance;
     private String userName;
     private String funds;
+    private String itemId;
+    private String itemOwner;
+    private String itemDescription;
+    private String itemPrice;
 
     /**
      *
@@ -77,6 +81,8 @@ public final class ParseClient {
                 return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";*/
             case "Bid":
                 return "/bid/" + userName + "#" + dataSplitted[0] + "\r\n";
+            case "Next":
+                return "/next" + userName +"#" + dataSplitted[0] + "\r\n";
             default:
                 System.out.println("Deu merda o parse do client");
 
@@ -134,6 +140,17 @@ public final class ParseClient {
             return "bid";
         }
 
+        if(string.startsWith("/sellItem/done/")) {
+            string = string.replace("/sellItem/done/","");
+            String[] words = string.split("#");
+            itemId = words[0];
+            itemOwner = words[1];
+            itemPrice = words[2];
+            itemDescription = words[3];
+            return "sellItem";
+
+        }
+
         return "register";
     }
 
@@ -159,6 +176,9 @@ public final class ParseClient {
         return null;
     }
 
+
+
+
     /**
      * @return
      */
@@ -171,6 +191,12 @@ public final class ParseClient {
      */
     public String getUserFunds() {
         return funds;
+    }
+    public String getItemId () {
+        return getItemId();
+    }
+    public void setItemId(String id){
+        this.itemId = id;
     }
 
 

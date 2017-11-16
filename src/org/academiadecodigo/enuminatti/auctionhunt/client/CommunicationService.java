@@ -34,8 +34,6 @@ public class CommunicationService implements Runnable, Service {
      */
     public void sendData(String data) {
 
-        System.out.println(data + "                SEND DATA");
-
         byte[] bytes = new byte[1024];
         DataOutputStream itemOutput;
         DataInputStream dataInputStream;
@@ -57,7 +55,6 @@ public class CommunicationService implements Runnable, Service {
             }*/
 
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-            System.out.println("isto é cenas fixes ------------------");
             out.println(data);
 
         } catch (IOException e) {
@@ -122,6 +119,9 @@ public class CommunicationService implements Runnable, Service {
 
                 if (Navigation.getInstance().getController() instanceof ProfileController)
                     ((ProfileController) Navigation.getInstance().getController()).changeView(answer);
+
+                if (Navigation.getInstance().getController() instanceof  BidController)
+                    ((BidController) Navigation.getInstance().getController()).changeView(answer);
 
             }
         }

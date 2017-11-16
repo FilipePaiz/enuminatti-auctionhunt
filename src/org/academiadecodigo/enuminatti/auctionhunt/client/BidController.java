@@ -1,5 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -100,7 +101,6 @@ public class BidController implements Initializable, Controller {
         communicationService.sendData(data);
 
         ParseClient.getInstance().decodeServerMessage("bid");
-        System.out.println("BIDCONTROLLER ------------");
 
         try {
             BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
@@ -138,6 +138,25 @@ public class BidController implements Initializable, Controller {
         //setText() with values given by item
         communicationService = (CommunicationService) ServiceRegistry.getInstance().getService("CommunicationService");
         // showItem(bidService.getItems().get(itemOnShow));
+    }
+
+    public void changeView(String answer) {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+                switch (answer) {
+
+                    case "bid":
+                        Navigation.getInstance().back();
+                        Navigation.getInstance().loadScreen("Profile");
+                        break;
+                    default:
+                        System.out.println("Cenas by Aires, try again");
+                }
+            }
+        });
     }
 }
 

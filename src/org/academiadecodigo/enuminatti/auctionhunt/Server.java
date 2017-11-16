@@ -17,7 +17,7 @@ public class Server {
 
     private LinkedList<ServerThread> clientList;
     public static final int PORT = 9090;
-    public static final String HOST = "192.168.1.28";
+    public static final String HOST = "localhost";
     public static final String PATH = "resources/";
 
     /**

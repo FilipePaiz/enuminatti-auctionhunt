@@ -1,6 +1,6 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,16 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+
 import javafx.scene.image.ImageView;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
-import org.academiadecodigo.enuminatti.auctionhunt.server.BidService;
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
-import org.academiadecodigo.enuminatti.auctionhunt.utils.BoughtItem;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 
-import javax.naming.ldap.Control;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -79,6 +75,12 @@ public class BidController implements Initializable, Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+
+        try {
+            ItemData.getInstance().save("zé","jose","resources/ItemData","1212121");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

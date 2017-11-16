@@ -2,6 +2,7 @@ package org.academiadecodigo.enuminatti.auctionhunt.utils;
 
 
 import org.academiadecodigo.enuminatti.auctionhunt.Server;
+import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -18,13 +19,18 @@ import java.util.List;
  * Created by Someone who is not me on 12/11/17.
  */
 
-public class ItemData {
+public final class ItemData {
 
     private static int itemNumber = 0;
+    private static ItemData instance;
+    private static final String FILEPATH = "resources/ItemData";
+    private static final String FILEPATHID = "resources/ItemIDLog";
+
+    private List<String> list = new LinkedList<>();
 
     private static BufferedWriter save;
+    private static BufferedWriter saveID;
     private static BufferedReader read;
-    private static ItemData instance;
 
     private ItemData() {
     }
@@ -32,8 +38,7 @@ public class ItemData {
     /**
      * @return
      */
-
-    /*public static ItemData getInstance() {
+    public static ItemData getInstance() {
         if (instance == null) {
             synchronized (ParseServer.class) {
                 if (instance == null) {
@@ -42,22 +47,25 @@ public class ItemData {
             }
         }
         return instance;
-    }*/
+    }
 
     /**
-
-     * @param name  receives the name of the owner
-     * @param itemName  receives the name of the item
-     * @param path  receives the location and the name of the picture
-     * @param price receives the price of the item
+     * @param name     receives the name of the owner
+     * @param itemName receives the name of the item
+     * @param path     receives the location and the name of the picture
+     * @param price    receives the price of the item
      * @throws IOException
      */
-    public static void save(String name, String itemName, String path, String price) throws IOException {
+    public void save(String name, String itemName, String path, String price) throws IOException {
 
-        String file = "resources/ItemData";
-        save = new BufferedWriter(new FileWriter(file, true));
+        itemNumber = Integer.parseInt((loadID("resources/ItemIDLog")));
 
-        String newPath = load(file, path);
+        int itemreplace = itemNumber;
+
+        saveID = new BufferedWriter(new FileWriter(FILEPATHID, true));
+        save = new BufferedWriter(new FileWriter(FILEPATH, true));
+
+        String newPath = load(FILEPATH, path);
 
         save.write("Item ID: " + itemNumber + "\n" +
                 "ID: " + name + "\n" +
@@ -69,18 +77,21 @@ public class ItemData {
 
         itemNumber++;
 
+        saveID.write("#" + itemNumber);
+        saveID.flush();
+
         save.newLine();
         save.flush();
         save.close();
+
     }
 
     /**
-     *
-     * @param file  receives the file to save
-     * @param Path  receives the location and the name of the picture
+     * @param file receives the file to save
+     * @param Path receives the location and the name of the picture
      * @return
      */
-    public static String load(String file, String Path) {
+    public String load(String file, String Path) {
 
         BufferedReader read = null;
 
@@ -95,7 +106,7 @@ public class ItemData {
 
             while ((line = read.readLine()) != null) {
                 if (line.contains(Path)) {
-                    if(newPath.contains("_" + counternumber)) {
+                    if (newPath.contains("_" + counternumber)) {
                         counternumber++;
                     }
                     newPath = Path.concat("_" + counternumber);
@@ -108,11 +119,34 @@ public class ItemData {
         return newPath;
     }
 
+    public String loadID(String file) {
+
+        BufferedReader read = null;
+
+        String id = null;
+
+        try {
+            read = new BufferedReader(new FileReader(file));
+
+            String line = "";
+
+            while ((line = read.readLine()) != null) {
+                String[] dataSplitted = line.split("#");
+                id = String.valueOf((dataSplitted.length - 1));
+                System.out.println(id);
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
     /**
-     *
-     * @return  returns the present day
+     * @return returns the present day
      */
-    private static String getDateTime() {
+    private String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return dateFormat.format(date);
@@ -169,53 +203,20 @@ public class ItemData {
         int index = 0;
         Iterator<String> iterator = list.iterator();
 
-        LinkedList<String> item = new LinkedList<>();
-        int countArray = 0;
-
         while (iterator.hasNext()) {
             index++;
             String next = iterator.next();
             if (next.equals("Item ID: " + itemID)) {
                 next = iterator.next();
                 while (!next.startsWith("Upload Date: ")) {
-                    countArray++;
-                    item.add(next);
-                    System.out.println(next);
                     index++;
                     next = iterator.next();
                 }
 
-                next = next.replace("Item ID: " + itemID , "");
+                next = next.replace("Item ID: " + itemID, "");
                 list.set(index, next);
                 break;
             }
         }
-    }
-
-    public  String loadItem(String file, String id) {
-
-        BufferedReader read = null;
-
-        Path path = FileSystems.getDefault().getPath(Server.PATH, "ItemData");
-        System.out.println(id);
-        try {
-
-            List<String> list = Files.readAllLines(path);
-
-            read = new BufferedReader(new FileReader(file));
-            String line = "";
-
-            System.out.println("<---------");
-            while ((line = read.readLine()) != null) {
-                if (line.contains(id)) {
-                     readListLines(list, id);
-                    }
-                }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return id;
     }
 }

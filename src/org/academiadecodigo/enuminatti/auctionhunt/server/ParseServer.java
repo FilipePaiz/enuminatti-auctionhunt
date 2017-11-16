@@ -138,7 +138,7 @@ public final class ParseServer {
                 System.out.println(line + "<-----------");
         try {
 
-            String path = "resources/" +  lineArray[0] + ".jpg";
+            String path = "resources/" +  lineArray[1] + ".jpg";
             FileOutputStream itemOutput = new FileOutputStream(path);
             DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
             int bytesReaden;
@@ -151,7 +151,8 @@ public final class ParseServer {
                 itemOutput.flush();
             }
 
-            bytesReadTotal = 0;
+            bytesReaden = 0; //NOT MESS WITH THIS ZEROS!!!
+            bytesReadTotal = 0; //NOT MESS WITH THIS ZEROS!!!
 
             //itemOutput.close();
             System.out.println("done reading");

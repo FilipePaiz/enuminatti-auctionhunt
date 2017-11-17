@@ -178,6 +178,12 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
+
+        if (!checkValues()) {
+            return;
+        }
+        notOkSubmit.setVisible(false);
+
         String username = ParseClient.getInstance().getUserName();
 
         String data = username + "#" + itemNameField.getText() + "#" + descriptionField.getText() + "#" + priceField.getText();
@@ -189,6 +195,43 @@ public class ProfileController implements Initializable, Controller {
         System.out.println("PATH:" + path);
         System.out.println("DATA:" + dataAndHead);
         communicationService.uploadImage(path, dataAndHead);
+    }
+
+    private boolean checkValues() {
+
+        if (itemNameField.getText().equals("")) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Item name");
+            return false;
+        }
+        if (descriptionField.getText().equals("")) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Item description!");
+            return false;
+        }
+        if (priceField.getText().equals("")) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Item price ");
+            return false;
+        }
+        try {
+            Integer.parseInt(priceField.getText());
+        } catch (NumberFormatException a) {
+            notOkSubmit.setText("Insert a value");
+            return false;
+        }
+
+        if (Integer.parseInt(priceField.getText()) > 999999) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Not permited value");
+            return false;
+        }
+        if(uploadImageDirectory.getText().equals("")){
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Choose some file");
+            return false;
+        }
+        return true;
     }
 
     /**

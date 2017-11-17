@@ -30,25 +30,16 @@ public class BidController implements Initializable, Controller {
     private URL location;
 
     @FXML
-    private Button bidButton;
-
-    @FXML
-    private TextField clientBid;
+    private Button buyButton;
 
     @FXML
     private ImageView itemImage;
 
     @FXML
-    private TextArea descriptionText;
+    private Label price;
 
     @FXML
-    private Label lastBid;
-
-    @FXML
-    private Label askingPrice;
-
-    @FXML
-    private Label bidResult;
+    private Label sellResult;
 
     @FXML
     private Label itemName;
@@ -62,6 +53,8 @@ public class BidController implements Initializable, Controller {
     @FXML
     private Button homeButton;
 
+    @FXML
+    private Label descriptionText;
 
     /**
      * @param event
@@ -93,7 +86,7 @@ public class BidController implements Initializable, Controller {
     @FXML
     void onBidButtonAction(ActionEvent event) {
 
-       if (clientBid.getText().equals("")){
+     /*  if (clientBid.getText().equals("")){
            clientBid.setText("0");
        }
 

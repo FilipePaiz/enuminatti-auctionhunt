@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -26,6 +28,9 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     private Label photo;
+
+    @FXML
+    private ImageView labelAvatar;
 
     @FXML
     private Button logoutButton;
@@ -84,7 +89,20 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
+
         String money = insertWithdrawMoney.getText();
+
+        try {
+            Integer.parseInt(money);
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        if (Integer.parseInt(money) > 999999) {
+            insertWithdrawMoney.setText("");
+            return;
+        }
+
 
         transferMoney(money, depositButton.getText());
 
@@ -157,7 +175,18 @@ public class ProfileController implements Initializable, Controller {
 
         String money = insertWithdrawMoney.getText();
 
+        try {
+            Integer.parseInt(money);
+        } catch (NumberFormatException e) {
+            return;
+        }
+
         if (Integer.parseInt(money) > Integer.parseInt(fundsAvailable.getText())) {
+            return;
+        }
+
+        if (Integer.parseInt(money) > 999999) {
+            insertWithdrawMoney.setText("");
             return;
         }
 
@@ -249,6 +278,7 @@ public class ProfileController implements Initializable, Controller {
         username.setText(ParseClient.getInstance().getUserName());
         okSubmit.setVisible(false);
         notOkSubmit.setVisible(false);
+        labelAvatar.setImage(new Image("avatar.png"));
     }
 
     public void changeView(String string) {

@@ -40,15 +40,24 @@ public final class UserData {
 
     public void addUser(User user) {
 
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "UserData");
+
         try {
 
-            save = new BufferedWriter(new FileWriter(Server.PATH + "UserData", true));
-            save.write(user.toString());
-            save.newLine();
-            save.write("<------------------->");
-            save.newLine();
-            save.flush();
+            List<String> list = Files.readAllLines(path);
+            synchronized (list) {
 
+                list.add(user.toString());
+                list.add("<------------------->");
+
+                PrintWriter printWriter = new PrintWriter(new FileWriter(Server.PATH + "UserData"), true);
+
+                for (String newLines : list) {
+                    printWriter.println(newLines);
+                }
+                printWriter.close();
+
+            }
             //  save.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,22 +68,20 @@ public final class UserData {
 
     public boolean getUser(User user) {
 
+
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "UserData");
         try {
 
-            read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
-            String line = read.readLine();
-            while (line != null) {
-                if (line.equals("Username= " + user.getUsername())) {
-                    return true;
-                }
-                line = read.readLine();
+            List<String> list = Files.readAllLines(path);
+            synchronized (list) {
+                return checkData(list, user.getUsername(), user.getPassword());
+
             }
-            read.close();
-            return false;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         return false;
     }
@@ -83,44 +90,61 @@ public final class UserData {
         return count;
     }
 
+
     public boolean authenticate(String username, String password) {
 
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "UserData");
         try {
-            read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
-            String line = read.readLine();
-            while (line != null) {
-                if (line.equals("Username= " + username) && (read.readLine()).equals("Password= " + Security.getHash(password))) {
-                    return true;
-                }
-                line = read.readLine();
+
+            List<String> list = Files.readAllLines(path);
+            synchronized (list) {
+                return checkData(list, username, password);
+
             }
-            read.close();
-            return false;
+
         } catch (IOException e) {
             e.printStackTrace();
-
         }
 
+
+        return false;
+    }
+
+    private boolean checkData(List<String> list, String username, String password) {
+
+        Iterator<String> iterator = list.iterator();
+
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            if (next.equals("Username= " + username)) {
+                next = iterator.next();
+                while (!next.startsWith("Password= ")) {
+                    next = iterator.next();
+                }
+
+                return true;
+            }
+
+        }
         return false;
     }
 
     public boolean existUser(String username) {
 
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "UserData");
         try {
-            read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
-            String line = read.readLine();
-            while (line != null) {
-                if (line.equals("Username= " + username)) {
+
+            List<String> list = Files.readAllLines(path);
+            synchronized (list) {
+                if (findUser(list, username, 0) != null) {
                     return true;
                 }
-                line = read.readLine();
             }
-            read.close();
-            return false;
+
         } catch (IOException e) {
             e.printStackTrace();
-
         }
+
         return false;
     }
 
@@ -131,7 +155,7 @@ public final class UserData {
 
             List<String> list = Files.readAllLines(path);
             synchronized (list) {
-                return findUser(list, username);
+                return findUser(list, username, 1);
             }
 
         } catch (IOException e) {
@@ -141,17 +165,23 @@ public final class UserData {
         return null;
     }
 
-    private String findUser(List<String> list, String username) {
+    private String findUser(List<String> list, String username, int i) {
 
         Iterator<String> iterator = list.iterator();
 
         while (iterator.hasNext()) {
             String next = iterator.next();
-            if (next.equals("Username= " + username)) {
+            if (next.equals("Username= " + username) && i == 1) {
                 next = iterator.next();
                 while (!next.startsWith("Funds= ")) {
                     next = iterator.next();
                 }
+
+                String[] array = next.split(" ");
+                return array[1];
+            }
+
+            if (next.equals("Username= " + username) && i == 0) {
 
                 String[] array = next.split(" ");
                 return array[1];
@@ -179,7 +209,6 @@ public final class UserData {
                 }
                 printWriter.close();
 
-                list = Files.readAllLines(path);
             }
 
         } catch (IOException e) {

@@ -1,5 +1,7 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
+import java.net.Socket;
+
 /**
  * Created by codecadet on 10/11/17.
  */
@@ -76,7 +78,9 @@ public final class ParseClient {
                 return "/withdraw/" + userName + "#" + dataSplitted[0] + "\r\n";
             case "Deposit":
                 return "/deposit/" + userName + "#" + dataSplitted[0] + "\r\n";
-            case "Bid":
+            case "Submit":
+                return "/item/" + data;
+            case "Buy":
                 return "/bid/" + userName + "#" + itemId + "#" + itemPrice + "\r\n";
             case "Next":
                 return "/next/" + userName + "#" + dataSplitted[0] + "\r\n";
@@ -92,6 +96,8 @@ public final class ParseClient {
      * @return
      */
     public String decodeServerMessage(String string) {
+
+        System.out.println(string);
 
         if (string.equals("login not done") || string.equals("register not done")) {
             return null;
@@ -167,6 +173,10 @@ public final class ParseClient {
             return "auction";
 
         }
+        if(string.startsWith("/item/done/")) {
+            return "item";
+        }
+
         return "register";
 
     }
@@ -192,6 +202,8 @@ public final class ParseClient {
         }
         return null;
     }
+
+
 
 
     /**

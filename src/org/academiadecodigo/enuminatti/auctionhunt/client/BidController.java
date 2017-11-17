@@ -10,10 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import org.academiadecodigo.enuminatti.auctionhunt.server.Item;
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,25 +30,16 @@ public class BidController implements Initializable, Controller {
     private URL location;
 
     @FXML
-    private Button bidButton;
-
-    @FXML
-    private TextField clientBid;
+    private Button buyButton;
 
     @FXML
     private ImageView itemImage;
 
     @FXML
-    private TextArea descriptionText;
+    private Label price;
 
     @FXML
-    private Label lastBid;
-
-    @FXML
-    private Label askingPrice;
-
-    @FXML
-    private Label bidResult;
+    private Label sellResult;
 
     @FXML
     private Label itemName;
@@ -64,6 +53,8 @@ public class BidController implements Initializable, Controller {
     @FXML
     private Button homeButton;
 
+    @FXML
+    private Label descriptionText;
 
     /**
      * @param event
@@ -101,10 +92,9 @@ public class BidController implements Initializable, Controller {
         }
 
         String moneyData = ParseClient.getInstance().getItemPrice();
-        String data = ParseClient.getInstance().setDataServer(moneyData, bidButton.getText());
+        String data = ParseClient.getInstance().setDataServer(moneyData, buyButton.getText());
         communicationService.sendData(data);
 
-        clientBid.clear();
 
         /** try {
          BoughtItem.save(Server.PATH + "NewOwner", ParseClient.getInstance().getUserName(), "SUBARU", "#2", clientBid.getText());
@@ -149,7 +139,7 @@ public class BidController implements Initializable, Controller {
                 switch (string) {
 
                     case "auction":
-                        askingPrice.setText(ParseClient.getInstance().getItemPrice());
+                        price.setText(ParseClient.getInstance().getItemPrice());
                         itemName.setText(ParseClient.getInstance().getItemName());
                         break;
                     case "bid":

@@ -4,27 +4,19 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.academiadecodigo.enuminatti.auctionhunt.server.ParseServer;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
-import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
-import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,6 +28,9 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     private Label photo;
+
+    @FXML
+    private ImageView labelAvatar;
 
     @FXML
     private Button logoutButton;
@@ -92,11 +87,22 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     private TextField InsertPathforPhotoUser;
 
-    private Navigation.LogicController logicController;
-
     @FXML
     void onDepositButtonPressed(ActionEvent event) {
+
         String money = insertWithdrawMoney.getText();
+
+        try {
+            Integer.parseInt(money);
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        if (Integer.parseInt(money) > 999999) {
+            insertWithdrawMoney.setText("");
+            return;
+        }
+
 
         transferMoney(money, depositButton.getText());
 
@@ -125,6 +131,8 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
         Navigation.getInstance().back();
+        Navigation.getInstance().back();
+        Navigation.getInstance().loadScreen("login&register");
     }
 
     /**
@@ -171,7 +179,18 @@ public class ProfileController implements Initializable, Controller {
 
         String money = insertWithdrawMoney.getText();
 
+        try {
+            Integer.parseInt(money);
+        } catch (NumberFormatException e) {
+            return;
+        }
+
         if (Integer.parseInt(money) > Integer.parseInt(fundsAvailable.getText())) {
+            return;
+        }
+
+        if (Integer.parseInt(money) > 999999) {
+            insertWithdrawMoney.setText("");
             return;
         }
 
@@ -192,6 +211,12 @@ public class ProfileController implements Initializable, Controller {
 
     @FXML
     void onButtonPressedOkPressed(ActionEvent event) {
+
+        if (!checkValues()) {
+            return;
+        }
+        notOkSubmit.setVisible(false);
+
         String username = ParseClient.getInstance().getUserName();
 
         String data = username + "#" + itemNameField.getText() + "#" + descriptionField.getText() + "#" + priceField.getText();
@@ -203,6 +228,43 @@ public class ProfileController implements Initializable, Controller {
         System.out.println("PATH:" + path);
         System.out.println("DATA:" + dataAndHead);
         communicationService.uploadImage(path, dataAndHead);
+    }
+
+    private boolean checkValues() {
+
+        if (itemNameField.getText().equals("")) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Item name");
+            return false;
+        }
+        if (descriptionField.getText().equals("")) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Item description!");
+            return false;
+        }
+        if (priceField.getText().equals("")) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Item price ");
+            return false;
+        }
+        try {
+            Integer.parseInt(priceField.getText());
+        } catch (NumberFormatException a) {
+            notOkSubmit.setText("Insert a value");
+            return false;
+        }
+
+        if (Integer.parseInt(priceField.getText()) > 999999) {
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Not permited value");
+            return false;
+        }
+        if(uploadImageDirectory.getText().equals("")){
+            notOkSubmit.setVisible(true);
+            notOkSubmit.setText("Choose some file");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -220,6 +282,7 @@ public class ProfileController implements Initializable, Controller {
         username.setText(ParseClient.getInstance().getUserName());
         okSubmit.setVisible(false);
         notOkSubmit.setVisible(false);
+        labelAvatar.setImage(new Image("avatar.png"));
     }
 
     public void changeView(String string) {

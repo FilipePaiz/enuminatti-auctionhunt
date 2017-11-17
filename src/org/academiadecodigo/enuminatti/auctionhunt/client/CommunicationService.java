@@ -88,7 +88,7 @@ public class CommunicationService implements Runnable, Service {
                 bytesRead = dataIn.read(bytes);
                 dataOut.flush();
             }
-
+            System.out.println("send photo");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,6 +105,7 @@ public class CommunicationService implements Runnable, Service {
 
             String answer = ParseClient.getInstance().decodeServerMessage(readData());
 
+            System.out.println("ANSWER:" + answer);
             System.out.println(Thread.currentThread().getName());
             System.out.println(this);
 

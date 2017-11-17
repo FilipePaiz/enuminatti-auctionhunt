@@ -19,6 +19,7 @@ public final class ParseServer {
     private static ParseServer instance;
     private boolean itemUpload;
     private int itemNumber = 0;
+    private int bytesReadTotal = 0;
 
     /**
      *
@@ -167,31 +168,29 @@ public final class ParseServer {
     private void itemDecodificate(String line) {
 
         System.out.println("LINE SERVER:" + line);
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[512 *2048];
         line = line.replace("/item/", "");
 
         String[] lineArray = line.split("#");
 
         int length = Integer.parseInt(lineArray[4]);
         System.out.println(length);
-
-        int bytesReadTotal = 0;
+        int bytesReaden = 0;
 
         System.out.println(line + "<-----------");
-
-        BidService Bidservice = (BidService) ServiceRegistry.getInstance().getService("BidService");
-
         try {
 
-            String path = "resources/" + lineArray[0] + ".jpg";
+            String path = "resources/" +  lineArray[0] + ".jpg";
             FileOutputStream itemOutput = new FileOutputStream(path);
             DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
-            int bytesReaden;
+            bytesReadTotal = 0;
 
             while (bytesReadTotal != length) {
                 bytesReaden = dataIn.read(bytes);
                 itemOutput.write(bytes, 0, bytesReaden);
                 bytesReadTotal += bytesReaden;
+                System.out.println(bytesReadTotal);
+                System.out.println(bytesReaden);
                 itemOutput.flush();
             }
 
@@ -201,7 +200,6 @@ public final class ParseServer {
             System.out.println("done reading");
 
             ItemData.getInstance().save(lineArray[0], lineArray[1], path, lineArray[3]);
-            Bidservice.getItems().put(0, new Item(lineArray[0], lineArray[1], "cenas", Integer.parseInt(lineArray[3])));
             System.out.println("Item save ");
 
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
@@ -276,10 +274,14 @@ public final class ParseServer {
         line = line.replace("/bid/", "");
         String[] words = line.split("#");
 
+        MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
+
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
             String seller = ItemData.getInstance().SearchID(ItemData.FILEPATH, words[1]);
+
+            System.out.println(seller + "    - -- - -- - -");
 
             int sellerUpdateFunds = Integer.parseInt(UserData.getInstance().userFunds(seller)) + Integer.parseInt(words[2]);
             UserData.getInstance().changeUserFunds(seller, (sellerUpdateFunds+""));
@@ -294,6 +296,8 @@ public final class ParseServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     private void sellItemDecodificate(String line) {

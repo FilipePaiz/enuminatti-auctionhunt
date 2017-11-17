@@ -13,9 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.academiadecodigo.enuminatti.auctionhunt.server.ServiceRegistry;
+import org.academiadecodigo.enuminatti.auctionhunt.server.User;
 import org.academiadecodigo.enuminatti.auctionhunt.server.UserService;
+import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -70,7 +73,7 @@ public final class Navigation {
 
             // Instantiate the view and the controller
             fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(VIEW_PATH + view + ".fxml"));
-            root = fxmlLoader.load();
+             root = fxmlLoader.load();
 
             stage.setTitle("AuctionHunt");
 
@@ -125,7 +128,6 @@ public final class Navigation {
     }
 
     /**
-     * @param
      * @return
      */
     public Controller getController() {

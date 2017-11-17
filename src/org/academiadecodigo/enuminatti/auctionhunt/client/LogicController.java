@@ -20,7 +20,6 @@ public class LogicController implements Initializable, Controller {
 
     private CommunicationService communicationService;
 
-
     @FXML
     private Button logoutButton;
 
@@ -107,6 +106,9 @@ public class LogicController implements Initializable, Controller {
 
         communicationService.sendData(dataAndHead);
 
+
+//        couldNotLogIn.setVisible(true);
+
     }
 
     /**
@@ -133,6 +135,7 @@ public class LogicController implements Initializable, Controller {
         String register = ParseClient.getInstance().setDataServer(registerData, logoutButton.getText());
 
         communicationService.sendData(register);
+
     }
 
     /**
@@ -186,15 +189,14 @@ public class LogicController implements Initializable, Controller {
             couldNotRegister.setVisible(false);
         }
         succesfullRegister.setVisible(false);
-        emailField.setVisible(true);
-        emailText.setVisible(true);
-        emailText.setText("Host");
+        emailField.setVisible(false);
+        emailText.setVisible(false);
         logoutButton.setVisible(false);
         alreadyHaveAccount.setVisible(false);
         logInButton.setVisible(true);
         dontHaveAccount.setVisible(true);
-        hostField.setVisible(false);
-        hostText.setVisible(false);
+        hostField.setVisible(true);
+        hostText.setVisible(true);
 
     }
 
@@ -227,6 +229,8 @@ public class LogicController implements Initializable, Controller {
                     case "login":
                         Navigation.getInstance().loadScreen("Profile");
                         break;
+                    case "register":
+                        showLogin();
                     default:
                         System.out.println("Cenas by Aires, try again");
                 }

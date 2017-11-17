@@ -129,6 +129,8 @@ public class ProfileController implements Initializable, Controller {
     @FXML
     void onLogoutButtonPressed(ActionEvent event) {
         Navigation.getInstance().back();
+        Navigation.getInstance().back();
+        Navigation.getInstance().loadScreen("login&register");
     }
 
     /**

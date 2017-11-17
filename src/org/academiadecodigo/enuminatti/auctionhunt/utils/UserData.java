@@ -126,27 +126,38 @@ public final class UserData {
 
     public String userFunds(String username) {
 
+        Path path = FileSystems.getDefault().getPath(Server.PATH, "UserData");
         try {
-            read = new BufferedReader(new FileReader(Server.PATH + "UserData"));
-            String line = read.readLine();
-            while (line != null) {
-                if (line.equals("Username= " + username)) {
-                    line = read.readLine();
-                    while (!line.startsWith("Funds= ")) {
-                        line = read.readLine();
-                    }
-                    String[] words = line.split(" ");
-                    return words[1];
-                }
-                line = read.readLine();
+
+            List<String> list = Files.readAllLines(path);
+            synchronized (list) {
+                return findUser(list, username);
             }
-            read.close();
-            return null;
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
+
+        return null;
+    }
+
+    private String findUser(List<String> list, String username) {
+
+        Iterator<String> iterator = list.iterator();
+
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            if (next.equals("Username= " + username)) {
+                next = iterator.next();
+                while (!next.startsWith("Funds= ")) {
+                    next = iterator.next();
+                }
+
+                String[] array = next.split(" ");
+                return array[1];
+            }
+        }
+
         return null;
     }
 
@@ -156,14 +167,20 @@ public final class UserData {
         try {
 
             List<String> list = Files.readAllLines(path);
-            readListLines(list, username, funds);
 
-            PrintWriter printWriter = new PrintWriter(new FileWriter(Server.PATH + "UserData"), true);
+            synchronized (list) {
+                System.out.println(list.size());
+                readListLines(list, username, funds);
 
-            for (String newLines : list) {
-                printWriter.println(newLines);
+                PrintWriter printWriter = new PrintWriter(new FileWriter(Server.PATH + "UserData"), true);
+
+                for (String newLines : list) {
+                    printWriter.println(newLines);
+                }
+                printWriter.close();
+
+                list = Files.readAllLines(path);
             }
-            printWriter.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -191,5 +208,5 @@ public final class UserData {
             }
         }
     }
-    
+
 }

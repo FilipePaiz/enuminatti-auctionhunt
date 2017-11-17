@@ -29,7 +29,7 @@ public final class UserData {
      */
     public static UserData getInstance() {
         if (instance == null) {
-            synchronized (ParseServer.class) {
+            synchronized (UserData.class) {
                 if (instance == null) {
                     instance = new UserData();
                 }

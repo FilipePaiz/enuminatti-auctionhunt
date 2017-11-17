@@ -27,7 +27,7 @@ public class Client extends Application {
 
         try {
 
-            Socket clientSocket = new Socket(Server.HOST, Server.PORT);
+            Socket clientSocket = new Socket("192.168.1.16", Server.PORT);
             communicationService = new CommunicationService();
             //ParseClient.getInstance().setClientSocket(clientSocket);
             communicationService.setClientSocket(clientSocket);

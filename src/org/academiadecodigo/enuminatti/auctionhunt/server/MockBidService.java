@@ -1,20 +1,16 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
-/*
+
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by codecadet on 09/11/2017.
-
-
 public class MockBidService implements BidService {
 
-    private HashMap<Integer, Item> items;
+    private Map<Integer, Item> items;
     private int itemAddedtoAuction;
 
     /**
      *
-
+     */
     public MockBidService() {
 
         this.items = new HashMap<>();
@@ -25,8 +21,8 @@ public class MockBidService implements BidService {
      * @param id
      * @param bidMoney
      * @param user
-
-    @Override
+     */
+   /** @Override
     public void bidOnItem(int id, int bidMoney, User user) {
 
         Item item = items.get(id);
@@ -38,12 +34,12 @@ public class MockBidService implements BidService {
 
         item.setActualBid(bidMoney);
         item.setUser(user);
-    }
+    }*/
 
     /**
      *
      * @param item
-
+     */
     @Override
     public void addItemtoAuction(Item item) {
 
@@ -54,10 +50,9 @@ public class MockBidService implements BidService {
     /**
      *
      * @return
-
+     */
     @Override
     public Map<Integer, Item> getItems() {
         return items;
     }
 }
-*/

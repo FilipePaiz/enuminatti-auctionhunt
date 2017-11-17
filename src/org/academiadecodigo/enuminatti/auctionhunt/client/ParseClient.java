@@ -1,7 +1,5 @@
 package org.academiadecodigo.enuminatti.auctionhunt.client;
 
-import java.net.Socket;
-
 /**
  * Created by codecadet on 10/11/17.
  */
@@ -10,10 +8,11 @@ public final class ParseClient {
     private static ParseClient instance;
     private String userName;
     private String funds;
-    private String itemId;
+    private String itemId = "1";
     private String itemOwner;
-    private String itemDescription;
+    //private String itemDescription;
     private String itemPrice;
+    private String itemName;
 
     /**
      *
@@ -72,17 +71,15 @@ public final class ParseClient {
             case "Sign In":
                 return "/login/" + dataSplitted[0] + "#" + dataSplitted[1] + "\r\n";
             case "Go to Auction":
-                return "/item/" + dataSplitted[0] + "#" + "aqui tem" + "\r\n";
+                return "/auction/" + itemId + "#" + "\r\n";
             case "Withdraw":
                 return "/withdraw/" + userName + "#" + dataSplitted[0] + "\r\n";
             case "Deposit":
                 return "/deposit/" + userName + "#" + dataSplitted[0] + "\r\n";
-            /*case "next"
-                return "/item/" + dataSplitted[0] + "€" + "aqui tem" + "\r\n";*/
             case "Bid":
-                return "/bid/" + userName + "#" + dataSplitted[0] + "\r\n";
+                return "/bid/" + userName + "#" + itemId + "#" + itemPrice + "\r\n";
             case "Next":
-                return "/next" + userName +"#" + dataSplitted[0] + "\r\n";
+                return "/next/" + userName + "#" + dataSplitted[0] + "\r\n";
             default:
                 System.out.println("Deu merda o parse do client");
 
@@ -140,18 +137,38 @@ public final class ParseClient {
             return "bid";
         }
 
-        if(string.startsWith("/sellItem/done/")) {
-            string = string.replace("/sellItem/done/","");
+        if (string.startsWith("/sellItem/done/")) {
+            string = string.replace("/sellItem/done/", "");
             String[] words = string.split("#");
-            itemId = words[0];
+            itemName = words [0];
             itemOwner = words[1];
-            itemPrice = words[2];
-            itemDescription = words[3];
+            itemPrice = words[3];
+            //itemDescription = words[3];
             return "sellItem";
 
         }
 
+        if (string.startsWith("/next/done/")) {
+            string = string.replace("/next/done/", "");
+            String[] words = string.split("#");
+            if (!userName.equals(words[0])) {
+                return null;
+            }
+            return "next";
+
+        }
+
+        if (string.startsWith("/auction/done/")) {
+            string = string.replace("/auction/done/", "");
+            String[] words = string.split("#");
+            itemName = words[0];
+            itemOwner = words[1];
+            itemPrice = words[2];
+            return "auction";
+
+        }
         return "register";
+
     }
 
     /**
@@ -177,8 +194,6 @@ public final class ParseClient {
     }
 
 
-
-
     /**
      * @return
      */
@@ -192,13 +207,38 @@ public final class ParseClient {
     public String getUserFunds() {
         return funds;
     }
-    public String getItemId () {
-        return getItemId();
+
+    public String getItemId() {
+        return itemId;
     }
-    public void setItemId(String id){
+
+    public void setItemId(String id) {
         this.itemId = id;
     }
 
 
+    public String getItemOwner() {
+        return itemOwner;
+    }
+
+    public void setItemOwner(String itemOwner) {
+        this.itemOwner = itemOwner;
+    }
+
+    public String getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(String itemPrice) {
+        this.itemPrice = itemPrice;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 }
 

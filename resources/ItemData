@@ -1,15 +1,21 @@
-
 Item ID: 1
 ID: Aires
-Item name: Subaru Imprenza
+Itemname: Subaru Imprenza
 Path: resources/Subaru_4
-Price: 995€
-Upload Date: 2017-11-16
+Price: 995
+UploadDate: 2017-11-16
 <------------------->
 Item ID: 2
 ID: Maria
-Item name: Subaru Imprenza
+Itemname: Subaru Imprenza
 Path: resources/test.jpg
-Price: 995€
-Upload Date: 2017-11-16
+Price: 995
+UploadDate: 2017-11-16
 <------------------->
+
+
+
+
+
+
+

@@ -109,10 +109,12 @@ public class ProfileController implements Initializable, Controller {
     void onGoToAuctionButtonPressed(ActionEvent event) {
 
 
-        //String decodeMessage = ParseClient.getInstance().receiveDataServer(receiveHead);
+        String message = ParseClient.getInstance().setDataServer(ParseClient.getInstance().getItemId(), goToAuctionButton.getText());
+
+        communicationService.sendData(message);
 
         Navigation.getInstance().loadScreen("bidAuction");
-        return;
+
 
 
     }

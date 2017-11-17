@@ -1,11 +1,14 @@
 package org.academiadecodigo.enuminatti.auctionhunt.server;
 
+import org.academiadecodigo.enuminatti.auctionhunt.utils.BoughtItem;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.ItemData;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.Security;
 import org.academiadecodigo.enuminatti.auctionhunt.utils.UserData;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by codecadet on 10/11/17.
@@ -15,6 +18,7 @@ public final class ParseServer {
     private Socket clientSocket = null;
     private static ParseServer instance;
     private boolean itemUpload;
+    private int itemNumber = 0;
 
     /**
      *
@@ -57,14 +61,52 @@ public final class ParseServer {
 
         if (line.startsWith("/withdraw/")) {
             withdrawDecodificate(line);
+            return;
         }
         if (line.startsWith("/deposit/")) {
             depositDecodificate(line);
+            return;
         }
         if (line.startsWith("/bid/")) {
             bidDecodificate(line);
+            return;
+        }
+        if (line.startsWith("/next/")) {
+            nextDecodificate(line);
+        }
+        if (line.startsWith("/auction/")) {
+            auctionDecodificate(line);
         }
 
+
+    }
+
+    private void auctionDecodificate(String line) {
+
+        line = line.replace("/auction/", "");
+        String[] words = line.split("#");
+
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(this);
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            String data = ItemData.getInstance().getallItemData(ItemData.FILEPATH, words[0]);
+
+
+            System.out.println(data + "    aspfkewigjewipgjeipwgji0ewgjeiwpjg");
+
+            String[] dataArray = data.split("#");
+
+            out.println("/auction/done/" + dataArray[0] + "#" + dataArray[1] + "#" + dataArray[3]);
+
+        } catch (
+                IOException e)
+
+        {
+            e.printStackTrace();
+        }
     }
 
     private void depositDecodificate(String line) {
@@ -135,10 +177,13 @@ public final class ParseServer {
 
         int bytesReadTotal = 0;
 
-                System.out.println(line + "<-----------");
+        System.out.println(line + "<-----------");
+
+        BidService Bidservice = (BidService) ServiceRegistry.getInstance().getService("BidService");
+
         try {
 
-            String path = "resources/" +  lineArray[0] + ".jpg";
+            String path = "resources/" + lineArray[0] + ".jpg";
             FileOutputStream itemOutput = new FileOutputStream(path);
             DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
             int bytesReaden;
@@ -155,7 +200,8 @@ public final class ParseServer {
             //itemOutput.close();
             System.out.println("done reading");
 
-            ItemData.getInstance().save(lineArray[0],lineArray[1],path,lineArray[3]);
+            ItemData.getInstance().save(lineArray[0], lineArray[1], path, lineArray[3]);
+            Bidservice.getItems().put(0, new Item(lineArray[0], lineArray[1], "cenas", Integer.parseInt(lineArray[3])));
             System.out.println("Item save ");
 
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
@@ -224,29 +270,30 @@ public final class ParseServer {
 
 
     }
+
     private void bidDecodificate(String line) {
 
         line = line.replace("/bid/", "");
         String[] words = line.split("#");
 
-        MoneyService moneyService = (MoneyService) ServiceRegistry.getInstance().getService("MoneyService");
-
         try {
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
-            int money = Integer.parseInt(words[1]);
+            String seller = ItemData.getInstance().SearchID(ItemData.FILEPATH, words[1]);
 
-            if(!moneyService.removeMoney(words[0], money)){
-                return;
-            }
+            int sellerUpdateFunds = Integer.parseInt(UserData.getInstance().userFunds(seller)) + Integer.parseInt(words[2]);
+            UserData.getInstance().changeUserFunds(seller, (sellerUpdateFunds+""));
+
+            int buyerUpdateFunds = Integer.parseInt(UserData.getInstance().userFunds(words[0])) - Integer.parseInt(words[2]);
+            UserData.getInstance().changeUserFunds(words[0], (buyerUpdateFunds+""));
+
+            BoughtItem.getInstance().save("resources/NewOwner", words[0], "Cadeira", words[1], words[2]);
 
             out.println("/bid/done/" + words[0] + "#" + UserData.getInstance().userFunds(words[0]));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void sellItemDecodificate(String line) {
@@ -254,8 +301,43 @@ public final class ParseServer {
         line = line.replace("/sellItem/", "");
         String[] words = line.split("#");
 
+        BidService bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
 
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void nextDecodificate(String line) {
+
+        line = line.replace("/next/", "");
+        String[] words = line.split("#");
+
+        BidService bidService = (BidService) ServiceRegistry.getInstance().getService("BidService");
+
+        try {
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            Set entrySet = bidService.getItems().entrySet();
+
+            Iterator it = entrySet.iterator();
+
+
+            if (it.hasNext()) {
+                itemNumber++;
+                String item = it.next().toString();
+                out.println("/next/done/" + words[0] + "#" + item);
+                return;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param clientSocket
      */

@@ -29,18 +29,17 @@ public class Server {
     }
 
     /**
-     *
      * @param args
      */
     public static void main(String[] args) {
 
 
         UserService userService = new MockUserService();
-       // BidService bidService = new MockBidService();
+        BidService bidService = new MockBidService();
         MoneyService moneyService = new MockMoneyService();
 
         ServiceRegistry.getInstance().addService("UserService", userService);
-       // ServiceRegistry.getInstance().addService("BidService", bidService);
+        ServiceRegistry.getInstance().addService("BidService", bidService);
         ServiceRegistry.getInstance().addService("MoneyService", moneyService);
 
         Server server = new Server();
@@ -58,7 +57,6 @@ public class Server {
     }
 
     /**
-     *
      * @param serverSocket
      */
     private void start(ServerSocket serverSocket) {
@@ -125,6 +123,7 @@ public class Server {
                     in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     String line = in.readLine();
+
                     synchronized (this) {
                         ParseServer.getInstance().setClientSocket(clientSocket);
                         ParseServer.getInstance().validateData(line);
@@ -150,17 +149,17 @@ public class Server {
         /**
          *
          */
-    private void closeFiles() {
+        private void closeFiles() {
 
-        try {
-            dataOutputStream.close();
-            dataInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                dataOutputStream.close();
+                dataInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
+
     }
-
-
-}
 }

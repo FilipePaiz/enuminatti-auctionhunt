@@ -22,13 +22,15 @@ import java.util.List;
 public final class ItemData {
 
     private static int itemNumber = 0;
-    private static ItemData instance;
-    private static final String FILEPATH = "resources/ItemData";
-    private static final String FILEPATHID = "resources/ItemIDLog";
 
+    private static ItemData instance;
+
+    public static final String FILEPATH = "resources/ItemData";
+    private static final String FILEPATHID = "resources/ItemIDLog";
     private List<String> list = new LinkedList<>();
 
     private static BufferedWriter save;
+
     private static BufferedWriter saveID;
     private static BufferedReader read;
 
@@ -69,10 +71,10 @@ public final class ItemData {
 
         save.write("Item ID: " + itemNumber + "\n" +
                 "ID: " + name + "\n" +
-                "Item name: " + itemName + "\n" +
+                "ItemName: " + itemName + "\n" +
                 "Path: " + newPath + "\n" +
                 "Price: " + price + "€\n" +
-                "Upload Date: " + getDateTime() +
+                "UploadDate: " + getDateTime() +
                 "\n<------------------->");
 
         itemNumber++;
@@ -136,6 +138,67 @@ public final class ItemData {
                 System.out.println(id);
 
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public String SearchID(String file, String itemID) {
+
+        BufferedReader read = null;
+
+        String id = null;
+
+        try {
+            read = new BufferedReader(new FileReader(file));
+
+            String line = "";
+
+            while ((line = read.readLine()) != null) {
+                if (line.equals("Item ID: " + itemID)) {
+                    line = read.readLine();
+                    String[] dataSplitted = line.split(" ");
+                    id = dataSplitted[1];
+                }
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public String getallItemData(String file, String itemID) {
+
+        BufferedReader read = null;
+
+        String id = null;
+
+        try {
+            read = new BufferedReader(new FileReader(file));
+
+            String line = "";
+
+            while ((line = read.readLine()) != null) {
+                if (line.equals("Item ID: " + itemID)) {
+                    line = read.readLine();
+                    String[] dataSplitted = line.split(" ");
+                    id = dataSplitted[1];
+
+                    for (int i = 0; i < 4; i++) {
+                        line = read.readLine();
+                        String[] dataSplitted1 = line.split(" ");
+                        id += "#" + dataSplitted1[1];
+                    }
+                    System.out.println(id);
+                }
+                break;
+            }
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,5 +281,9 @@ public final class ItemData {
                 break;
             }
         }
+    }
+
+    public static int getItemNumber() {
+        return itemNumber;
     }
 }

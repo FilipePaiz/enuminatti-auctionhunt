@@ -15,7 +15,7 @@ public interface BidService extends Service {
      * @param bidMoney
      * @param user
      */
-    void bidOnItem(int id, int bidMoney, User user);
+    //void bidOnItem(int id, int bidMoney, User user);
 
     /**
      *

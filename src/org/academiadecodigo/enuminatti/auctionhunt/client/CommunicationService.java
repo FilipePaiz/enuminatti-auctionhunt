@@ -20,7 +20,6 @@ public class CommunicationService implements Runnable, Service {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             line = in.readLine();
-            System.out.println(line);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,7 +77,7 @@ public class CommunicationService implements Runnable, Service {
 
             String msgProtocol = data + "#" + file.length() + "\n";
 
-            System.out.println("PROTOCOL:"+ msgProtocol);
+            System.out.println("PROTOCOL:" + msgProtocol);
 
             System.out.println("FLENGTH:" + file.length());
             dataOut.write(msgProtocol.getBytes());
@@ -123,6 +122,9 @@ public class CommunicationService implements Runnable, Service {
                 if (Navigation.getInstance().getController() instanceof ProfileController)
                     ((ProfileController) Navigation.getInstance().getController()).changeView(answer);
             }
+
+            if (Navigation.getInstance().getController() instanceof BidController)
+                ((BidController) Navigation.getInstance().getController()).changeView(answer);
         }
     }
 
